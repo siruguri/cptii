@@ -8,7 +8,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-module TodoList
+module GoalGetter
   class NoTokenException < Exception
   end
 
@@ -22,6 +22,7 @@ module TodoList
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
+    config.assets.quiet = true
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
     config.middleware.insert(0, Rack::Deflater)

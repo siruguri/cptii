@@ -1,0 +1,25 @@
+.header {
+  background-color: $basic-blue;
+  color: $white;  
+  
+  .nav-back {
+    width: 34px;
+    height: 50px;
+    padding-top: 4px;
+    
+    margin: 16.5px 0 0 20px;
+    display: inline-block;
+    font-size: $large-title;
+    color: $arrow-gray;
+  }
+  
+  .header-title {
+    margin: 16.5px 0 0 20px;
+    display: inline-block;
+    font-size: $large-title;
+  }
+
+  .header-actions {
+    float: right;
+  }
+}

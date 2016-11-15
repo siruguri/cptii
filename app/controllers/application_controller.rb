@@ -7,15 +7,10 @@ class ApplicationController < ActionController::Base
     # Quite a few things to do before the app starts...
     I18n.locale = set_locale
     insert_default_param_filter
-    create_navbar_data
   end
 
   rescue_from ActionController::RoutingError do |exception|
     error_message = I18n.t(:message_404)
-    go_to_root(error_message)
-  end
-  rescue_from CanCan::AccessDenied do |exception|
-    error_message = I18n.t(:access_denied_message)
     go_to_root(error_message)
   end
 
@@ -32,15 +27,6 @@ class ApplicationController < ActionController::Base
     method = "#{resource}_strong_params"
 
     params[resource] &&= send(method, params[resource]) if respond_to?(method, true)
-  end
-
-  def create_navbar_data
-    @navbar_entries = NavbarEntry.all.map do |entry|
-      if entry.user_id == -1 || Ability.new(current_user).can?(:read, entry)
-        {title: entry.title, url: entry.url }
-      end
-    end
-    @navbar_entries.compact!
   end
 
   def go_to_root(message)

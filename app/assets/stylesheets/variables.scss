@@ -1,2 +1,31 @@
-$form-border-gray: #D8DEE2;
-$form-background: #FFF;
+/* Colors */
+
+$basic-gray: #B0BEC5;
+$arrow-gray: #0a89a7;
+$basic-orange: #F94730;
+$basic-blue: #00b9e6;
+$white: #FFF;
+
+/* Hard-coded Dimensions */
+$navicon-dim: 18px;
+$nav-action-area: 72px;
+
+$header-height: 68px;
+$footer-height: 56px;
+
+/* Font sizes */
+
+$navbar-deselected: 12px;
+$navbar-selected: 1<4px;
+$large-title: 34px;
+
+/*
+Nav bar 20px medium
+Subheadings 16px medium
+Body 16px regular
+Body small 14px regular
+Buttons 14px medium all caps
+Hint text 12px regular
+Nav bar selected 14px regular
+Nav bar deselected 12px regular
+*/

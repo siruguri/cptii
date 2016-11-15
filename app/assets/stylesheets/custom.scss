@@ -1,75 +1,40 @@
-body {
- height: auto;
- width: 100%;
- font-family: 'Cabin', sans-serif;
- font-size: 18px;
+html, body {
+  height: 100%;
 }
 
-.flash-box {
-  padding: 10px 5px;
-  min-height: 40px;
-
-  background-color: lightred;
-  color: black;
-
-  display: inline-block;
-  margin: auto;
+.app-body {
+  flex: 1 1 auto;
 }
 
-p {
-  margin-top: 5px;
+.main-app {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
-.centered-textbox {
-  border: blue solid 1px;
-  border-radius: 5px;
-  display: inline-block;
-  padding: 5px;
-  height: 40px;
-  line-height: 25px;
-  vertical-align: middle;
+.header {
+  flex: 0 1 $header-height;
 }
 
-form {
-  label {
-    font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif;
-    margin-bottom: 7px;
-  }
+.footer {
+  flex: 0 1 $footer-height;
+  text-align: center;
+}
 
-  input[type=text], input[type=email], input[type=password] {
-    margin: 5px 0 15px;
-  }
+.content {
+  flex: 1 1 auto;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .text-center {
   text-align: center;
 }
 
-.sign-in-form {
-  padding: 20px;
-  border: 1px solid $form-border-gray;
-  background-color: $form-background;
-}
-
-.to-left {
-  float: left;
-}
-
-.to-right {
-  float: right;
-}
-
-.btn {
-  margin-top: 20px;
+svg.defs {
+  height: 0;
+  width: 0;
   display: block;
-  width: 100%;
-  text-align: center;
-  background-image: linear-gradient(#8add6d, #60b044);
-  font-size: 1.05em;
-  font-weight: bold;
-  vertical-align: middle;
-}
-
-.auth-form-footer {
-  font-size: 0.8em;
 }

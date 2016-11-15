@@ -1,0 +1,38 @@
+.row .col.s-fifth {
+  width: 20%;
+}
+
+.footer {
+  &.row {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  
+  padding-top: 9px;
+  .nav-change {
+    max-width: $nav-action-area;
+    margin: auto;
+    
+    color: $basic-gray;
+    .nav-img {
+      height: $navicon-dim;
+      width: $navicon-dim;
+      margin: auto;
+      svg {
+	height: 100%;
+      }
+    }
+    
+    .nav-title {
+      margin-top: 7px;
+      font-size: $navbar-deselected;
+    }
+    
+    &:hover {
+      color: $basic-orange;
+      .nav-title {
+	font-size: $navbar-selected;
+      }
+    }    
+  }
+}

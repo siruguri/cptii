@@ -1,0 +1,19 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.app-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-body * {
+  flex: 1 1 auto;
+}
+
+.body-text {
+  font-size: 28px;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}

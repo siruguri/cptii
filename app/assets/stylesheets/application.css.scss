@@ -1,7 +1,7 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
+@import 'materialize';
 @import 'variables';
 @import 'reset';
 @import 'custom';
-
+@import 'cptii_main';
+@import 'cptii_header';
+@import 'cptii_footer';
