@@ -1,5 +1,5 @@
 require 'test_helper'
-class MainController < ApplicationController
+class MainControllerTest < ActionController::TestCase
   test 'open page' do
     get :main
     assert_template :main

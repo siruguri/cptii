@@ -28,7 +28,7 @@
       font-size: $navbar-deselected;
     }
     
-    &:hover {
+    &:hover,&.selected {
       color: $basic-orange;
       .nav-title {
 	font-size: $navbar-selected;

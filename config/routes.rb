@@ -3,6 +3,10 @@ GoalGetter::Application.routes.draw do
   devise_for :users
   resources :users, path: 'profiles'
 
+  scope :taxonomy, controller: :taxonomy do
+    get :list_names
+  end  
+
   root to: 'main#main' # Change this to something else in your app.
 
   require 'sidekiq/web'

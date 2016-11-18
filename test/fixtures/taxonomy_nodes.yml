@@ -1,0 +1,9 @@
+nd_1:
+  node_name: node1
+  parent_id: -1
+nd_2:
+  node_name: node2
+  parent_id: -1
+nd_3:
+  node_name: node3
+  parent_id: -1  

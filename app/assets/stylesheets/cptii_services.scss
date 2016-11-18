@@ -1,0 +1,15 @@
+.taxonomy-list {
+  padding-top: 5px;
+  .col {
+    padding: 3px;
+    height: $taxonomy-cell-height;
+  }
+  .taxonomy-cell {
+    background-color: rgba(25,25,25,.3);
+    height: 100%;
+    
+    &purple {
+      background-color: $basic-purple;
+    }
+  }
+}

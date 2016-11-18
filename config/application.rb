@@ -23,7 +23,7 @@ module GoalGetter
     # config.time_zone = 'Central Time (US & Canada)'
 
     config.assets.quiet = true
-    config.active_record.raise_in_transactional_callbacks = true
+
     config.active_job.queue_adapter = :sidekiq
     config.middleware.insert(0, Rack::Deflater)
     config.autoload_paths += %W(#{config.root}/lib)

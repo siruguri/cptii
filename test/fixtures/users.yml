@@ -6,7 +6,6 @@
 
 DEFAULTS: &DEFAULTS
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
-  confirmed_at: <%= Time.now.utc %>
   
 user_1:
   email: user1@valid.com
