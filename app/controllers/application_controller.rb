@@ -13,6 +13,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+  def require_xhr
+    if !request.xhr? || !(params[:format] == 'json')
+      throw :abort
+    end
+  end
+  
   private
   def go_to_root(message)
     redirect_to root_path, :alert => message

@@ -1,0 +1,7 @@
+profile_student_1:
+  user: student_1
+  contact_details: <%= {}.to_json %>
+profile_couns_1:
+  user: counselor_1
+  contact_details: <%= {"first_name" => "counselor", "last_name" => 'the first'}.to_json %>
+  

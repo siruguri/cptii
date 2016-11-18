@@ -13,8 +13,8 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     @body_model.init_fetch()
             
   render: ->
-    @header = new GoalGetter.Views.HeaderView()
-    @header.title = 'Portfolio'
+    @header = new GoalGetter.Views.HeaderView
+      model: @body_model
 
     @body = new GoalGetter.Views.AppBodyView
       model: @body_model

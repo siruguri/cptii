@@ -30,10 +30,6 @@ gem 'rails-backbone'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'materialize-sass'
-
-# Needed for default layouts
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 gem 'underscore-rails'
 
 group :doc do

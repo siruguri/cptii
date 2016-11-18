@@ -1,0 +1,10 @@
+.counselor-name {
+  background-color: $basic-blue;
+  color: white;
+  height: 59px;
+  
+  .nametext {
+    font-size: $large-title;
+    padding-left: 17px;
+  }
+}
