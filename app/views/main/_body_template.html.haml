@@ -5,9 +5,12 @@
   .bottom-row
 
 %script#body_services_template{type: 'text/template'}
-  .row.taxonomy-list
+  .taxonomy-list
 
 %script#body_counselor_template{type: 'text/template'}
+  .floating-action.pointer.chat
+    %svg
+      %use{x: '19px', y: '19px', "xlink:href" => '#chat-action'}
   .row.counselor-name
     .col.s9.nametext
       <%- name %>

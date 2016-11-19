@@ -1,6 +1,6 @@
 RailsAdmin.config do |config|
   # Configure this
-  config.included_models = ["User", "Profile", "School", "CounselorAssignment"]
+  config.included_models = ["User", "Profile", "School", "CounselorAssignment", "TaxonomyNode"]
   
   ### Popular gems integration
 

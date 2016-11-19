@@ -4,8 +4,8 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     _.bindAll(@, 'render')
 
   change_nav: (args...) ->
-    @body.trigger 'switch_screen', args
-    @header.trigger 'switch_screen', args
+    @body_model.set_current_screen args[0]
+    @header.render_with_body()
     
   load_and_render: ->
     @body_model = new GoalGetter.Models.AppBodyModel()
@@ -16,13 +16,12 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     @header = new GoalGetter.Views.HeaderView
       model: @body_model
 
-    @body = new GoalGetter.Views.AppBodyView
-      model: @body_model
     @footer = new GoalGetter.Views.FooterView
       model: @body_model
     
     @listenTo @footer, 'footer:change_nav', @change_nav
     
-    @$el.append @header.render()
-    @$el.append @body.render()
+    view_self = @
+    @header.render_with_body().forEach (node_elt) ->
+      view_self.$el.append node_elt
     @$el.append @footer.render()

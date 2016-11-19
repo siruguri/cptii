@@ -14,11 +14,6 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
       when 3 then 'PortfolioView'
       when 4 then 'ContactsView'
     
-  switch_screen: (args) ->
-    target = args[0]
-    @model.set_current_screen target
-    @render()
-    
   render: ->
     # Hide all screens; show or build current one.
     @screens.forEach (view) ->
