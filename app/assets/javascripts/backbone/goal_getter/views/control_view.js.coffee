@@ -5,7 +5,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
 
   change_nav: (args...) ->
     @body_model.set_current_screen args[0]
-    @header.render_with_body()
+    @header.change_screens ['control', args[0]]
     
   load_and_render: ->
     @body_model = new GoalGetter.Models.AppBodyModel()
@@ -13,6 +13,9 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     @body_model.init_fetch()
             
   render: ->
+    # I think this will only ever happen once... when the app loads. Does
+    # that make sense?
+    
     @header = new GoalGetter.Views.HeaderView
       model: @body_model
 

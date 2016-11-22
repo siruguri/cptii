@@ -4,9 +4,8 @@ class ProfilesControllerTest < ActionController::TestCase
   def setup
     u = users(:student_1)
     sign_in u
-    p = u.profile
-    p.contact_details['school_id'] = schools(:school_1).id
-    p.save
+
+    jsonb_initializations!
   end
   
   test '#show' do

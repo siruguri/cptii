@@ -1,13 +1,12 @@
-GoalGetter.Views.CounselorView = Backbone.View.extend
+GoalGetter.Views.ChatView = Backbone.View.extend
   initialize: ->
     _.bindAll @, 'render'
 
   events:
-    'click .nametext': ->
-      @trigger 'navigation:change', 'navigation:change', 'counselor', 'chat'
-      
+    a: 1
+    
   render: ->
-    t_func = _.template $('#body_counselor_template').html()
+    t_func = _.template $('#body_chat_template').html()
 
     if @model.user_info != {}
       name = @model.user_info.counselor_name
