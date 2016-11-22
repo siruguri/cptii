@@ -3,7 +3,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
   initialize: ->
     _.bindAll @, 'render'
 
-    @screens = []
+    @screens = {}
     @listenTo @, 'switch_screen', @switch_screen
 
   resolve_to_class_name: (index) ->
@@ -22,16 +22,17 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     
   render: ->
     # Hide all screens; show or build current one.
-    @screens.forEach (view) ->
+    view_self = @
+    _.values(@screens).forEach (view) ->
       view.$el.hide()
 
-    curr_screen_index = @model.current_screen
-    if typeof @screens[curr_screen_index] == 'undefined'
-      @screens[curr_screen_index] = new GoalGetter.Views[@resolve_to_class_name(curr_screen_index)]
+    curr_screen_ref = @model.current_screen
+    if typeof @screens[curr_screen_ref] == 'undefined'
+      @screens[curr_screen_ref] = new GoalGetter.Views[@resolve_to_class_name(curr_screen_ref)]
         model: @model
-      @listenTo @screens[curr_screen_index], 'navigation:change', @pass_thru
-      @$el.append @screens[curr_screen_index].render()
+      @listenTo @screens[curr_screen_ref], 'navigation:change', @pass_thru
+      @$el.append @screens[curr_screen_ref].render()
 
-    @screens[curr_screen_index].$el.show()
+    @screens[curr_screen_ref].$el.show()
     
     @$el
