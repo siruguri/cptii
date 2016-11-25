@@ -10,8 +10,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       'chat' : '$counselor_name'
 
     @taxonomy_list = []
-    @user_info = {}
-    @counselor_name = '--fillin--'
+    @user_info =
+      counselor_name: null
 
     @directory_level =
       0: 0
@@ -32,30 +32,34 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       @directory_level[@current_screen] == 0
     else
       true
-        
+
+  counselor_name: ->
+    @user_info.counselor_name
+    
   header_title: ->
     if @texts[@current_screen][0] == '$'
       ref = @texts[@current_screen].slice(1)
-      @[ref]
+      @[ref].call()
     else
       @texts[@current_screen]
-      
-  loggedin_calls: ->
+
+  destroy_user_data: ->
+    @user_info.counselor_name = null
+    @trigger 'model:updated'
+    
+  check_login_and_fetch: ->
     # For now, let's get everything else later.
     model_self = @
-    $.get('/profile.json', (d, s, x) ->
-      if d.data.hasOwnProperty('user_info')
-        model_self.user_info = d.data.user_info
-        model_self.counselor_name = d.data.user_info.counselor_name
-    )
-    
+    if $('#login_token').data('value') == 42
+      $.get('/profile.json', (d, s, x) ->
+        if d.data.hasOwnProperty('user_info')
+          model_self.user_info = d.data.user_info
+      )
+
+  # entry point from views/control_view
   init_fetch: ->
     model_self = @
-    $.post('/users/sign_in',
-      {user: {email: 'me@me.com', password: 'helloworld'}},
-      (d, s, x) ->
-        model_self.loggedin_calls()
-    )
+    @check_login_and_fetch()
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
       model_self.taxonomy_list = d.data.taxonomy_list

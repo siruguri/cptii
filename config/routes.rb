@@ -1,6 +1,6 @@
 GoalGetter::Application.routes.draw do
   # Logins and Profiles
-  devise_for :users
+  devise_for :users, controllers: {sessions: 'users/sessions'}
   devise_for :admins
 
   resource :profile, only: [:show] do

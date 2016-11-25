@@ -6,9 +6,10 @@ class ProfilesController < ApplicationController
   end
 
   def show
+    u = current_user
     d =
-      if current_user
-        ({data: {user_info: {counselor_name: current_user.counselor.profile.full_name}}})
+      if u
+        ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
       else
         ({data: {}})
       end

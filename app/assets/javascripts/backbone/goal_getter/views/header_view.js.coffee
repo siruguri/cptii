@@ -19,7 +19,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     dest = args[0][1]
     if dest == 'up'
       @model.current_screen = @model.up()
-    else      
+    else
       @model.current_screen = dest
     @render_with_body()
     

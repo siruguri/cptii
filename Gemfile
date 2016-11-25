@@ -79,4 +79,5 @@ group :test do
   gem 'minitest-spec-rails'
   gem 'minitest-rails-capybara'
   gem 'capybara-webkit'
+  gem 'poltergeist'
 end

@@ -1,6 +1,7 @@
 GoalGetter.Views.CounselorView = Backbone.View.extend
   initialize: ->
     _.bindAll @, 'render'
+    @listenTo @model, 'model:updated', @render
 
   events:
     'click .nametext': ->
@@ -8,13 +9,14 @@ GoalGetter.Views.CounselorView = Backbone.View.extend
       
   render: ->
     t_func = _.template $('#body_counselor_template').html()
-
-    if @model.user_info != {}
-      name = @model.user_info.counselor_name
-    else
-      name = 'not logged in'
-      
-    @$el.html t_func({name: name})
-    view_self = @
+    name = @model.user_info.counselor_name
     
+    @$el.html t_func({name: name})
+    if name == null
+      @$el.find('#logged-out-screen').show()
+      @$el.find('#logged-in-screen').hide()
+    else
+      @$el.find('#logged-in-screen').show()
+      @$el.find('#logged-out-screen').hide()
+
     @$el

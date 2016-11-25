@@ -1,6 +1,7 @@
 = render "header_svgs"
 = render "body_svgs"
 = render 'nav_svgs'
+#login_token{style: 'display: none;', "data-value" => @logged_in}
 .main-app
 = render 'header_template'
 = render 'body_template'
