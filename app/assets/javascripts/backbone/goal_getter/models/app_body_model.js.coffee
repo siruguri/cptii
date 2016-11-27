@@ -26,8 +26,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @up_level =
       'chat': 2
       'add-work' : 3
-      
+    @header_config =
+      'add-work' :
+        has_done: true
+        
   # Directory navigation helpers
+  has_done: ->
+    @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].has_done == true
+    
   up: ->
     # Move up from the current screen
     @up_level[@current_screen]
@@ -36,7 +42,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       @directory_level[@current_screen] == 0
     else
       true
+  # /Directory navigation helpers
 
+  # Shim to take any arbitrary form on the page and pass its data to the server
+  # Returns a promise
+  process_form_data: (code, data_jq_array) ->
+    promise = (new GoalGetter.Helpers.FormProcessor(code, data_jq_array)).run().promise
+    return promise
+  
   counselor_name: ->
     @user_info.counselor_name
     

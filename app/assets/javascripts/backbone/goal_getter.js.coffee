@@ -3,6 +3,7 @@
 #= require_tree ./goal_getter/views
 
 window.GoalGetter =
+  Helpers: {}
   Models: {}
   Collections: {}
   Routers: {}

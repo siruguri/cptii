@@ -3,7 +3,7 @@ GoalGetter::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'users/sessions'}
   devise_for :admins
 
-  resource :profile, only: [:show] do
+  resource :profile, only: [:show, :update] do
     get :index, path: '/all'
   end
   

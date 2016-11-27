@@ -21,7 +21,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
 
     @footer = new GoalGetter.Views.FooterView
       model: @body_model
-    
+
     @listenTo @footer, 'footer:change_nav', @change_nav
     
     view_self = @

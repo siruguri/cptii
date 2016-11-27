@@ -5,6 +5,17 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
 
     @screens = {}
     @listenTo @, 'switch_screen', @switch_screen
+    @listenTo @, 'header:submit-body-form', @render_and_close
+
+  close_and_up: (data) ->
+    a = 1
+  show_fail: (errorThrown) ->
+    a = 1
+  render_and_close: ->
+    # POST an update to the backend; trigger server response
+    if @$el.find('.input-form').length == 1
+      code = @$el.find('.input-form').data('server-code')
+      @model.process_form_data(code, @$el.find('.input-form input')).then(@close_and_up).catch(@show_fail)
 
   resolve_to_class_name: (index) ->
     switch index

@@ -11,7 +11,7 @@
   Chat
 
 %script#body_add-work_template{type: 'text/template'}
-  .portfolio-card.row
+  .portfolio-card.row.input-form{"data-server-code" => 'add-work'}
     .card-entry.tight.col.s-ninety
       .input-field      
         %input#add-work-title{type: 'text'}
@@ -29,10 +29,10 @@
         <%- username %>
   .portfolio-card.row
     .title.col.s12
-      Work Experience
+      = t('body.portfolio.work_experience')
     .card-entry.col.s-ninety.pointer#add-work
       .light-text
-        Add Work Experience
+        = t('body.portfolio.add_work_experience')
     .card-entry.col.s-ninety
           
   .btn.pointer#sign-out

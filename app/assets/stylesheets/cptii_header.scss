@@ -23,5 +23,12 @@
 
   .header-actions {
     float: right;
+    display: none;
+    .done {
+      margin: 20px 46px 0 0;
+      text-transform: uppercase;
+      color: $white;
+      font-size: $header-actions;
+    }
   }
 }

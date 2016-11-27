@@ -11,7 +11,10 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
   events:
     'click .nav-back': ->
       @change_screens ['header', 'up']
-      
+
+    'click #submit-body-form': ->
+      @body_view.trigger 'header:submit-body-form'
+            
   change_screens: (args...) ->
     # the usual order of arguments will be the requesting view name, and a target view
     @model.previous_screen = @model.current_screen
@@ -44,4 +47,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('.nav-back').css('display', 'inline-block')
     else
       @$el.find('.nav-back').hide()
+
+    if @model.has_done()
+      @$el.find('.header-actions').show()
+      
     @$el

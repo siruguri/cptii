@@ -9,7 +9,14 @@ class ProfilesControllerTest < ActionController::TestCase
   end
   
   test '#show' do
-    get :show, xhr: :true, params: {format: 'json'}
+    get :show, xhr: true, params: {format: 'json'}
     assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']
-  end  
+  end
+
+  test '#update' do
+    assert_difference('ProfileEntry.count') do
+      put :update, xhr: true, params: {format: 'json',
+                                       payload: {code: 'add-work', data: ['title', 'workplace']}}
+    end
+  end
 end
