@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
     u = current_user
     d =
       if u
-        ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
+        ({data: {user_info: {counselor_name: u.counselor.profile.full_name, user_name: u.profile.full_name}}})
       else
         ({data: {}})
       end

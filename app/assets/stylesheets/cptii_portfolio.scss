@@ -1,0 +1,19 @@
+.portfolio {
+  background-color: $light-gray;
+  width: 100%;
+
+  .portfolio-name {
+    min-height: 115px;
+    background: $white;
+    text-align: center;
+    padding-top: 34px;
+    .username {
+      font-size: $portfolio-name-text;
+      font-weight: bold;
+    }
+
+    margin-bottom: 8px;
+    box-shadow: 0 2px 2px $shadow-rgba;
+  }
+}
+

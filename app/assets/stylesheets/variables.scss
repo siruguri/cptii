@@ -1,12 +1,18 @@
 /* Colors */
 
+$opaque-black: rgba(0, 0, 0, 0.38);
 $basic-gray: #B0BEC5;
+$light-gray: #F2F2F2;
+$dark-gray: #4A4A4A;
 $arrow-gray: #0a89a7;
 $basic-orange: #F94730;
 $basic-blue: #00b9e6;
 $basic-purple: #5e35b1;
 
 $white: #FFF;
+
+$shadow-rgba: rgba(0, 0, 0, 0.24);
+$light-shadow-rgba: rgba(0, 0, 0, 0.12);
 
 /* Hard-coded Dimensions */
 $navicon-dim: 18px;
@@ -22,11 +28,12 @@ $navbar-deselected: 12px;
 $navbar-selected: 14px;
 $large-title: 34px;
 $top-navbar-text: 20px;
+$portfolio-name-text: 20px;
+$body-text: 16px;
 
 /*
 Nav bar 20px medium
 Subheadings 16px medium
-Body 16px regular
 Body small 14px regular
 Buttons 14px medium all caps
 Hint text 12px regular

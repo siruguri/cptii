@@ -1,9 +1,12 @@
 GoalGetter.Views.PortfolioView = Backbone.View.extend
-  className: 'portfolio row'
+  className: 'portfolio'
   initialize: ->
     _.bindAll @, 'render'
 
   events:
+    'click #add-work': ->
+      @trigger 'navigation:change', 'navigation:change', 'portfolio', 'add-work'
+      
     'click #sign-out': ->
       view_self = @
       $.ajax(
@@ -16,6 +19,6 @@ GoalGetter.Views.PortfolioView = Backbone.View.extend
       
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
-    @$el.html t_func({})
+    @$el.html t_func({username: @model.user_info.user_name})
 
     @$el

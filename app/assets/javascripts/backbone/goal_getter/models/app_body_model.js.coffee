@@ -8,6 +8,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       3: 'Portfolio',
       4: 'Contact',
       'chat' : '$counselor_name'
+      'add-work' : 'Add job experience'
 
     @taxonomy_list = []
     @user_info =
@@ -20,8 +21,11 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       3: 0
       4: 0
       'chat': 1
+      'add-work' : 1
+            
     @up_level =
       'chat': 2
+      'add-work' : 3
       
   # Directory navigation helpers
   up: ->

@@ -14,6 +14,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
       when 3 then 'PortfolioView'
       when 4 then 'ContactsView'
       when 'chat' then 'ChatView'
+      when 'add-work' then 'AddWorkView'
       
   pass_thru: (evt_name, args...) ->
     # Pass thru event arguments up to control app; it assumes that the original trigger contained the

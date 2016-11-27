@@ -33,6 +33,30 @@ body {
       color: white;
     }
   }
+
+  .portfolio-card {
+    margin-top: 34px;
+    .title {
+      font-size: $body-text;
+      color: $dark-gray;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .card-entry {
+      box-shadow: 0 2px 2px $shadow-rgba, 0 2px 2px $light-shadow-rgba;
+      &.content {
+	min-height: 112px;
+      }
+      
+      background-color: $white;
+      padding: 16px 0 12px 37px;
+      &.tight {
+	padding: 16px 16px 0 16px;
+      }
+      margin-bottom: 8px;
+    }
+  }
 }
 
 .body-text {

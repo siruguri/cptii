@@ -9,8 +9,32 @@
 
 %script#body_chat_template{type: 'text/template'}
   Chat
-  
+
+%script#body_add-work_template{type: 'text/template'}
+  .portfolio-card.row
+    .card-entry.tight.col.s-ninety
+      .input-field      
+        %input#add-work-title{type: 'text'}
+        %label{for: 'add-work-title'}
+          Job Title
+      .input-field
+        %input#add-work-workplace{type: 'text'}
+        %label{for: 'add-work-workplace'}
+          Workplace
+
 %script#body_portfolio_template{type: 'text/template'}
+  .portfolio-name.row
+    .col.s12
+      .username
+        <%- username %>
+  .portfolio-card.row
+    .title.col.s12
+      Work Experience
+    .card-entry.col.s-ninety.pointer#add-work
+      .light-text
+        Add Work Experience
+    .card-entry.col.s-ninety
+          
   .btn.pointer#sign-out
     Sign Out
     
