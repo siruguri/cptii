@@ -1,4 +1,4 @@
-GoalGetter.Views.AddWorkView = Backbone.View.extend
+GoalGetter.Views.AddWorkView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
 

@@ -1,4 +1,4 @@
-GoalGetter.Views.PortfolioView = Backbone.View.extend
+GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   className: 'portfolio'
   initialize: ->
     _.bindAll @, 'render'

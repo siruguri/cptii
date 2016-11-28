@@ -1,5 +1,6 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
+  has_many :profile_entries, dependent: :destroy
 
   def school
     School.find_by_id contact_details["school_id"]

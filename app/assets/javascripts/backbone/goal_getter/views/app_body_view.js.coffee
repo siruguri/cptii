@@ -40,10 +40,16 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
 
     curr_screen_ref = @model.current_screen
     if typeof @screens[curr_screen_ref] == 'undefined'
+      # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
+      @model.logged_in = ($('#login_token').data('value') == 42)
+      
+      if curr_screen_ref != 0 and @model.logged_in and !@model.screen_data_ready[curr_screen_ref]
+        @model.fetch_screen curr_screen_ref
+        
       @screens[curr_screen_ref] = new GoalGetter.Views[@resolve_to_class_name(curr_screen_ref)]
         model: @model
       @listenTo @screens[curr_screen_ref], 'navigation:change', @pass_thru
-      @$el.append @screens[curr_screen_ref].render()
+      @$el.append @screens[curr_screen_ref].wait_and_render(curr_screen_ref)
 
     @screens[curr_screen_ref].$el.show()
     

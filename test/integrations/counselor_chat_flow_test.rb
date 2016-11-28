@@ -10,10 +10,15 @@ class CounselorChatFlowTest < Capybara::Rails::TestCase
     visit "/"
   end
 
-  test 'can get to chat screen' do
-    sleep 1
-    page.all('.footer .nav-change')[2].click
-    assert page.has_content?('counselor the first')
+  describe 'can get to chat screen' do
+    it 'works normally' do
+      sleep 1
+      page.all('.footer .nav-change')[2].click
+      assert page.has_content?('Rendering')
+      
+      sleep 1
+      assert page.has_content?('counselor the first')      
+    end
   end
   
   def teardown

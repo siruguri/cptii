@@ -1,5 +1,14 @@
 GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   initialize: ->
+    @logged_in = false
+    @screen_data_ready =
+      0: true
+      1: false
+      2: false
+      3: false
+      4: false
+      'add-work': true
+      
     @current_screen = 0
     @texts =
       0: 'Services',
@@ -64,21 +73,21 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @user_info.counselor_name = null
     @trigger 'model:updated'
     
-  check_login_and_fetch: ->
-    # For now, let's get everything else later.
+  fetch_screen: (screen_number) ->
+    # Get everything else on demand.
     model_self = @
-    if $('#login_token').data('value') == 42
-      $.get('/profile.json', (d, s, x) ->
-        if d.data.hasOwnProperty('user_info')
-          model_self.user_info = d.data.user_info
-      )
+    $.get('/profile.json?screen_number=' + screen_number, (d, s, x) ->
+      if d.data.hasOwnProperty('user_info')
+        model_self.screen_data_ready[screen_number] = true
+        model_self.user_info = d.data.user_info
+    )
 
   # entry point from views/control_view
   init_fetch: ->
     model_self = @
-    @check_login_and_fetch()
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
+      model_self.screen_data_ready[0] = true
       model_self.taxonomy_list = d.data.taxonomy_list
       model_self.trigger 'body_model:ready'
     )

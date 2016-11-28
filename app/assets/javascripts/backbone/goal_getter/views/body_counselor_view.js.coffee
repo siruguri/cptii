@@ -1,4 +1,4 @@
-GoalGetter.Views.CounselorView = Backbone.View.extend
+GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @listenTo @model, 'model:updated', @render

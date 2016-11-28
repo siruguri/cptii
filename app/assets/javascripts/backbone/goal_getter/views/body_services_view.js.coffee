@@ -1,4 +1,4 @@
-GoalGetter.Views.ServicesView = Backbone.View.extend
+GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
   className: 'services row'
   initialize: ->
     _.bindAll @, 'render'

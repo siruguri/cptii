@@ -8,9 +8,17 @@ class ProfilesControllerTest < ActionController::TestCase
     jsonb_initializations!
   end
   
-  test '#show' do
-    get :show, xhr: true, params: {format: 'json'}
-    assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']
+  describe '#show' do
+    it 'works for counselor screen' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 2}
+      assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']
+    end
+
+    it 'works for portf screen' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 3}
+      assert_equal 1, JSON.parse(response.body)['data']['user_info']['work_experience'].size
+      assert_equal 2, JSON.parse(response.body)['data']['user_info']['work_experience'][0].keys.size
+    end
   end
 
   test '#update' do
