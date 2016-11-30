@@ -42,6 +42,7 @@ class ProfilesController < ApplicationController
           work_ex_list = u.profile.profile_entries.to_a.select { |e| e.entry_details.keys.include?("work_title") }.
                          map { |entry| {work_title: entry.entry_details['work_title'],
                                         work_workplace: entry.entry_details['work_workplace']}}
+          Rails.logger.debug "Returning #{work_ex_list.size} jobs"
           ({data: {user_info: {work_experience: work_ex_list, user_name: u.profile.full_name}}})
         end
       else

@@ -15,7 +15,7 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
       context.load_event = setInterval context.wait_and_render, 200, screen_number, context
       if first_time
         d = $('<div>').addClass('special').text('Rendering...')
-        context.$el.append d 
+        context.$el.append d
     else
       context.render()
       

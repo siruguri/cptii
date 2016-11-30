@@ -2,13 +2,16 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
   className: 'app-body'
   initialize: ->
     _.bindAll @, 'render'
-
+    _.bindAll @, 'close_and_up'
+    _.bindAll @, 'show_fail'
+    
     @screens = {}
     @listenTo @, 'switch_screen', @switch_screen
     @listenTo @, 'header:submit-body-form', @render_and_close
 
   close_and_up: (data) ->
-    a = 1
+    @trigger 'navigation:change', ['add-work', 'up'], {refresh_screen: [3]}
+    
   show_fail: (errorThrown) ->
     a = 1
   render_and_close: ->
@@ -32,6 +35,11 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     # event name itself in the passed arguments ...
     @trigger evt_name, args
     
+  refresh_screen: (key) ->
+    @model.screen_data_ready[key] = false
+    @model.get_screen_data(key) if key != 0
+    @screens[key].wait_and_render(key)
+        
   render: ->
     # Hide all screens; show or build current one.
     view_self = @
@@ -42,9 +50,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     if typeof @screens[curr_screen_ref] == 'undefined'
       # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
       @model.logged_in = ($('#login_token').data('value') == 42)
-      
-      if curr_screen_ref != 0 and @model.logged_in and !@model.screen_data_ready[curr_screen_ref]
-        @model.fetch_screen curr_screen_ref
+      @model.get_screen_data curr_screen_ref if curr_screen_ref != 0
         
       @screens[curr_screen_ref] = new GoalGetter.Views[@resolve_to_class_name(curr_screen_ref)]
         model: @model

@@ -39,6 +39,16 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       'add-work' :
         has_done: true
         
+  # entry point from views/control_view
+  init_fetch: ->
+    model_self = @
+    
+    $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
+      model_self.screen_data_ready[0] = true
+      model_self.taxonomy_list = d.data.taxonomy_list
+      model_self.trigger 'body_model:ready'
+    )
+
   # Directory navigation helpers
   has_done: ->
     @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].has_done == true
@@ -53,12 +63,29 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       true
   # /Directory navigation helpers
 
+  # Sync
+  get_screen_data: (curr_screen_ref) ->
+    if @logged_in and !@screen_data_ready[curr_screen_ref]
+      @fetch_screen curr_screen_ref
+
   # Shim to take any arbitrary form on the page and pass its data to the server
   # Returns a promise
   process_form_data: (code, data_jq_array) ->
     promise = (new GoalGetter.Helpers.FormProcessor(code, data_jq_array)).run().promise
     return promise
+
+  fetch_screen: (screen_number) ->
+    # Get everything else on demand.
+    model_self = @
+    $.get('/profile.json?screen_number=' + screen_number, (d, s, x) ->
+      if d.data.hasOwnProperty('user_info')
+        model_self.screen_data_ready[screen_number] = true
+        model_self.user_info = d.data.user_info
+    )
+
+  # /Sync
   
+  # Getters
   counselor_name: ->
     @user_info.counselor_name
     
@@ -69,31 +96,16 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     else
       @texts[@current_screen]
 
+  display_data: ->
+    {text:  @texts[@current_screen]}
+  # /Getters
+
+  # Setters
   destroy_user_data: ->
     @user_info.counselor_name = null
     @trigger 'model:updated'
-    
-  fetch_screen: (screen_number) ->
-    # Get everything else on demand.
-    model_self = @
-    $.get('/profile.json?screen_number=' + screen_number, (d, s, x) ->
-      if d.data.hasOwnProperty('user_info')
-        model_self.screen_data_ready[screen_number] = true
-        model_self.user_info = d.data.user_info
-    )
-
-  # entry point from views/control_view
-  init_fetch: ->
-    model_self = @
-    
-    $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
-      model_self.screen_data_ready[0] = true
-      model_self.taxonomy_list = d.data.taxonomy_list
-      model_self.trigger 'body_model:ready'
-    )
 
   set_current_screen: (target) ->
     @current_screen = target
-  
-  display_data: ->
-    {text:  @texts[@current_screen]}
+  # /Setters
+    

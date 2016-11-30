@@ -2,6 +2,23 @@
   background-color: $light-gray;
   width: 100%;
 
+  .card-entry {
+    .work-title {
+      font-size: $body-text;
+      line-height: $tall-height;
+    }
+    .work-workplace {
+      font-size: $portfolio-workplace-text;
+      line-height: $normal-height;
+      margin-bottom: 3px;
+    }
+    .work-worktime {
+      color: $opaque-black;
+      line-height: $normal-height;
+      font-size: $body-text;
+    }
+  }
+  
   .portfolio-name {
     min-height: 115px;
     background: $white;
