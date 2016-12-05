@@ -1,0 +1,49 @@
+= render 'portfolio_category'
+%script#body_add-work_template{type: 'text/template'}
+  .portfolio-card.row.input-form{"data-server-code" => 'add-work'}
+    .card-entry.tight.col.s-ninety
+      .input-field      
+        %input#add-work-title{type: 'text'}
+        %label{for: 'add-work-title'}
+          Job Title
+      .input-field
+        %input#add-work-workplace{type: 'text'}
+        %label{for: 'add-work-workplace'}
+          Workplace
+
+%script#body_add-achievement_template{type: 'text/template'}
+  .portfolio-card.row.input-form{"data-server-code" => 'add-an-achievement'}
+    .card-entry.tight.col.s-ninety
+      .input-field      
+        %input#add-achievement{type: 'text'}
+        %label{for: 'add-achievement'}
+          What did you achieve?
+
+%script#body_portfolio_work_experience{type: 'text/template'}
+  .card-entry.col.s-ninety.pointer
+    .work-title
+      <%- title %>
+    .work-workplace
+      <%- workplace %>
+    .work-worktime
+      11/01/16 - 12/30/16
+        
+%script#body_portfolio_template_loggedout{type: 'text/template'}
+  #logged-out-screen
+    = link_to 'Sign In', new_user_session_path
+    
+%script#body_portfolio_template{type: 'text/template'}
+  .portfolio-name.row
+    .col.s12
+      .username
+        <%- username %>
+  .portfolio-card.row#workex
+    .title.col.s12
+      = t('body.portfolio.work_experience')
+    .card-entry.col.s-ninety.pointer.add-card.waves-effect.waves-indigo.lighten-5{"data-card-type" => 'work-experience'}
+      .light-text
+        = t('body.portfolio.add_work_experience')
+  .row.signout-row
+    .col.s12.btn.pointer#sign-out
+      Sign Out
+

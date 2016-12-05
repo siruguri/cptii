@@ -7,17 +7,25 @@ class GoalGetter.Helpers.FormProcessor
     data = _.map(@node_array, (node) ->
       $(node).val()
     )
-      
+
+    all_filled = _.filter(data, (item) ->
+      item.trim().length > 0
+    )
+    
     @promise = new Promise (done, fail) ->
-      $.ajax
-        url: '/profile.json',
-        method: 'put',
-        data:
-          payload:
-            code: code
-            data: data
-        success: (d, s, x) ->
-          done(d)
-        error: (x, s, e) ->
-          fail(e)
+      if all_filled.length == data.length
+        $.ajax
+          url: '/profile.json',
+          method: 'put',
+          data:
+            payload:
+              code: code
+              data: data
+          success: (d, s, x) ->
+            done(d)
+          error: (x, s, e) ->
+            fail(e)
+      else
+        done([])
+        
     @

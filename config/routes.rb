@@ -9,7 +9,6 @@ GoalGetter::Application.routes.draw do
   
   scope :taxonomy, controller: :taxonomy do
     get :list_names
-    get :test_signin
   end  
 
   root to: 'main#main' # Change this to something else in your app.

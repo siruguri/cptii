@@ -4,6 +4,7 @@ class TaxonomyControllerTest < ActionController::TestCase
     it 'works with json' do
       get :list_names, xhr: true, params: ({format: 'json', level: 1})
       assert_equal TaxonomyNode.count, JSON.parse(response.body)['data']['taxonomy_list'].size
+      assert_equal PortfolioCategory.count, JSON.parse(response.body)['data']['portfolio_categories'].size
     end
 
     it 'errors without json' do

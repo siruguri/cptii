@@ -10,7 +10,15 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     @listenTo @, 'header:submit-body-form', @render_and_close
 
   close_and_up: (data) ->
-    @trigger 'navigation:change', ['add-work', 'up'], {refresh_screen: [3]}
+    # data will be an empty array if the form wasn't filled in: see models/base/form_processor
+    # This call will have to be dynamic based on which form is closing and upping.
+
+    # When going up from a form screen, it should be emptied out
+    if @model.header_config['add-work-experience']['has_done'] == true
+      @screens['add-work-experience'].$el.remove()
+      delete @screens['add-work-experience']
+
+    @trigger 'navigation:change', ['add-work-experience', 'up'], {refresh_screen: [3]}
     
   show_fail: (errorThrown) ->
     a = 1
@@ -20,16 +28,6 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
       code = @$el.find('.input-form').data('server-code')
       @model.process_form_data(code, @$el.find('.input-form input')).then(@close_and_up).catch(@show_fail)
 
-  resolve_to_class_name: (index) ->
-    switch index
-      when 0 then 'ServicesView'
-      when 1 then 'GuidesView'
-      when 2 then 'CounselorView'
-      when 3 then 'PortfolioView'
-      when 4 then 'ContactsView'
-      when 'chat' then 'ChatView'
-      when 'add-work' then 'AddWorkView'
-      
   pass_thru: (evt_name, args...) ->
     # Pass thru event arguments up to control app; it assumes that the original trigger contained the
     # event name itself in the passed arguments ...
@@ -51,8 +49,9 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
       # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
       @model.logged_in = ($('#login_token').data('value') == 42)
       @model.get_screen_data curr_screen_ref if curr_screen_ref != 0
-        
-      @screens[curr_screen_ref] = new GoalGetter.Views[@resolve_to_class_name(curr_screen_ref)]
+
+      klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name curr_screen_ref
+      @screens[curr_screen_ref] = new GoalGetter.Views[klass]
         model: @model
       @listenTo @screens[curr_screen_ref], 'navigation:change', @pass_thru
       @$el.append @screens[curr_screen_ref].wait_and_render(curr_screen_ref)

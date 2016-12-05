@@ -10,42 +10,8 @@
 %script#body_chat_template{type: 'text/template'}
   Chat
 
-%script#body_add-work_template{type: 'text/template'}
-  .portfolio-card.row.input-form{"data-server-code" => 'add-work'}
-    .card-entry.tight.col.s-ninety
-      .input-field      
-        %input#add-work-title{type: 'text'}
-        %label{for: 'add-work-title'}
-          Job Title
-      .input-field
-        %input#add-work-workplace{type: 'text'}
-        %label{for: 'add-work-workplace'}
-          Workplace
+= render 'body_portfolio_template'
 
-%script#body_portfolio_template{type: 'text/template'}
-  .portfolio-name.row
-    .col.s12
-      .username
-        <%- username %>
-  .portfolio-card.row
-    .title.col.s12
-      = t('body.portfolio.work_experience')
-    .card-entry.col.s-ninety.pointer#add-work.waves-effect.waves-indigo.lighten-5
-      .light-text
-        = t('body.portfolio.add_work_experience')
-  .row 
-    .col.s12.btn.pointer#sign-out
-      Sign Out
-
-%script#body_portfolio_entry{type: 'text/template'}
-  .card-entry.col.s-ninety.pointer
-    .work-title
-      <%- title %>
-    .work-workplace
-      <%- workplace %>
-    .work-worktime
-      11/01/16 - 12/30/16
-        
 %script#body_counselor_template{type: 'text/template'}
   #logged-out-screen
     = link_to 'Sign In', new_user_session_path

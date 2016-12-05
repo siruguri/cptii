@@ -24,11 +24,10 @@ end
 a.save
 
 u = User.find_by_email 'me@me.com'
-unless u.profile
-  p = Profile.new user: u
-  p.profile_type = 'student'
-  p.save
-end
+p = u.profile || Profile.new(user: u)
+p.contact_details = {last_name: 'Roberts', first_name: 'Ora'}
+p.profile_type = 'student'
+p.save
 
 c_u = User.find_by_email 'counselor@school.com'
 unless c_u.profile

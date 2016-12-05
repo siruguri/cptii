@@ -1,44 +1,12 @@
 GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   initialize: ->
     @logged_in = false
-    @screen_data_ready =
-      0: true
-      1: false
-      2: false
-      3: false
-      4: false
-      'add-work': true
-      
     @current_screen = 0
-    @texts =
-      0: 'Services',
-      1: 'Guides',
-      2: 'Counselor'
-      3: 'Portfolio',
-      4: 'Contact',
-      'chat' : '$counselor_name'
-      'add-work' : 'Add job experience'
-
     @taxonomy_list = []
     @user_info =
       counselor_name: null
-
-    @directory_level =
-      0: 0
-      1: 0
-      2: 0
-      3: 0
-      4: 0
-      'chat': 1
-      'add-work' : 1
-            
-    @up_level =
-      'chat': 2
-      'add-work' : 3
-    @header_config =
-      'add-work' :
-        has_done: true
-        
+    GoalGetter.Helpers.ModelInitializer.initialize_model @
+    
   # entry point from views/control_view
   init_fetch: ->
     model_self = @
@@ -46,6 +14,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
       model_self.screen_data_ready[0] = true
       model_self.taxonomy_list = d.data.taxonomy_list
+      model_self.portfolio_categories = d.data.portfolio_categories
+      
       model_self.trigger 'body_model:ready'
     )
 
@@ -65,7 +35,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
   # Sync
   get_screen_data: (curr_screen_ref) ->
-    if @logged_in and !@screen_data_ready[curr_screen_ref]
+    if (!@requires_login[curr_screen_ref] or @logged_in) and !@screen_data_ready[curr_screen_ref]
       @fetch_screen curr_screen_ref
 
   # Shim to take any arbitrary form on the page and pass its data to the server
