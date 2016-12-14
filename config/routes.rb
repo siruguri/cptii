@@ -3,6 +3,7 @@ GoalGetter::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'users/sessions'}
   devise_for :admins
 
+  resources :chat_records, only: [:create, :index]
   resource :profile, only: [:show, :update] do
     get :index, path: '/all'
   end

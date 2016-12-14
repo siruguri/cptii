@@ -13,8 +13,11 @@ class CounselorChatFlowTest < Capybara::Rails::TestCase
   describe 'can get to chat screen' do
     it 'works normally' do
       sleep 1
+
+      ENV['IS_SLOW'] = '1'
       page.all('.footer .nav-change')[2].click
       assert page.has_content?('Rendering')
+      ENV['IS_SLOW'] = '0'
       
       sleep 1
       assert page.has_content?('counselor the first')      

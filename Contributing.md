@@ -19,6 +19,10 @@ These are notes to help folks contribute to this code base.
 
 * Attemps to be XHR only, though it doesn't use Rails 5 API which it probably should.
 
+## Schema
+
+* User accounts have Profiles, which store all the relevant information about a user. E.g., the `profile_type` column in `profiles` decides if the user is a student or counselor.
+
 # Database
 
 * You can seed the database with some dummy values after migration:

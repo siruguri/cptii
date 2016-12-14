@@ -1,7 +1,20 @@
 profile_student_1:
   user: student_1
+  profile_type: student
   contact_details: <%= {}.to_json %>
+
+profile_noschool_student:
+  user: noschool_student
+  profile_type: student
+  contact_details: <%= {}.to_json %>
+  
+profile_uncounseled_student:
+  user: uncounseled_student
+  profile_type: student
+  contact_details: <%= {}.to_json %>
+
 profile_couns_1:
   user: counselor_1
+  profile_type: counselor
   contact_details: <%= {"first_name" => "counselor", "last_name" => 'the first'}.to_json %>
   

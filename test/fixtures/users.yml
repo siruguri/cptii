@@ -10,6 +10,14 @@ DEFAULTS: &DEFAULTS
 student_1:
   email: user1@valid.com
   <<: *DEFAULTS
+  
+noschool_student:
+  email: noschool@valid.com
+  <<: *DEFAULTS
+  
+uncounseled_student:
+  email: no_counselor@valid.com
+  <<: *DEFAULTS
 
 counselor_1:
   email: user2@valid.com

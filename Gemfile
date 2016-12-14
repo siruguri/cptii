@@ -41,6 +41,7 @@ gem 'devise'
 gem 'haml-rails'
 gem 'sidekiq'
 
+gem 'redis-namespace'
 # Required for sidekiq monitoring
 gem 'sinatra', git: 'https://github.com/sinatra/sinatra.git'
 

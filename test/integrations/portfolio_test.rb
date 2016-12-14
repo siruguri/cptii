@@ -8,7 +8,6 @@ class PortfolioTest < Capybara::Rails::TestCase
     login_as users(:student_1), scope: :user, run_callbacks: false
     jsonb_initializations!
 
-    ENV['IS_SLOW'] = '0'
     visit "/"
 
     # needs this fo sho

@@ -10,18 +10,26 @@ class ProfilesControllerTest < ActionController::TestCase
   
   describe '#show' do
     it 'works for counselor screen' do
-      get :show, xhr: true, params: {format: 'json', screen_number: 2}
+      get :show, xhr: true, params: {format: 'json', screen_number: '2'}
       assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']
     end
 
     it 'works for portfolio screen' do
-      get :show, xhr: true, params: {format: 'json', screen_number: 3}
+      get :show, xhr: true, params: {format: 'json', screen_number: '3'}
       b = JSON.parse response.body
       
       # see fixtures for these size numbers
       assert_equal 1, b['data']['user_info']['work_experience'].size
       assert_equal 2, b['data']['user_info']['work_experience'][0].keys.size
       assert_equal 2, b['data']['user_info']['achievements'].size
+    end
+
+    it 'works for chat screen' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 'chat'}
+      d = JSON.parse(response.body)['data']['user_info']
+      # See fixtures
+      assert_equal 3, d['rec_count']
+      assert_match /now/, d['recs'].last['message']
     end
   end
 

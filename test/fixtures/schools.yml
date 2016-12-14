@@ -1,2 +1,5 @@
 school_1:
   name: school 1
+
+nocounselor_school:
+  name: has no counselor

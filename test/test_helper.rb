@@ -17,6 +17,10 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   include FixtureFiles
   fixtures :all
+
+  class << self
+    attr_accessor :jsonb_initialized
+  end
 end
 
 class ActionController::TestCase

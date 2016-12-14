@@ -1,11 +1,16 @@
 GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   initialize: ->
     @logged_in = false
-    @current_screen = 0
+    @current_screen = '0'
     @taxonomy_list = []
     @user_info =
       counselor_name: null
     GoalGetter.Helpers.ModelInitializer.initialize_model @
+
+    # Getters need to be bound to this object
+    _.bindAll @, 'header_title'
+    _.bindAll @, 'display_data'
+    _.bindAll @, 'counselor_name'
     
   # entry point from views/control_view
   init_fetch: ->

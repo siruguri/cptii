@@ -1,8 +1,8 @@
 GoalGetter.Views.HeaderView = Backbone.View.extend
   className: 'header'
   initialize: ->
-    _.bindAll(@, 'render')
-    _.bindAll(@, 'render_with_body')
+    _.bindAll @, 'render'
+    _.bindAll @, 'render_with_body'
     @body_view = new GoalGetter.Views.AppBodyView
       model: @model
 

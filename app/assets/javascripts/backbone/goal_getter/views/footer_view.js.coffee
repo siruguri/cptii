@@ -5,7 +5,8 @@ GoalGetter.Views.FooterView = Backbone.View.extend
 
   events:
     'click  .nav-change': (evt) ->
-      trigger_target = $(evt.target).closest('.nav-change').data 'target'
+      # I want to use the string value, even though the footer tabs are referenced as numerals.
+      trigger_target = $(evt.target).closest('.nav-change').attr 'data-target'
       @$el.find('.nav-change').removeClass 'selected'
       $(evt.target).closest('.nav-change').addClass 'selected'
 

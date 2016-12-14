@@ -1,10 +1,18 @@
-.counselor-name {
-  background-color: $basic-blue;
-  color: white;
-  height: 59px;
+.counselor {
+  width: 100%;
+  .contact-details {
+    clear: both;
+  }
   
-  .nametext {
-    font-size: $large-title;
-    padding-left: 17px;
+  .counselor-name {
+    background-color: $basic-blue;
+    color: white;
+    height: 59px;
+    margin-bottom: 21px;
+    
+    .nametext {
+      font-size: $large-title;
+      padding-left: 17px;
+    }
   }
 }

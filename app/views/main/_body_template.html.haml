@@ -7,33 +7,6 @@
 %script#body_services_template{type: 'text/template'}
   .taxonomy-list
 
-%script#body_chat_template{type: 'text/template'}
-  Chat
-
 = render 'body_portfolio_template'
+= render 'body_counselor_template'
 
-%script#body_counselor_template{type: 'text/template'}
-  #logged-out-screen
-    = link_to 'Sign In', new_user_session_path
-  #logged-in-screen
-    .floating-action.pointer.chat
-      %svg
-        %use{x: '19px', y: '19px', "xlink:href" => '#chat-action'}
-    .row.counselor-name
-      .col.s9.nametext.pointer
-        <%- name %>
-      .col.s3.namepic
-        %img{src: ''}
-    .row.contact-details
-      .col.s2.icon
-        %svg
-          %use{x: '0', y: '0', "xlink:href" => '#contact-hours'}
-      .col.s10.description
-        Curabitur sed elec idemat pis
-    .row.contact-details
-      .col.s2.icon
-        %svg
-          %use{x: '0', y: '0', "xlink:href" => '#contact-pin'}
-      .col.s10.description
-        Curabitur sed elec idemat pis
-      

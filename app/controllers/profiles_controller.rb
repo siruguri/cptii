@@ -41,15 +41,15 @@ class ProfilesController < ApplicationController
     if Rails.env.test? and ENV['IS_SLOW'] == '1'
       sleep 2
     end
-      
+
     u = current_user
-    screen_number = params[:screen_number].try(:to_i) || 0
+    screen_number = params[:screen_number]
     d =
       if u
         case screen_number
-        when 2
+        when '2'
           ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
-        when 3
+        when '3'
           entries = u.profile.profile_entries.to_a
           work_ex_list = entries.select { |e| e.entry_details.keys.include?("work_title") }.
                          map { |entry| {work_title: entry.entry_details['work_title'],
@@ -65,6 +65,14 @@ class ProfilesController < ApplicationController
           ({data: {user_info: {work_experience: work_ex_list,
                                achievements: achievements,
                                user_name: u.profile.full_name}}})
+        when 'chat'
+          id = u.id
+          recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).
+                 map do |r|
+            {message: r.message, at: r.written_time, relation: (r.sender_id == id ? 'sent' : 'received')}
+          end
+              
+          ({data: {user_info: {rec_count: recs.count, recs: recs}}})
         end
       else
         ({data: {}})

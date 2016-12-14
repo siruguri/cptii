@@ -8,7 +8,9 @@ body {
   position: relative;
   
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  
   .services {
     overflow: hidden;
     width: 100%;

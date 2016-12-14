@@ -1,4 +1,5 @@
 GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
+  className: 'row counselor'
   initialize: ->
     _.bindAll @, 'render'
     @listenTo @model, 'model:updated', @render
