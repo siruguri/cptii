@@ -7,5 +7,5 @@ GoalGetter.Views.AddAnAchievement = GoalGetter.Views.ScreenBase.extend
     
   render: ->
     t_func = _.template $('#body_add-achievement_template').html()
-    @$el.html t_func()
+    @$el.html t_func({achievement_type: @model.adding_achievement})
     @$el

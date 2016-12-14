@@ -6,7 +6,13 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   events:
     # Generic handler for all portfolio additions
     'click .add-card': (e) ->
-      click_on = $(e.target).data('card-type') or $(e.target).closest('.card-entry').data('card-type')
+      if $(e.target).data('card-type')
+        click_on_node = $(e.target)
+      else
+        click_on_node = $(e.target).closest('.card-entry')
+      click_on = click_on_node.data('card-type')
+      achievement_type = click_on_node.find('#achievement-type').data('entry-type')
+      @model.adding_achievement = achievement_type
 
       # "Normalize" the card name
       click_on = click_on.trim().toLowerCase().replace(/\s/g, '-')
@@ -45,9 +51,21 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       t_func = _.template $('#body_portfolio_work_experience').html()
       wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))
 
-    # Add the remaining categories to work experience
+    # Add the remaining categories beneath work experience
     t_func = _.template $('#portfolio_category').html()
     @model.portfolio_categories.forEach (cat_name) ->
       view_self.$el.find('.signout-row').before t_func({card_name: cat_name})
+      # This is in the #portfolio_category template
+      ach_list = view_self.$el.find('.portfolio-card.row').last()
+      t_func_1 = _.template $('#body_portfolio_achievement').html()
+      
+      avlbl_ach = view_self.model.user_info.achievements.filter( (e) ->
+        e.type == cat_name
+      )
+      if avlbl_ach.length > 0
+        avlbl_ach[0]['texts'].forEach( (txt) ->
+          ach_list.append $(t_func_1({text: txt}))
+        )
+      null
     
     @$el

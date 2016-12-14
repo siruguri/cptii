@@ -3,4 +3,11 @@ profile_entry_student_1_1:
   entry_details: <%= ({work_title: 'intern 1', work_workplace: 'job 1 1'}).to_json %>
 profile_entry_student_1_2:
   profile: profile_student_1
-  entry_details: <%= ({edu_degree: 'HS 1', edu_acq_date: '5/12/2016'}).to_json %>
+  entry_details: <%= ({achievement_type: 'school achievement', achievement_text: 'school ach 1'}).to_json %>
+profile_entry_student_1_3:
+  profile: profile_student_1
+  entry_details: <%= ({achievement_type: 'school achievement', achievement_text: 'school ach 2'}).to_json %>
+profile_entry_student_1_4:
+  profile: profile_student_1
+  entry_details: <%= ({achievement_type: 'personal achievement', achievement_text: 'pers ach 1'}).to_json %>
+  

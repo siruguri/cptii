@@ -11,17 +11,19 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
 
   close_and_up: (data) ->
     # data will be an empty array if the form wasn't filled in: see models/base/form_processor
-    # This call will have to be dynamic based on which form is closing and upping.
 
     # When going up from a form screen, it should be emptied out
-    if @model.header_config['add-work-experience']['has_done'] == true
-      @screens['add-work-experience'].$el.remove()
-      delete @screens['add-work-experience']
+    if @model.header_config[@model.current_screen]['has_done'] == true
+      @screens[@model.current_screen].$el.remove()
+      delete @screens[@model.current_screen]
 
-    @trigger 'navigation:change', ['add-work-experience', 'up'], {refresh_screen: [3]}
+    # TODO There might be more complex logic for what needs to be refreshed; than simply what's the up level screen
+    @trigger 'navigation:change', [@model.current_screen, 'up'], {refresh_screen: [@model.up_level[@model.current_screen]]}
     
   show_fail: (errorThrown) ->
-    a = 1
+    @$el.append($('<div>got error</div>'))
+    null
+    
   render_and_close: ->
     # POST an update to the backend; trigger server response
     if @$el.find('.input-form').length == 1

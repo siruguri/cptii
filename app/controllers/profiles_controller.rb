@@ -6,28 +6,39 @@ class ProfilesController < ApplicationController
   end
 
   def update
+    # The payload comes in as a specific ordering of data that is determined by the
+    # [:payload][:code] parameter.
+    
     u = current_user || (current_admin and User.find_by_id(params[:user]))
-    d =
-      if u
-        case params.dig(:payload, :code)
-        when 'add-work'
-          if params.dig(:payload, :data).try(:size).try(:>, 1)
-            data = params[:payload][:data]
-            p = ProfileEntry.new profile: u.profile, entry_details: {work_title: data[0], work_workplace: data[1]}
-            p.save
-            {data: {id: p.id}}
-          else
-            ({data: {}})
-          end
+    if !u
+      resp = {}
+    else
+      case params.dig(:payload, :code)
+      when 'add-work'
+        if params.dig(:payload, :data).try(:size).try(:==, 2)
+          data = params[:payload][:data]
+          p = ProfileEntry.new profile: u.profile, entry_details: {work_title: data[0], work_workplace: data[1]}
+          p.save
+          resp = {id: p.id}
+        else
+          resp = {}
         end
-      else
-        ({data: {}})
+      when 'add-an-achievement'
+        if params.dig(:payload, :data).try(:size).try(:==, 2)
+          data = params[:payload][:data]
+          p = ProfileEntry.new profile: u.profile, entry_details: {achievement_type: data[0], achievement_text: data[1]}
+          p.save
+          resp = {id: p.id}
+        else
+          resp = {}
+        end
       end
-    render json: d
+    end
+    render json: ({data: resp})
   end
 
   def show
-    if ENV['IS_SLOW'] == '1'
+    if Rails.env.test? and ENV['IS_SLOW'] == '1'
       sleep 2
     end
       
@@ -39,11 +50,21 @@ class ProfilesController < ApplicationController
         when 2
           ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
         when 3
-          work_ex_list = u.profile.profile_entries.to_a.select { |e| e.entry_details.keys.include?("work_title") }.
+          entries = u.profile.profile_entries.to_a
+          work_ex_list = entries.select { |e| e.entry_details.keys.include?("work_title") }.
                          map { |entry| {work_title: entry.entry_details['work_title'],
                                         work_workplace: entry.entry_details['work_workplace']}}
-          Rails.logger.debug "Returning #{work_ex_list.size} jobs"
-          ({data: {user_info: {work_experience: work_ex_list, user_name: u.profile.full_name}}})
+
+          achievements = entries.select { |e| e.entry_details.keys.include?("achievement_type") }.
+                         group_by { |e| e.entry_details['achievement_type']}.
+                         map { |type, recs| {type: type,
+                                             texts: recs.map { |r| r.entry_details['achievement_text']}
+                               }
+          }
+
+          ({data: {user_info: {work_experience: work_ex_list,
+                               achievements: achievements,
+                               user_name: u.profile.full_name}}})
         end
       else
         ({data: {}})

@@ -3,5 +3,6 @@
     .title.col.s12
       <%- card_name %>
     .card-entry.col.s-ninety.pointer.add-card.waves-effect.waves-indigo.lighten-5{"data-card-type" => 'an-achievement'}
+      %div#achievement-type{'data-entry-type' => '<%- card_name %>'.html_safe}
       .light-text
         Add <%- card_name %>

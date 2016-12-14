@@ -14,8 +14,9 @@
 %script#body_add-achievement_template{type: 'text/template'}
   .portfolio-card.row.input-form{"data-server-code" => 'add-an-achievement'}
     .card-entry.tight.col.s-ninety
-      .input-field      
-        %input#add-achievement{type: 'text'}
+      .input-field
+        %input{type: 'hidden', name: 'achievement_type', value: '<%- achievement_type %>'.html_safe}
+        %input#add-achievement{name: 'add_achievement', type: 'text'}
         %label{for: 'add-achievement'}
           What did you achieve?
 
@@ -28,6 +29,11 @@
     .work-worktime
       11/01/16 - 12/30/16
         
+%script#body_portfolio_achievement{type: 'text/template'}
+  .card-entry.col.s-ninety.pointer
+    .ach-text
+      <%- text %>
+
 %script#body_portfolio_template_loggedout{type: 'text/template'}
   #logged-out-screen
     = link_to 'Sign In', new_user_session_path

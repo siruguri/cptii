@@ -80,4 +80,5 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
+  gem 'selenium-webdriver'
 end
