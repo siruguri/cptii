@@ -1,4 +1,9 @@
 .portfolio {
+  &:hover {
+    overflow-y: scroll;
+  }
+  overflow: hidden;
+  
   background-color: $light-gray;
   width: 100%;
 

@@ -1,15 +1,39 @@
-.taxonomy-list {
-  padding-top: 5px;
-  .col {
-    padding: 3px;
-    height: $taxonomy-cell-height;
+.services {
+  &:hover {
+    overflow-y: scroll;
   }
-  .taxonomy-cell {
-    background-color: rgba(25,25,25,.3);
-    height: 100%;
+  overflow: hidden;
+  
+  .taxonomy-list {
+    padding-top: 5px;
     
-    &purple {
-      background-color: $basic-purple;
+    .col {
+      padding: 3px;
+      height: $taxonomy-cell-height;
+    }
+    .taxonomy-img {
+      width: 116px;
+      height: 116px;
+      margin: auto;
+      margin-top: 13px;
+    }
+    .taxonomy-name {
+      margin: auto;
+      color: white;
+      font-size: $body-text;
+      padding: 14px 0;
+      font-weight: bold;
+      text-align: center;
+      width: 50%;
+    }
+    
+    .taxonomy-cell {
+      background-color: rgba(25,25,25,.3);
+      height: 100%;
+      
+      &purple {
+	background-color: $basic-purple;
+      }
     }
   }
 }

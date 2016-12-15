@@ -3,12 +3,6 @@
 
 # Change these values, especially everything after the two User instances.
 
-['Healthcare', 'Clothing', 'Jobs', 'Housing', 'Healthcare', 'Clothing', 'Jobs'].each do |name|
-  t = TaxonomyNode.find_or_create_by node_name: name
-  t.parent_id = -1
-  t.save
-end
-
 [['me@me.com', 'helloworld'], ['counselor@school.com', 'helloworld']].each do |p|
   u = User.find_or_create_by email: p[0]
   u.password = p[1]

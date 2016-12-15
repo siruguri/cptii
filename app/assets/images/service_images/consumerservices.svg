@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="118px" height="118px" viewBox="0 0 118 118" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>C8516353-5F97-4354-9C4F-A7BF0483652A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M100,19.9794 L100,27.9794 L8,27.9794 L80.06,14.2594 L92,11.9794 C92,11.9794 100,10.2194 100,19.9794 Z M108,47.9794 L108,95.9794 C101.38,95.9794 96,101.3594 96,107.9794 L0,107.9794 L0,94.5794 C2.5,95.4794 5.2,95.9794 8,95.9794 C21.26,95.9794 32,85.2394 32,71.9794 C32,58.7194 21.26,47.9794 8,47.9794 C5.2,47.9794 2.5,48.4794 0,49.3794 L0,35.9794 L96,35.9794 C96,42.5994 101.38,47.9794 108,47.9794 Z" id="path-1"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M116,35.9794 L116,107.9794 C116,112.3994 112.42,115.9794 108,115.9794 L8,115.9794 C3.58,115.9794 0,112.3994 0,107.9794 L96,107.9794 C96,101.3594 101.38,95.9794 108,95.9794 L108,47.9794 C101.38,47.9794 96,42.5994 96,35.9794 L0,35.9794 L0,27.9794 C0,23.5594 3.7,20.1394 8,18.9794 L68,0.9794 C68,0.9794 80,-3.8606 80,7.9794 L80,13.9794 L80.06,14.2594 L8,27.9794 L100,27.9794 L108,27.9794 C112.42,27.9794 116,31.5594 116,35.9794 Z M8,47.9794 C21.26,47.9794 32,58.7194 32,71.9794 C32,85.2394 21.26,95.9794 8,95.9794 C5.2,95.9794 2.5,95.4794 0,94.5794 L0,49.3794 C2.5,48.4794 5.2,47.9794 8,47.9794 Z" id="path-3"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.1-Services" transform="translate(-121.000000, -338.000000)">
+            <g id="Group-17" transform="translate(8.000000, 142.000000)">
+                <g id="Group-5-Copy" transform="translate(0.000000, 184.000000)">
+                    <g id="Group-4">
+                        <g id="card1">
+                            <g id="Group-7">
+                                <g id="Group" transform="translate(114.000000, 13.000000)">
+                                    <g id="fill">
+                                        <g id="Combined-Shape">
+                                            <use fill="#50DD8E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                        </g>
+                                        <g id="Combined-Shape">
+                                            <use fill="#E4F2DE" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                                        </g>
+                                    </g>
+                                    <path d="M52,79.9776 L52,63.9776 L46,69.9776 M80,63.9776 C77.792,63.9776 76,65.7696 76,67.9776 L76,75.9776 C76,78.1856 77.792,79.9776 80,79.9776 C82.208,79.9776 84,78.1856 84,75.9776 L84,67.9776 C84,65.7696 82.208,63.9776 80,63.9776 L80,63.9776 L80,63.9776 L80,63.9776 L80,63.9776 L80,63.9776 L80,63.9776 L80,63.9776 Z M64,63.9776 C61.792,63.9776 60,65.7696 60,67.9776 L60,75.9776 C60,78.1856 61.792,79.9776 64,79.9776 C66.208,79.9776 68,78.1856 68,75.9776 L68,67.9776 C68,65.7696 66.208,63.9776 64,63.9776 L64,63.9776 L64,63.9776 L64,63.9776 L64,63.9776 L64,63.9776 L64,63.9776 L64,63.9776 Z M8,95.9776 C21.254,95.9776 32,85.2316 32,71.9776 C32,58.7236 21.254,47.9776 8,47.9776 M8,85.9776 L8,83.9776 C11.312,83.9776 14,81.2916 14,77.9776 C14,74.6636 11.312,71.9776 8,71.9776 M14,65.9776 C14,62.6636 11.312,59.9776 8,59.9776 L8,57.9776 M8,107.9776 L96,107.9776 C96,101.3516 101.374,95.9776 108,95.9776 L108,47.9776 C101.374,47.9776 96,42.6036 96,35.9776 L8,35.9776 M100,19.9776 C100,10.2276 92,11.9776 92,11.9776 L8,27.9776 L108,27.9776 C112.418,27.9776 116,31.5596 116,35.9776 L116,107.9776 C116,112.3956 112.418,115.9776 108,115.9776 L8,115.9776 C3.582,115.9776 0,112.3956 0,107.9776 L0,27.9776 C0,23.5596 3.708,20.1436 8,18.9776 L68,0.9776 C68,0.9776 80,-3.8564 80,7.9776" id="stroke" stroke="#51565F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

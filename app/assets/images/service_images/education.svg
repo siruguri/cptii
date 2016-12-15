@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="118px" height="110px" viewBox="0 0 118 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>68793558-6493-4AAF-8108-3935547EFA78</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M88,43.5201 L88,43.58 L88,74 C93.8,69.24 96,64 96,64 L96,40.58 L95.8800687,40.2801717 L116,32.0002 L116,24.0002 C116,24.0002 98.6,31.2002 88,35.5802 L87.96,35.6802 L88,35.7002 L88,43.5201 Z M58,84 C28,84 20,64 20,64 L20,40.84 L20.2,40.36 L58,56 L88,43.58 L88,74 C83.62,77.58 80,79.38 80,79.38 C74.68,82 67.32,84 58,84 Z" id="path-1"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M0,24 L58,0 L116,24 C116,24 98.6,31.2 88,35.58 L87.96,35.68 L88,35.7 L88,43.52 L88,43.58 L58,56 L20.2,40.36 L0,32 L0,24 Z M62.88,26.32 C63.58,25.66 64,24.86 64,24 C64,21.8 61.32,20 58,20 C54.68,20 52,21.8 52,24 C52,26.2 54.68,28 58,28 C60.02,28 61.8,27.34 62.88,26.32 L62.88,26.32 Z" id="path-3"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M64,24 C64,24.86 63.58,25.66 62.88,26.32 C61.8,27.34 60.02,28 58,28 C54.68,28 52,26.2 52,24 C52,21.8 54.68,20 58,20 C61.32,20 64,21.8 64,24" id="path-5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M88,88 C90.2,88 92,89.8 92,92 C92,94.2 90.2,96 88,96 C85.8,96 84,94.2 84,92 C84,89.8 85.8,88 88,88" id="path-7"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.1-Services" transform="translate(-121.000000, -713.000000)">
+            <g id="Group-17" transform="translate(8.000000, 142.000000)">
+                <g id="Group-5-Copy-3" transform="translate(0.000000, 552.000000)">
+                    <g id="Group-4">
+                        <g id="card1">
+                            <g id="Group-9">
+                                <g id="Group" transform="translate(114.000000, 20.000000)">
+                                    <g id="fill">
+                                        <g id="Combined-Shape">
+                                            <use fill="#AAB1BA" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                        </g>
+                                        <g id="Fill-3">
+                                            <use fill="#AAB1BA" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                                        </g>
+                                        <g id="Fill-9">
+                                            <use fill="#F2EDDA" fill-rule="evenodd" xlink:href="#path-5"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                                        </g>
+                                        <g id="Fill-11">
+                                            <use fill="#FFE079" fill-rule="evenodd" xlink:href="#path-7"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                                        </g>
+                                    </g>
+                                    <path d="M96,108 L94,100 L96,108 L96,108 L96,108 L96,108 L96,108 L96,108 Z M80,108 L82,100 L80,108 L80,108 L80,108 L80,108 L80,108 L80,108 Z M88,108 L88,102 L88,108 L88,108 L88,108 L88,108 L88,108 L88,108 Z M92,92 C92,89.792 90.208,88 88,88 C85.792,88 84,89.792 84,92 C84,94.208 85.792,96 88,96 C90.208,96 92,94.208 92,92 L92,92 L92,92 L92,92 L92,92 L92,92 L92,92 Z M20,50 L20,64 C20,64 28,84 58,84 C67.314,84 74.688,82 80,79.374 M88,74 C93.944,69.944 96,64 96,64 L96,50 M58,64 L58,84 L58,64 L58,64 L58,64 L58,64 L58,64 L58,64 Z M88,88 L88,35.708 L62.874,26.326 M58,20 C54.686,20 52,21.792 52,24 C52,26.208 54.686,28 58,28 C61.314,28 64,26.208 64,24 C64,21.792 61.314,20 58,20 L58,20 L58,20 L58,20 L58,20 L58,20 L58,20 Z M0,30 L0,32 L58,56 L79.998,46.896 M88,43.524 L116,32 L116,30 M78.972,39.324 L58,48 L0,24 L58,0 L116,24 C116,24 98.608,31.196 88,35.586 L78.972,39.324 L78.972,39.324 L78.972,39.324 L78.972,39.324 L78.972,39.324 L78.972,39.324 Z" id="stroke" stroke="#51565F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
