@@ -28,3 +28,4 @@ These are notes to help folks contribute to this code base.
 * You can seed the database with some dummy values after migration:
   * `rake db:seed`
   * `rake db:seed:make_portfolio_categories`
+* Alameda County seed data has been produced in Ruby/ActiveRecord format in `db/seeds/make_programs.rb`. Load it with `rake db:seed:make_programs_and_organizations` and `rake db:seed:make_categorizations`

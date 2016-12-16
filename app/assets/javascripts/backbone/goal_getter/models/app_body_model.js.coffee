@@ -39,6 +39,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   # /Directory navigation helpers
 
   # Sync
+  make_url: (ref) ->
+    u =
+      if ref == 'search_results'
+        '/organizations?q=' + @search_query
+      else
+        '/profile.json?screen_number=' + ref
+    u
+
   get_screen_data: (curr_screen_ref) ->
     if (!@requires_login[curr_screen_ref] or @logged_in) and !@screen_data_ready[curr_screen_ref]
       @fetch_screen curr_screen_ref
@@ -52,7 +60,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   fetch_screen: (screen_number) ->
     # Get everything else on demand.
     model_self = @
-    $.get('/profile.json?screen_number=' + screen_number, (d, s, x) ->
+    url = @make_url screen_number
+    $.get(url, (d, s, x) ->
       if d.data.hasOwnProperty('user_info')
         model_self.screen_data_ready[screen_number] = true
         model_self.user_info = d.data.user_info

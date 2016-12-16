@@ -26,10 +26,11 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     else
       @model.current_screen = dest
 
-    if args.length > 1 and
-       args[1].hasOwnProperty('refresh_screen')
-      args[1].refresh_screen.forEach (key) ->
-        view_self.body_view.refresh_screen key
+    if args.length > 1
+      if args[1].hasOwnProperty('refresh_screen')
+        args[1].refresh_screen.forEach (key) ->
+          view_self.body_view.refresh_screen key
+        
     @render_with_body()
     
   render_with_body: ->

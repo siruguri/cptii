@@ -2,6 +2,14 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
   className: 'services row'
   initialize: ->
     _.bindAll @, 'render'
+
+  events:
+    'click .taxonomy-cell': (e) ->
+      if !(q = $(e.target).data('name'))
+        q = $(e.target).closest('.taxonomy-cell').data('name')
+
+      @model.search_query = q
+      @trigger 'navigation:change', ['0', 'search_results']
   render: ->
     t_func = _.template $('#body_services_template').html()
     @$el.html t_func({})
@@ -16,6 +24,8 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
       
       cell = $(t_func({node_name: name, image_key: img_key + '.svg'}))
       cell.addClass colors[idx % colors.length]
+      cell.data('name', name)
+      
       view_self.$el.find('.taxonomy-list').append cell
 
     @$el

@@ -3,12 +3,12 @@
   ['Consumer Services', 'consumerservices'],
   ['Criminal Justice and Legal Services', 'justice'],
   ['Education', 'education'],
-  ['Environment, Public Health, and Safety', 'environment'],
+  ['Environment and Public Health/Safety', 'environment'],
   ['Health Care', 'healthcare'],
   ['Income Support and Employment', 'income'],
   ['Individual and Family Life', 'family'],
-  ['Mental Health and Substance Abuse', 'mental'],
-  ['Organizational, Community, International', 'orgs']
+  ['Mental Health and Substance Abuse Services', 'mental'],
+  ['Organizational/Community/International Services', 'orgs']
 ].each do |rec|
   t = TaxonomyNode.find_or_create_by node_name: rec[0]
   t.image_key = rec[1]

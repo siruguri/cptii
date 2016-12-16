@@ -1,0 +1,23 @@
+prog_1:
+  title: prog 1  
+  description: adult tutoring
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_1
+  
+prog_2:
+  title: prog 2
+  description: tutors for children
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_2
+  
+prog_3:
+  title: prog 3
+  description: medical aid
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_1
+  
+prog_4:
+  title: prog 4
+  description: fin serv
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_1  

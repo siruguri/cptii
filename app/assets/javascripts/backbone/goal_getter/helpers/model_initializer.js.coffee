@@ -9,11 +9,13 @@ GoalGetter.Helpers.ModelInitializer =
       'chat': 1
       'add-work-experience' : 1
       'add-an-achievement' : 1
+      'search-results': 1
             
     model_obj.up_level =
-      'chat': 2
-      'add-work-experience' : 3
-      'add-an-achievement' : 3
+      'chat': '2'
+      'add-work-experience' : '3'
+      'add-an-achievement' : '3'
+      'search-results': '0'
       
     model_obj.header_config =
       'add-work-experience' :
@@ -30,6 +32,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience': true
       'add-an-achievement' : true
       'chat': true
+      'search-results': false
       
     model_obj.screen_data_ready =
       '0': true
@@ -40,6 +43,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat': false
       'add-work-experience': true
       'add-an-achievement' : true
+      'search-results': false
       
     model_obj.texts =
       '0': 'Services',
@@ -50,6 +54,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat' : '$counselor_name'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
+      'search-results': '$search_query'
 
   resolve_to_class_name: (index) ->
     switch index
@@ -61,5 +66,4 @@ GoalGetter.Helpers.ModelInitializer =
       when 'chat' then 'ChatView'
       when 'add-work-experience' then 'AddWorkView'
       when 'add-an-achievement' then 'AddAnAchievement'
-
-                      
+      when 'search-results' then 'SearchResultsView'

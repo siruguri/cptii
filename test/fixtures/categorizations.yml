@@ -1,0 +1,15 @@
+cat_1_1:
+  taxonomy_node: nd_1
+  program: prog_1
+
+cat_3_1.1:
+  taxonomy_node: nd_1_again
+  program: prog_3
+  
+cat_1_2:
+  taxonomy_node: nd_2
+  program: prog_1
+  
+cat_4_1.1:
+  taxonomy_node: nd_1_again
+  program: prog_4

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215201027) do
+ActiveRecord::Schema.define(version: 20161216230041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20161215201027) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "categorizations", force: :cascade do |t|
+    t.integer  "taxonomy_node_id"
+    t.integer  "program_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "chat_records", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "receiver_id"
@@ -46,6 +53,15 @@ ActiveRecord::Schema.define(version: 20161215201027) do
     t.integer  "counselor_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.jsonb    "contact_details"
+    t.text     "cost"
+    t.text     "about"
+    t.string   "title"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "portfolio_categories", force: :cascade do |t|
@@ -67,6 +83,16 @@ ActiveRecord::Schema.define(version: 20161215201027) do
     t.jsonb    "contact_details"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.jsonb    "program_details"
+    t.text     "description"
+    t.string   "title"
+    t.string   "address"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "organization_id"
   end
 
   create_table "schools", force: :cascade do |t|
