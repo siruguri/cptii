@@ -34,4 +34,3 @@ bower.json
 .DS_Store
 db/*.sqlite
 dump.rdb
-/public/

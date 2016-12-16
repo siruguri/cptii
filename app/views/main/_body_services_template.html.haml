@@ -1,2 +1,8 @@
 %script#body_services_template{type: 'text/template'}
   .taxonomy-list
+%script#body_services_item_template{type: 'text/template'}
+  .col.l6.s12.taxonomy-cell.pointer
+    .taxonomy-img
+      = (image_tag('service_images/OXB').gsub(/OXB/, '<%- image_key %>')).html_safe
+    .taxonomy-name
+      <%- node_name %>
