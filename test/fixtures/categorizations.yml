@@ -13,3 +13,8 @@ cat_1_2:
 cat_4_1.1:
   taxonomy_node: nd_1_again
   program: prog_4
+
+cat_2_3:
+  taxonomy_node: nd_3
+  program: prog_2
+  

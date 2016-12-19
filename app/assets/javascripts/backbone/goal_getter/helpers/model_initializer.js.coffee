@@ -54,7 +54,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat' : '$counselor_name'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
-      'search-results': '$search_query'
+      'search-results': '$query'
 
   resolve_to_class_name: (index) ->
     switch index

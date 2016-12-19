@@ -6,7 +6,7 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
 
   events:
     'click .nametext': ->
-      @trigger 'navigation:change', 'navigation:change', 'counselor', 'chat'
+      @trigger 'navigation:change', {from: 'counselor', to: 'chat'}
       
   render: ->
     t_func = _.template $('#body_counselor_template').html()

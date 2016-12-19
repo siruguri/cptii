@@ -15,21 +15,22 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     'click #submit-body-form': ->
       @body_view.trigger 'header:submit-body-form'
 
-  change_screens: (args...) ->
-    # the usual order of arguments will be the requesting view name, and a target view
+  change_screens: (change_obj) ->
     view_self = @
     @model.previous_screen = @model.current_screen
 
-    dest = args[0][1]
+    if @model.previous_screen == 'search-results'
+      @body_view.garbage 'search-results'
+      
+    dest = change_obj.to
     if dest == 'up'
       @model.current_screen = @model.up()
     else
       @model.current_screen = dest
 
-    if args.length > 1
-      if args[1].hasOwnProperty('refresh_screen')
-        args[1].refresh_screen.forEach (key) ->
-          view_self.body_view.refresh_screen key
+    if change_obj.hasOwnProperty('refresh_screen')
+      change_obj.refresh_screen.forEach (key) ->
+        view_self.body_view.refresh_screen key
         
     @render_with_body()
     

@@ -17,6 +17,7 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
         d = $('<div>').addClass('special').text('Rendering...')
         context.$el.append d
     else
+      context.$el.find('.special').hide()
       context.render()
       
     @$el

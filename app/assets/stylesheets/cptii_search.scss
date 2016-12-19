@@ -2,8 +2,45 @@
   height: 100%;
   width: 100%;
 
+  /* placeholder for list/map tab */
+  &:before {
+    content: '';
+    display: block;
+    width: 100%;
+    background-color: $basic-blue;
+    height: 53px;
+  }
+    
   &:hover {
     overflow-y: scroll;
   }
   overflow: hidden;
+  .result-card {
+    .card-entry {
+      margin-bottom: 10px;
+    }
+    
+    width: 100%;
+    clear: both;
+
+    padding-top: 12px;
+
+    * {
+      background-color: white;
+    }      
+    .contact-box {
+      min-height: 72px;
+      color: $basic-blue;
+      text-align: center;
+    }
+    
+    .title {
+      font-size: $portfolio-name-text;
+      font-weight: bold;
+    }
+
+    .detail-title {
+      color: $about-gray;
+    }
+  }
 }

@@ -11,6 +11,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     _.bindAll @, 'header_title'
     _.bindAll @, 'display_data'
     _.bindAll @, 'counselor_name'
+    _.bindAll @, 'query'
     
   # entry point from views/control_view
   init_fetch: ->
@@ -41,13 +42,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   # Sync
   make_url: (ref) ->
     u =
-      if ref == 'search_results'
+      if ref == 'search-results'
         '/organizations?q=' + @search_query
       else
         '/profile.json?screen_number=' + ref
     u
 
   get_screen_data: (curr_screen_ref) ->
+    return if curr_screen_ref == '0'
     if (!@requires_login[curr_screen_ref] or @logged_in) and !@screen_data_ready[curr_screen_ref]
       @fetch_screen curr_screen_ref
 
@@ -62,8 +64,12 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     model_self = @
     url = @make_url screen_number
     $.get(url, (d, s, x) ->
-      if d.data.hasOwnProperty('user_info')
+      if d.hasOwnProperty('data') and Object.keys(d.data).length > 0 
         model_self.screen_data_ready[screen_number] = true
+
+      if screen_number == 'search-results'
+        model_self.search_results = d.data
+      else
         model_self.user_info = d.data.user_info
     )
 
@@ -72,10 +78,13 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   # Getters
   counselor_name: ->
     @user_info.counselor_name
-    
+  query: ->
+    @search_query
+        
   header_title: ->
     if @texts[@current_screen][0] == '$'
       ref = @texts[@current_screen].slice(1)
+      # The reference has to be an available method 
       @[ref].call()
     else
       @texts[@current_screen]

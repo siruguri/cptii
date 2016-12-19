@@ -9,7 +9,8 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
         q = $(e.target).closest('.taxonomy-cell').data('name')
 
       @model.search_query = q
-      @trigger 'navigation:change', ['0', 'search_results']
+      @trigger 'navigation:change', {from: '0', to: 'search-results'}
+      
   render: ->
     t_func = _.template $('#body_services_template').html()
     @$el.html t_func({})

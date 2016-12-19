@@ -4,8 +4,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     _.bindAll(@, 'render')
 
   change_nav: (args...) ->
-    @body_model.set_current_screen args[0]
-    @header.change_screens ['control', args[0]]
+    @header.change_screens {from: 'control', to: args[0]}
     
   load_and_render: ->
     @body_model = new GoalGetter.Models.AppBodyModel()
