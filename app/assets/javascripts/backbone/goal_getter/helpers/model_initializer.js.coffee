@@ -22,6 +22,10 @@ GoalGetter.Helpers.ModelInitializer =
         has_done: true
       'add-an-achievement' :
         has_done: true
+      'search-results':
+        has_search: true
+      '0':
+        has_search: true
         
     model_obj.requires_login =
       '0': false

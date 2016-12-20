@@ -23,9 +23,20 @@
 
   .header-actions {
     float: right;
-    display: none;
-    .done {
+    .item {
+      display: none;
       margin: 20px 46px 0 0;
+    }
+    
+    #search {
+      .search-icon-img {
+	height: 30px;
+	width: 30px;
+	color: $arrow-gray;
+      }
+    }
+    
+    #submit-body-form {
       text-transform: uppercase;
       color: $white;
       font-size: $header-actions;

@@ -10,7 +10,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
   events:
     'click .nav-back': ->
-      @change_screens ['header', 'up']
+      @change_screens({from: 'header', to: 'up'})
 
     'click #submit-body-form': ->
       @body_view.trigger 'header:submit-body-form'
@@ -56,7 +56,9 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     else
       @$el.find('.nav-back').hide()
 
+    if @model.has_search()
+      @$el.find('#search').show()
     if @model.has_done()
-      @$el.find('.header-actions').show()
+      @$el.find('#submit-body-form').show()
       
     @$el

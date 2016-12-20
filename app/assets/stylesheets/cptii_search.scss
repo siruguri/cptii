@@ -37,9 +37,15 @@
     overflow-y: scroll;
   }
   overflow: hidden;
-  .result-card {
+  .result-cards {
     .card-entry {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      .title {
+	font-size: $portfolio-name-text;
+	font-weight: bold;
+	margin-top: 12px;
+	margin-bottom: 13px;
+      }
     }
     
     width: 100%;
@@ -56,13 +62,13 @@
       text-align: center;
     }
     
-    .title {
-      font-size: $portfolio-name-text;
-      font-weight: bold;
-    }
 
     .detail-title {
       color: $about-gray;
+      padding-bottom: 10px;
     }
+    .detail-text {
+      padding-bottom: 10px;
+    }      
   }
 }
