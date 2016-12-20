@@ -7,8 +7,8 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test 'with query' do
-    # node1 is a prefix for two cats, produces 3 programs (1,3,4), but 1 org (org1).
+    # node1 is a prefix for two cats, produces 4 programs (1,3,4,5), but 2 org (org1, org2).
     get :index, xhr: true, params: {q: 'node1'}
-    assert_equal 1, JSON.parse(response.body)['data'].length
+    assert_equal 2, JSON.parse(response.body)['data'].length
   end
 end

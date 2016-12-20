@@ -7,22 +7,31 @@
       = (image_tag('service_images/OXB').gsub(/OXB/, '<%- image_key %>')).html_safe
     .taxonomy-name
       <%- node_name %>
-
-%script#org_template{type: 'text/template'}
-  .result-card
-    .card-entry.row
-      .col.s12.title
-        <%- title %>
-    .card-entry.row
-      .col.s12.contact-box
-        Contacts Here
-    .card-entry.row
-      .col.s3.detail-title
-        About
-      .col.s9.detail-text
-        <%- about %>
-    .card-entry.row
-      .col.s3.detail-title
-        Cost
-      .col.s9.detail-text
-        <%- about %>
+      
+%script#org_map_template{type: 'text/template'}
+  #map-canvas
+    
+%script#org_list_template{type: 'text/template'}
+  .switcher-tab.row
+    .col.s6#goto-list.goto.selected.pointer
+      list
+    .col.s6#goto-map.goto.pointer
+      map
+  .result-cards
+%script#org_list_card_template{type: 'text/template'}
+  .card-entry.row
+    .col.s12.title
+      <%- title %>
+  .card-entry.row
+    .col.s12.contact-box
+      Contacts Here
+  .card-entry.row
+    .col.s3.detail-title
+      About
+    .col.s9.detail-text
+      <%- about %>
+  .card-entry.row
+    .col.s3.detail-title
+      Cost
+    .col.s9.detail-text
+      <%- about %>

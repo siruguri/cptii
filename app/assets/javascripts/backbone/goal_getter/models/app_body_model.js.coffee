@@ -64,7 +64,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     model_self = @
     url = @make_url screen_number
     $.get(url, (d, s, x) ->
-      if d.hasOwnProperty('data') and Object.keys(d.data).length > 0 
+      if d.hasOwnProperty('data') and Object.keys(d.data).length > 0
         model_self.screen_data_ready[screen_number] = true
 
       if screen_number == 'search-results'
@@ -84,7 +84,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   header_title: ->
     if @texts[@current_screen][0] == '$'
       ref = @texts[@current_screen].slice(1)
-      # The reference has to be an available method 
+      # The reference has to be an available method
       @[ref].call()
     else
       @texts[@current_screen]
@@ -101,4 +101,3 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   set_current_screen: (target) ->
     @current_screen = target
   # /Setters
-    

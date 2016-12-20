@@ -3,21 +3,38 @@ prog_1:
   description: adult tutoring
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_1
+  lat: <%= 37.8105196 %>
+  lon: <%= -122.2728222 %>
   
 prog_2:
   title: prog 2
   description: tutors for children
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_2
+  lat: <%= 37.8003216 %>
+  lon: <%= -122.2728222 %>
   
 prog_3:
   title: prog 3
   description: medical aid
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_1
+  lat: <%= 37.7990011 %>
+  lon: <%= -122.2728222 %>
   
 prog_4:
   title: prog 4
   description: fin serv
   program_details: <%= ({'cost' => 'cost'}).to_json %>
-  organization: org_1  
+  organization: org_1
+  lat: <%= 37.8003216 %>
+  lon: <%= -122.2728222 %>
+  
+prog_5:
+  title: prog 5
+  description: counsel counsel
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_2
+  lat: <%= 37.8003216 %>
+  lon: <%= -122.2728222 %>
+  

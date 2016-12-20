@@ -28,4 +28,20 @@ These are notes to help folks contribute to this code base.
 * You can seed the database with some dummy values after migration:
   * `rake db:seed`
   * `rake db:seed:make_portfolio_categories`
+  * `rake db:seed:make_taxonomy_nodes` (This is keyed in to the names in the Programs and Organizations data for Alameda County.)
 * Alameda County seed data has been produced in Ruby/ActiveRecord format in `db/seeds/make_programs.rb`. Load it with `rake db:seed:make_programs_and_organizations` and `rake db:seed:make_categorizations`
+* If Programs haven't already been geo-coded, you can use `db/seeds/initialize_lat_lon.rb` to do so. It will set lat/lon values to -1 if the geocode fails. It rate-limits itself to 3 requests per second, so expect it'll take a while if you have a lot of entries.
+
+# External dependencies
+
+JS based libraries
+
+* Materialize: managed via gems
+* Leaflet
+
+They are stored in `vendor/assets/` - to update, run a package manager, and copy the updated files, if any, to the vendor folder.For example, if you use `[yarn](https://yarnpkg.com/)`,
+
+    yarn global add leaflet # or yarn upgrade leaflet
+    cp ~/.yarn-config/global/node_modules/leaflet/dist/leaflet.css vendor/assets/stylesheets
+    cp ~/.yarn-config/global/node_modules/leaflet/dist/leaflet.js vendor/assets/javascripts
+    

@@ -26,16 +26,13 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'rails-backbone'
 
-# Everybody gotta have some jQuery (UI) and Bootstrap!
+# Everybody gotta have some jQuery (UI)
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'materialize-sass'
 gem 'underscore-rails'
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
+gem 'geocoder'
 
 gem 'devise'
 gem 'haml-rails'
