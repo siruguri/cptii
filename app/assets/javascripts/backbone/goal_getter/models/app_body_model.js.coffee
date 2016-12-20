@@ -1,6 +1,7 @@
 GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   initialize: ->
     @logged_in = false
+    @is_category = true
     @current_screen = '0'
     @taxonomy_list = []
     @user_info =
@@ -45,7 +46,10 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   make_url: (ref) ->
     u =
       if ref == 'search-results'
-        '/organizations?q=' + @search_query
+        if @is_category
+          '/organizations?q=' + @search_query
+        else
+          '/programs?q=' + @search_query   
       else
         '/profile.json?screen_number=' + ref
     u

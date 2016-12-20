@@ -35,6 +35,11 @@ Capybara::Webkit.configure do |config|
   config.allow_url("fonts.googleapis.com")
 end
 
+#http://stackoverflow.com/questions/21445164/set-chrome-as-default-browser-for-rspec-capybara
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
 # https://gist.github.com/euricovidal/40d036c357afa7833e30127a2b5e1795
 # https://github.com/ariya/phantomjs/issues/14506
 Capybara.register_driver :poltergeist do |app|

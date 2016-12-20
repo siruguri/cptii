@@ -41,9 +41,9 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     
   refresh_screen: (key) ->
     @garbage key
-    @model.get_screen_data(key) 
+    @model.get_screen_data(key)
     @screens[key].wait_and_render(key)
-        
+    
   render: ->
     # Hide all screens; show or build current one.
     view_self = @

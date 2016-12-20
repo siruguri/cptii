@@ -21,7 +21,7 @@ GoalGetter.Views.SearchResultsView = GoalGetter.Views.ScreenBase.extend
     card_func = _.template($('#org_list_card_template').html())
     card_root = @$el.find '.result-cards'
     @model.search_results.forEach (rec) ->
-      card_root.append $(card_func({title: rec.title, about: rec.about}))
+      card_root.append $(card_func({title: rec.agency_name, about: rec.about}))
           
   render: ->
     t_func = _.template($('#org_list_template').html())

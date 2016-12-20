@@ -11,7 +11,9 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
   events:
     'click .nav-back': ->
       @change_screens({from: 'header', to: 'up'})
-
+    'click #search': ->
+      @trigger 'query', {to: 'search'}
+      
     'click #submit-body-form': ->
       @body_view.trigger 'header:submit-body-form'
 
