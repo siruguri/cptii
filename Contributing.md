@@ -37,11 +37,18 @@ These are notes to help folks contribute to this code base.
 JS based libraries
 
 * Materialize: managed via gems
-* Leaflet
 
-They are stored in `vendor/assets/` - to update, run a package manager, and copy the updated files, if any, to the vendor folder.For example, if you use `[yarn](https://yarnpkg.com/)`,
+Some assets are stored in `vendor/assets/`:
+
+* Leaflet
+* Dropzone
+
+To update, run a package manager to install/upgrade globally (say, [YarnJS](https://yarnpkg.com/)), and copy the updated files, if any, to the vendor folder. For example, if you use `[YarnJS](https://yarnpkg.com/)`,
 
     yarn global add leaflet # or yarn upgrade leaflet
+    yarn global add dropzone # or yarn upgrade dropzone
     cp ~/.yarn-config/global/node_modules/leaflet/dist/leaflet.css vendor/assets/stylesheets
     cp ~/.yarn-config/global/node_modules/leaflet/dist/leaflet.js vendor/assets/javascripts
+    cp ~/.yarn-config/global/node_modules/dropzone/dist/leaflet.css vendor/assets/stylesheets
+    cp ~/.yarn-config/global/node_modules/dropzone/dist/leaflet.js vendor/assets/javascripts
     

@@ -49,7 +49,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         if @is_category
           '/organizations?q=' + @search_query
         else
-          '/programs?q=' + @search_query   
+          '/programs?q=' + @search_query
       else
         '/profile.json?screen_number=' + ref
     u

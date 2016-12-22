@@ -23,6 +23,12 @@ class Program < ActiveRecord::Base
   def display_data
     o = organization
     {title: title, about: description, agency_name: o.title,
-     agency_contact: o.contact_details, cost: program_details['cost']}.merge(fetched_lat_lon)
+     agency_contact: o.contact_details, eligibility: program_details['eligibility'],
+     cost: program_details['cost']}.merge(fetched_lat_lon)
   end
+
+  def self.empty_display_data
+    {title: nil, about: nil, agency_name: nil, eligibility: '',
+     cost: '', lat: nil, lon: nil}
+  end    
 end

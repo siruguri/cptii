@@ -1,4 +1,17 @@
 .portfolio {
+  .portfolio-img {
+    &.dragged {
+      opacity: 0.3;
+    }
+    
+    height: 60px;
+    margin: auto;
+    width: auto;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    border-color: white;
+  }
+  
   &:hover {
     overflow-y: scroll;
   }
@@ -32,6 +45,7 @@
     .username {
       font-size: $portfolio-name-text;
       font-weight: bold;
+      margin-bottom: 17px;
     }
 
     margin-bottom: 8px;

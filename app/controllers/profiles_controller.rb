@@ -5,6 +5,11 @@ class ProfilesController < ApplicationController
   def index
   end
 
+  def add_photo
+    Rails.logger.debug "got here + #{params}"
+    head :ok
+  end
+  
   def update
     # The payload comes in as a specific ordering of data that is determined by the
     # [:payload][:code] parameter.
