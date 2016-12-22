@@ -5,6 +5,23 @@ class ProfilesController < ApplicationController
   def index
   end
 
+  def add_photo
+    updated = false
+    if current_user
+      p = current_user.profile
+      p.profile_pic = params[:file]
+      if p.save
+        updated = true
+      end
+    end
+
+    if !updated
+      head :ok
+    else
+      render json: ({redirect: '3'}), status: :ok
+    end
+  end
+  
   def update
     # The payload comes in as a specific ordering of data that is determined by the
     # [:payload][:code] parameter.
@@ -50,7 +67,8 @@ class ProfilesController < ApplicationController
         when '2'
           ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
         when '3'
-          entries = u.profile.profile_entries.to_a
+          p = u.profile
+          entries = p.profile_entries.to_a
           work_ex_list = entries.select { |e| e.entry_details.keys.include?("work_title") }.
                          map { |entry| {work_title: entry.entry_details['work_title'],
                                         work_workplace: entry.entry_details['work_workplace']}}
@@ -62,7 +80,8 @@ class ProfilesController < ApplicationController
                                }
           }
 
-          ({data: {user_info: {work_experience: work_ex_list,
+          ({data: {user_info: {profile_pic_url: p.profile_pic&.url,
+                               work_experience: work_ex_list,
                                achievements: achievements,
                                user_name: u.profile.full_name}}})
         when 'chat'

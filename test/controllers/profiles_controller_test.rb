@@ -1,6 +1,8 @@
 require 'test_helper'
 class ProfilesControllerTest < ActionController::TestCase
+  include ActionDispatch::TestProcess
   include Devise::Test::ControllerHelpers
+  
   def setup
     @student_1 = users(:student_1)
     sign_in @student_1
@@ -58,5 +60,20 @@ class ProfilesControllerTest < ActionController::TestCase
                                          payload: {code: 'add-an-achievement', data: ['type 1', 'i achieved it!']}}
       end
     end
+  end
+
+  describe '#add_photo' do
+    it 'fails without login' do
+      sign_out @student_1
+      post :add_photo, xhr: true, params: {file: File.open(fixture_file_as_io('sample.png'))}
+      assert_equal '', response.body
+    end
+
+    it 'returns redirect directive' do
+      Aws.config = {stub_responses: true}
+      Profile.any_instance.stubs(:save_attached_files).returns true
+      post :add_photo, xhr: true, params: {file: fixture_file_upload("files/sample.png", 'application/png')}
+      assert_match /{"redirect".*"3"}/, response.body
+    end      
   end
 end

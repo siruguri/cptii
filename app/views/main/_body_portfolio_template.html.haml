@@ -41,6 +41,9 @@
 %script#body_portfolio_template{type: 'text/template'}
   .portfolio-name.row
     .col.s12
+      %img.portfolio-img.loading{src: '/images/spinner.gif'}
+      %img#portfolio-img.portfolio-img{src: ''}
+    .col.s12
       .username
         <%- username %>
   .portfolio-card.row#workex

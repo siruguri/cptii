@@ -18,6 +18,12 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @body_view.trigger 'header:submit-body-form'
 
   change_screens: (change_obj) ->
+    # Gonna make it double to also do redirects
+
+    if change_obj.hasOwnProperty 'redirect'
+      @trigger 'post_redirect', {dest: change_obj.redirect}
+      return null
+      
     view_self = @
     @model.previous_screen = @model.current_screen
 

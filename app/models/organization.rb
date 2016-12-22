@@ -3,12 +3,11 @@ class Organization < ActiveRecord::Base
   def display_data
     first_p = programs.first
     program_hash = if first_p
-      {about: first_p.description}.merge(first_p.fetched_lat_lon)
+      first_p.display_data
     else
-      {about: nil, lat: nil, lon: nil}
+      Program.empty_display_data
     end
     
-    {title: self.title,
-     contact_details: self.contact_details, agency_name: self.title, cost: self.cost}.merge(program_hash)
+    {contact_details: self.contact_details, agency_name: self.title}.merge(program_hash)
   end
 end

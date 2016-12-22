@@ -21,7 +21,7 @@
 %script#org_list_card_template{type: 'text/template'}
   .card-entry.row
     .col.s12.title
-      <%- title %>
+      <%- agency_name %>
     .col.s12.contact-box
       Contacts Here
     .col.s2.detail-title
@@ -31,4 +31,8 @@
     .col.s2.detail-title
       Cost
     .col.s10.detail-text
-      <%- about %>
+      <%- cost %>
+    .col.s2.detail-title
+      Eligibility
+    .col.s10.detail-text
+      <%- eligibility %>

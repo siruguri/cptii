@@ -45,8 +45,40 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       t_func = _.template $('#body_portfolio_template').html()
       @$el.html t_func({username: @model.user_info.user_name})
 
+    @$el.find('#portfolio-img').attr('src', @model.user_info.profile_pic_url)
     view_self = @
+
+    # Create drop zone
+    $.ajaxSetup(
+      headers:
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    )
+    
+    dz = $("#portfolio-img").dropzone(
+      url: "/profile/photo"
+      headers:
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      init: ->
+        @on('success', (file, resp) ->
+          if resp.hasOwnProperty('redirect')
+            view_self.trigger 'navigation:change', {redirect: resp.redirect}
+        )
+    )
+    dz.on('dragenter', (e) ->
+      $(e.target).addClass('dragged')
+    )
+    dz.on('dragleave', (e) ->
+      $(e.target).removeClass('dragged')
+    )
+    dz.on('drop', (e) ->
+      $(e.target).removeClass('dragged')
+      $(e.target).hide()
+      $('.portfolio-img.loading').show()
+    )
+          
+    # Add work experience
     wex_card = @$el.find('.portfolio-card#workex')
+    
     @model.user_info.work_experience.forEach (item) ->
       t_func = _.template $('#body_portfolio_work_experience').html()
       wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))

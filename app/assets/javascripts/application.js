@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require leaflet
+//= require dropzone
 //= require materialize-sprockets
 //= require underscore
 //= require backbone

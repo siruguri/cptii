@@ -24036,34 +24036,6 @@ p_rec.program_details['eir_id'] = 'PG003778'
 p_rec.address = '159 Washington Blvd, Fremont	3683 Peralta Blvd, Fremont'
 o_rec.save
 p_rec.save
-o_rec = Organization.find_or_create_by title: 'United States Government - Federal Trade Commission (FTC)'
-o_rec.contact_details = {} if o_rec.contact_details.nil?
-o_rec.contact_details['eir_id'] = 'J2631'
-p_rec = Program.find_or_create_by title: 'Identity Theft Complaints - Consumer Response Center', organization: o_rec
-p_rec.organization = o_rec
-p_rec.description = 'Accepts complaints, comments or inquiries regarding identity theft. Provides information on how to proceed if victimized by identity theft. Information is provided online, by toll-free telephone helpline and by postal mail.	Investigates patterns of law violations requiring law enforcement action.'
-p_rec.program_details = {} if p_rec.program_details.nil?
-p_rec.program_details['region'] = 'Alameda County; nationwide.'
-p_rec.program_details['eligibility'] = 'Open to all.'
-p_rec.program_details['cost'] = 'None to obtain information or to file a complaint.'
-p_rec.program_details['eir_id'] = 'PG003793'
-p_rec.address = '600 Pennsylvania Avenue, NW, Washington'
-o_rec.save
-p_rec.save
-o_rec = Organization.find_or_create_by title: 'United States Government - Federal Trade Commission (FTC)'
-o_rec.contact_details = {} if o_rec.contact_details.nil?
-o_rec.contact_details['eir_id'] = 'J2631'
-p_rec = Program.find_or_create_by title: 'National Do Not Call Registry', organization: o_rec
-p_rec.organization = o_rec
-p_rec.description = 'The National Do Not Call Registry gives a choice about whether to receive telemarketing calls at home. Most telemarketers should not call a number once it has been on the registry for 31 days. If so, a complaint can be filed at the website. Call for more information.'
-p_rec.program_details = {} if p_rec.program_details.nil?
-p_rec.program_details['region'] = 'Alameda County, Statewide, Nationwide.'
-p_rec.program_details['eligibility'] = 'Anyone with a phone; cell, home, and or business.'
-p_rec.program_details['cost'] = 'None.'
-p_rec.program_details['eir_id'] = 'PG004086'
-p_rec.address = '600 Pennsylvania Avenue, NW, Washington'
-o_rec.save
-p_rec.save
 o_rec = Organization.find_or_create_by title: 'Food Addicts in Recovery Anonymous (FA)'
 o_rec.contact_details = {} if o_rec.contact_details.nil?
 o_rec.contact_details['eir_id'] = 'J2633'

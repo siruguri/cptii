@@ -18,6 +18,9 @@ gem 'rails_admin'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
+gem 'paperclip'
+gem 'aws-sdk', '~> 2'
+gem 'aws-sdk-resources'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'

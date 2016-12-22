@@ -8,6 +8,7 @@ GoalGetter::Application.routes.draw do
   resources :chat_records, only: [:create, :index]
   resource :profile, only: [:show, :update] do
     get :index, path: '/all'
+    post :add_photo, path: '/photo'
   end
   
   scope :taxonomy, controller: :taxonomy do

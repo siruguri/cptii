@@ -1,8 +1,13 @@
 GoalGetter.Views.ControlView = Backbone.View.extend
   className: 'app-container'
   initialize: ->
-    _.bindAll(@, 'render')
-
+    _.bindAll @, 'render'
+    _.bindAll @, 'load_and_render'
+    
+  reload_app: (obj) ->
+    # Nuclear option to just load the app again
+    if obj.hasOwnProperty 'dest'
+      window.document.location.href = '/?screen=' + obj.dest
   change_nav: (args...) ->
     @header.change_screens {from: 'control', to: args[0]}
   do_search: (args...) ->
@@ -10,6 +15,15 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     
   load_and_render: ->
     @body_model = new GoalGetter.Models.AppBodyModel()
+
+    # If there is a valid parameter, use it to generate a specific tab.
+    if window.document.location.search != ''
+      x = window.document.location.search.split('?')[1].split('screen=')
+      if x.length > 1
+        screen_param = x[1]
+        unless isNaN((num = parseInt(screen_param))) or typeof @body_model.directory_level[screen_param] == 'undefined'
+          @body_model.set_current_screen screen_param
+    
     @listenTo @body_model, 'body_model:ready', @render
     @body_model.init_fetch()
 
@@ -38,6 +52,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
       model: @body_model
 
     @listenTo @header, 'query', @flip_headers
+    @listenTo @header, 'post_redirect', @reload_app
     @footer = new GoalGetter.Views.FooterView
       model: @body_model
 
