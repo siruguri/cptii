@@ -16,6 +16,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     
   # entry point from views/control_view
   init_fetch: ->
+    @logged_in = ($('#login_token').data('value') == 42)
     model_self = @
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->

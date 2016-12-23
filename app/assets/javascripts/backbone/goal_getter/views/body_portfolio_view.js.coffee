@@ -36,15 +36,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       )
       
   render: ->
-    if !@model.logged_in
-      # return quickly
-      t_func = _.template $('#body_portfolio_template_loggedout').html()
-      @$el.html t_func()
-      return @$el
-    else
-      t_func = _.template $('#body_portfolio_template').html()
-      @$el.html t_func({username: @model.user_info.user_name})
-
+    t_func = _.template $('#body_portfolio_template').html()
+    @$el.html t_func({username: @model.user_info.user_name})
     @$el.find('#portfolio-img').attr('src', @model.user_info.profile_pic_url)
     view_self = @
 

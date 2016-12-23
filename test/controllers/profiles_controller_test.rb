@@ -11,6 +11,12 @@ class ProfilesControllerTest < ActionController::TestCase
   end
   
   describe '#show' do
+    it 'works for guides screen without login' do
+      sign_out @student_1
+      get :show, xhr: true, params: {format: 'json', screen_number: '1'}
+      assert JSON.parse(response.body)['data'].keys.include? 'guides'
+    end
+    
     it 'works for counselor screen' do
       get :show, xhr: true, params: {format: 'json', screen_number: '2'}
       assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']

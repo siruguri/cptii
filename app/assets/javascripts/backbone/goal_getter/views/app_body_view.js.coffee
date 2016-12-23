@@ -53,7 +53,6 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     curr_screen_ref = @model.current_screen
     if typeof @screens[curr_screen_ref] == 'undefined' or @screens[curr_screen_ref].$el.html() == ''
       # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
-      @model.logged_in = ($('#login_token').data('value') == 42)
       @model.get_screen_data curr_screen_ref if curr_screen_ref != '0'
 
       if typeof @screens[curr_screen_ref] == 'undefined'

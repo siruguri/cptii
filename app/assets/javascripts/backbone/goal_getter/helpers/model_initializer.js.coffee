@@ -10,6 +10,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience' : 1
       'add-an-achievement' : 1
       'search-results': 1
+      'logged-out': 0
             
     model_obj.up_level =
       'chat': '2'
@@ -37,6 +38,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-an-achievement' : true
       'chat': true
       'search-results': false
+      'logged-out': false
       
     model_obj.screen_data_ready =
       '0': true
@@ -48,6 +50,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience': true
       'add-an-achievement' : true
       'search-results': false
+      'logged-out': true
       
     model_obj.texts =
       '0': 'Services',
@@ -59,6 +62,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
       'search-results': '$query'
+      'logged-out': ''
 
   resolve_to_class_name: (index) ->
     switch index
@@ -71,3 +75,4 @@ GoalGetter.Helpers.ModelInitializer =
       when 'add-work-experience' then 'AddWorkView'
       when 'add-an-achievement' then 'AddAnAchievement'
       when 'search-results' then 'SearchResultsView'
+      when 'logged-out' then 'LoggedOutView'

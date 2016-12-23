@@ -59,44 +59,50 @@ class ProfilesController < ApplicationController
       sleep 2
     end
 
-    u = current_user
     screen_number = params[:screen_number]
-    d =
-      if u
-        case screen_number
-        when '2'
-          ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
-        when '3'
-          p = u.profile
-          entries = p.profile_entries.to_a
-          work_ex_list = entries.select { |e| e.entry_details.keys.include?("work_title") }.
-                         map { |entry| {work_title: entry.entry_details['work_title'],
-                                        work_workplace: entry.entry_details['work_workplace']}}
+    
+    # Data that doesn't require login
+    if screen_number == '1'
+      d = ({data: {guides: 'guides'}})
+    else
+      u = current_user
+      d =
+        if u
+          case screen_number
+          when '2'
+            ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
+          when '3'
+            p = u.profile
+            entries = p.profile_entries.to_a
+            work_ex_list = entries.select { |e| e.entry_details.keys.include?("work_title") }.
+                           map { |entry| {work_title: entry.entry_details['work_title'],
+                                          work_workplace: entry.entry_details['work_workplace']}}
 
-          achievements = entries.select { |e| e.entry_details.keys.include?("achievement_type") }.
-                         group_by { |e| e.entry_details['achievement_type']}.
-                         map { |type, recs| {type: type,
-                                             texts: recs.map { |r| r.entry_details['achievement_text']}
-                               }
-          }
+            achievements = entries.select { |e| e.entry_details.keys.include?("achievement_type") }.
+                           group_by { |e| e.entry_details['achievement_type']}.
+                           map { |type, recs| {type: type,
+                                               texts: recs.map { |r| r.entry_details['achievement_text']}
+                                 }
+            }
 
-          ({data: {user_info: {profile_pic_url: p.profile_pic&.url,
-                               work_experience: work_ex_list,
-                               achievements: achievements,
-                               user_name: u.profile.full_name}}})
-        when 'chat'
-          id = u.id
-          recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).
-                 map do |r|
-            {message: r.message, at: r.written_time, relation: (r.sender_id == id ? 'sent' : 'received')}
+            ({data: {user_info: {profile_pic_url: p.profile_pic&.url,
+                                 work_experience: work_ex_list,
+                                 achievements: achievements,
+                                 user_name: u.profile.full_name}}})
+          when 'chat'
+            id = u.id
+            recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).
+                   map do |r|
+              {message: r.message, at: r.written_time, relation: (r.sender_id == id ? 'sent' : 'received')}
+            end
+            
+            ({data: {user_info: {rec_count: recs.count, recs: recs}}})
           end
-              
-          ({data: {user_info: {rec_count: recs.count, recs: recs}}})
+        else
+          ({data: {}})
         end
-      else
-        ({data: {}})
-      end
-      
+    end
+    
     render json: d
   end
 

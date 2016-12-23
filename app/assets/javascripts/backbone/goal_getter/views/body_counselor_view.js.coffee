@@ -13,11 +13,4 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
     name = @model.user_info.counselor_name
     
     @$el.html t_func({name: name})
-    if name == null
-      @$el.find('#logged-out-screen').show()
-      @$el.find('#logged-in-screen').hide()
-    else
-      @$el.find('#logged-in-screen').show()
-      @$el.find('#logged-out-screen').hide()
-
     @$el

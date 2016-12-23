@@ -5,16 +5,19 @@ class TopLevelsTest < Capybara::Rails::TestCase
   
   def setup
     Capybara.current_driver = :poltergeist
-    login_as users(:student_1), scope: :user, run_callbacks: false
+    logout :user
     # In support/ file
-    jsonb_initializations!
-    visit "/"
   end
 
-  describe 'root navigation' do
+  describe 'root navigation without login' do
     it 'starts with Services' do
-      sleep 1
+      visit "/"
       assert_match /selected/i, page.all('.footer .nav-change')[0][:class]
+    end
+
+    it 'can switch with parameter' do
+      visit "/?screen=1"
+      assert_match /selected/i, page.all('.footer .nav-change')[1][:class]
     end
   end
 

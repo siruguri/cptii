@@ -19,11 +19,10 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
   change_screens: (change_obj) ->
     # Gonna make it double to also do redirects
-
     if change_obj.hasOwnProperty 'redirect'
       @trigger 'post_redirect', {dest: change_obj.redirect}
       return null
-      
+
     view_self = @
     @model.previous_screen = @model.current_screen
 
@@ -39,7 +38,13 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     if change_obj.hasOwnProperty('refresh_screen')
       change_obj.refresh_screen.forEach (key) ->
         view_self.body_view.refresh_screen key
-        
+
+    if @model.requires_login[@model.current_screen] and !@model.logged_in
+      # Divert the screen to the logged out screen
+      # Pretend to use the title from whatever screen you don't have access to
+      @model.texts['logged-out'] = @model.texts[@model.current_screen]
+      @model.current_screen = 'logged-out'
+      
     @render_with_body()
     
   render_with_body: ->

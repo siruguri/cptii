@@ -1,7 +1,9 @@
-GoalGetter.Views.GuidesView = Backbone.View.extend
+GoalGetter.Views.GuidesView = GoalGetter.Views.ScreenBase.extend
+  className: 'guides row'
   initialize: ->
     _.bindAll @, 'render'
   render: ->
-    t_func = _.template $('#body_template').html()
-    text = t_func @model.display_data()
-    @$el.html text
+    t_func = _.template $('#body_guides_template').html()
+    @$el.html()
+
+    @$el
