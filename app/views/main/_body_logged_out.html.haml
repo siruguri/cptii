@@ -1,3 +1,15 @@
 %script#loggedout_template{type: 'text/template'}
-  #logged-out-screen
-    = link_to 'Sign In', new_user_session_path
+  .logged-out-screen
+    .logged-out-image
+      %img{src: ''}
+    .message
+      .message-title
+        <%- message_title %>
+      .message-body
+        <%- message_body %>
+    .signin-bar.row
+      .signin.col.s6
+        = link_to 'sign in', new_user_session_path
+      .register.col.s6
+        = link_to 'register', new_user_registration_path
+

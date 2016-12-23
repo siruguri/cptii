@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :counselor_assignments
 
   after_create :make_blank_profile
+  attr_accessor :first_name, :last_name
   
   def counselor
     # Can return nil

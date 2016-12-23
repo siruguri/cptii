@@ -54,3 +54,20 @@ svg.defs {
   width: 0;
   display: block;
 }
+
+.signin-form {
+  padding: 80px 20px;
+  border-left: solid 1px black;
+  margin: 0 50px;
+  border-right: solid 1px black;
+  .sign-in-form {
+    position: relative;
+    .error-message {
+      position: absolute;
+      top: -60px;
+      color: red;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}

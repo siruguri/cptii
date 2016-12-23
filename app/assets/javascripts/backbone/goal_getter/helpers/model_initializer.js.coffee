@@ -1,5 +1,12 @@
 GoalGetter.Helpers.ModelInitializer =
   initialize_model: (model_obj) ->
+    model_obj.logged_out_texts =
+      '2':
+        title: 'Get in touch with your school\'s counselor'
+        body: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+        img_url: '/images/logged_out_counselor.png'
+        bkgrd_color: '#00b9e6'
+        
     model_obj.directory_level =
       '0': 0
       '1': 0

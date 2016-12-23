@@ -4,7 +4,7 @@ class TopLevelsTest < Capybara::Rails::TestCase
   self.use_transactional_tests = false
   
   def setup
-    Capybara.current_driver = :poltergeist
+    Capybara.current_driver = :selenium
     logout :user
     # In support/ file
   end
