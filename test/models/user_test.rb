@@ -8,11 +8,11 @@ class UserTest < ActiveSupport::TestCase
   describe '#counselor' do
     describe 'failure' do
       it 'when there is no school' do
-        assert_equal nil, users(:noschool_student).counselor
+        assert_nil users(:noschool_student).counselor
       end
 
       it 'when there is no counselor' do
-        assert_equal nil, users(:uncounseled_student).counselor
+        assert_nil users(:uncounseled_student).counselor
       end
     end
     
