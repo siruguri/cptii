@@ -33,7 +33,7 @@ class Profile < ActiveRecord::Base
   end
   
   def full_name
-    "#{contact_details['first_name']} #{contact_details['last_name']}"
+    contact_details.present? ? ("#{contact_details['first_name']} #{contact_details['last_name']}") : ''
   end
 
   private

@@ -9,8 +9,9 @@ module Users
       else
         u = User.new email: params[:user][:email], password: params[:user][:password]
         u.save
-        u.build_profile
-        u.profile.save
+        p = u.build_profile
+        p.contact_details = {first_name: params[:user][:first_name], last_name: params[:user][:last_name]}
+        p.save
         redirect_to root_path
       end
     end

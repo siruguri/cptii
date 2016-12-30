@@ -26,6 +26,10 @@ module Users
         assert_difference('User.count', 1) do 
           post :create, params: ({user: @good_hash})
         end
+
+        p = User.last.profile
+        assert_equal @good_hash[:first_name], p.contact_details['first_name']
+        assert_equal @good_hash[:last_name], p.contact_details['last_name']
         assert_redirected_to root_path
       end
     end
