@@ -1,6 +1,8 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_secure_token
+
+  before_create :initialize_empty_jsonb
   
   has_many :profile_entries, dependent: :destroy
   has_attached_file :profile_pic, storage: :s3, url: ":s3_domain_url", s3_protocol: :http,
@@ -20,7 +22,7 @@ class Profile < ActiveRecord::Base
   end
   
   def school
-    School.find_by_id contact_details["school_id"]
+    contact_details.present? ? School.find_by_id(contact_details["school_id"]) : nil
   end
 
   def school=(s)
@@ -32,5 +34,12 @@ class Profile < ActiveRecord::Base
   
   def full_name
     "#{contact_details['first_name']} #{contact_details['last_name']}"
+  end
+
+  private
+  def initialize_empty_jsonb
+    unless contact_details.present?
+      self.contact_details = {}
+    end
   end
 end

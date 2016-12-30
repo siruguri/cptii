@@ -1,4 +1,8 @@
 GoalGetter.Views.ScreenBase = Backbone.View.extend
+  refresh_data: ->
+    # Default is to do nothing
+    # Views might override this.
+
   wait_and_render: (screen_number, context) ->
     # For now the Services screen (0) is instantly renderable. This won't work if screen 0 is not
     # always the default.

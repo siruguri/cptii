@@ -7,8 +7,11 @@ module Users
         flash[:error] = "Supply both email and password, and ensure passwords match."
         redirect_to new_user_registration_path
       else
-        flash[:error] = 'good job'
-        redirect_to new_user_registration_path
+        u = User.new email: params[:user][:email], password: params[:user][:password]
+        u.save
+        u.build_profile
+        u.profile.save
+        redirect_to root_path
       end
     end
 

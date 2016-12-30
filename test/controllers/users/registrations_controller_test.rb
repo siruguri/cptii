@@ -4,8 +4,8 @@ module Users
     describe '#create' do
       before do
         @request.env["devise.mapping"] = Devise.mappings[:user]
-        @good_hash = {first_name: 'a', last_name: 'b', password_confirmation: 'sadf',
-                                       email: 'email', password: 'sadf'}
+        @good_hash = {first_name: 'a', last_name: 'b', password_confirmation: 'sadfsadf1',
+                                       email: 'email@email.com', password: 'sadfsadf1'}
       end
       
       it 'handles errors' do
@@ -23,10 +23,10 @@ module Users
       end
 
       it 'goes through successfully' do
-        post :create, params: ({user: @good_hash})
-
-        assert_redirected_to new_user_registration_path
-        assert_match /job/i, flash[:error]
+        assert_difference('User.count', 1) do 
+          post :create, params: ({user: @good_hash})
+        end
+        assert_redirected_to root_path
       end
     end
 

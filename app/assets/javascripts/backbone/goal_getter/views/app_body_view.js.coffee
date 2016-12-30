@@ -63,5 +63,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
       @$el.append @screens[curr_screen_ref].wait_and_render(curr_screen_ref)
 
     @screens[curr_screen_ref].$el.show()
+    # Some screens might know they have new data to render even if the view is already there.
+    @screens[curr_screen_ref].refresh_data()
     
     @$el

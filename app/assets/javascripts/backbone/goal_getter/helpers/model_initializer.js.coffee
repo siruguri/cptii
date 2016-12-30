@@ -6,6 +6,17 @@ GoalGetter.Helpers.ModelInitializer =
         body: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
         img_url: '/images/logged_out_counselor.png'
         bkgrd_color: '#00b9e6'
+      '3':
+        title: 'Build your portfolio and share with potential employers'
+        body: 'Ultricies vehicula ut id elit, cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh .'
+        img_url: '/images/logged_out_portfolio.png'
+        bkgrd_color: '#00b9e6'
+      '4':
+        title: 'Add and store your professional contacts'
+        body: 'Dapibus ac facilisis in, cras justo odio, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+        img_url: '/images/logged_out_contacts.png'
+        bkgrd_color: '#00b9e6'
+        
         
     model_obj.directory_level =
       '0': 0

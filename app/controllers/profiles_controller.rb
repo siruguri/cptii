@@ -70,7 +70,7 @@ class ProfilesController < ApplicationController
         if u
           case screen_number
           when '2'
-            ({data: {user_info: {counselor_name: u.counselor.profile.full_name}}})
+            ({data: {user_info: {counselor_name: u.counselor&.profile&.full_name}}})
           when '3'
             p = u.profile
             entries = p.profile_entries.to_a
