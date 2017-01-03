@@ -6,5 +6,11 @@
       saved
   .guides-list.row
 %script#body_guides_guidelist_template{type: 'text/template'}
-  .col.s12.guide-title
+  .col.s12.guide-title.pointer
     <%- title %>
+
+%script#body_guides_singleview_template{type: 'text/template'}
+  .col.s12.title
+    <%- title %>
+  .col.s12.description
+    <%- description %>

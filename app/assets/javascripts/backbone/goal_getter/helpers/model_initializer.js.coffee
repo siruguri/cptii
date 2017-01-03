@@ -28,6 +28,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience' : 1
       'add-an-achievement' : 1
       'search-results': 1
+      'guide-single': 1
       'logged-out': 0
             
     model_obj.up_level =
@@ -35,6 +36,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience' : '3'
       'add-an-achievement' : '3'
       'search-results': '0'
+      'guide-single': '1'
       
     model_obj.header_config =
       'add-work-experience' :
@@ -45,6 +47,9 @@ GoalGetter.Helpers.ModelInitializer =
         has_search: true
       'search-results':
         has_search: true
+      'guide-single' :
+        has_star: true
+        has_share: true
       '0':
         has_search: true
         
@@ -58,6 +63,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-an-achievement' : true
       'chat': true
       'search-results': false
+      'guide-single' : false
       'logged-out': false
       
     model_obj.screen_data_ready =
@@ -70,6 +76,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience': true
       'add-an-achievement' : true
       'search-results': false
+      'guide-single' : false
       'logged-out': true
       
     model_obj.texts =
@@ -81,6 +88,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat' : '$counselor_name'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
+      'guide-single' : '$guide_title'
       'search-results': '$query'
       'logged-out': ''
 
@@ -95,4 +103,5 @@ GoalGetter.Helpers.ModelInitializer =
       when 'add-work-experience' then 'AddWorkView'
       when 'add-an-achievement' then 'AddAnAchievement'
       when 'search-results' then 'SearchResultsView'
+      when 'guide-single' then 'GuideSingleView'
       when 'logged-out' then 'LoggedOutView'

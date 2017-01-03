@@ -27,8 +27,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     view_self = @
     @model.previous_screen = @model.current_screen
 
-    if @model.previous_screen == 'search-results'
-      @body_view.garbage 'search-results'
+    if @model.previous_screen == 'search-results' || @model.previous_screen == 'guide-single'
+      @body_view.garbage @model.previous_screen
       
     dest = change_obj.to
     if dest == 'up'

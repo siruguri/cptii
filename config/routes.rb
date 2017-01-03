@@ -3,6 +3,7 @@ GoalGetter::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
   devise_for :admins
 
+  resources :guides, only: [:show]
   resources :programs, only: [:index]
   resources :organizations, only: [:index]
   resources :chat_records, only: [:create, :index]

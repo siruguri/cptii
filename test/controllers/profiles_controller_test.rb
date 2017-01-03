@@ -17,6 +17,7 @@ class ProfilesControllerTest < ActionController::TestCase
       b = JSON.parse(response.body)
       assert b['data'].keys.include? 'guides'
       assert_equal ContentResource.where(resource_type: 'guides').count, b['data']['guides'].size
+      assert_equal ['id', 'title'], b['data']['guides'][0].keys.sort
     end
     
     it 'works for counselor screen' do

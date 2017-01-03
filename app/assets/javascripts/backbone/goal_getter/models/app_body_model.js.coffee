@@ -13,6 +13,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     _.bindAll @, 'display_data'
     _.bindAll @, 'counselor_name'
     _.bindAll @, 'query'
+    _.bindAll @, 'guide_title'
     
   # entry point from views/control_view
   init_fetch: ->
@@ -51,6 +52,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/organizations?q=' + @search_query
         else
           '/programs?q=' + @search_query
+      else if ref == 'guide-single'
+        '/guides/' + @body_guide_id
       else
         '/profile.json?screen_number=' + ref
     u
@@ -78,6 +81,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.search_results = d.data
       else if screen_number == '1'
         model_self.guides = d.data['guides']
+      else if screen_number == 'guide-single'
+        model_self.guide_data = d.data
       else
         model_self.user_info = d.data.user_info
     )
@@ -89,6 +94,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @user_info.counselor_name
   query: ->
     @search_query
+  guide_title: ->
+    @body_guide_title
         
   header_title: ->
     if @texts[@current_screen][0] == '$'

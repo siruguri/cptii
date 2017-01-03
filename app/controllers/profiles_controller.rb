@@ -63,7 +63,7 @@ class ProfilesController < ApplicationController
     
     # Data that doesn't require login
     if screen_number == '1'
-      list = ContentResource.where(resource_type: 'guides').pluck :title
+      list = ContentResource.where(resource_type: 'guides').pluck(:title, :id).map { |rec_pair| ({title: rec_pair[0], id: rec_pair[1]})}
       d = ({data: {guides: list}})
     else
       u = current_user
