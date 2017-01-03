@@ -1,0 +1,14 @@
+.guides-list {
+  padding: 8px 8px 8px 0;
+  margin-bottom: 0;
+  background-color: $light-gray;
+  
+  .guide-title {
+    padding: 24px 0 48px 0;
+    font-size: $body-text;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}

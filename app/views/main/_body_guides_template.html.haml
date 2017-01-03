@@ -1,2 +1,10 @@
 %script#body_guides_template{type: 'text/template'}
-  .guides-list
+  .switcher-tab.row
+    .col.s6#goto-list.goto.selected.pointer
+      list
+    .col.s6#goto-saved.goto.pointer
+      saved
+  .guides-list.row
+%script#body_guides_guidelist_template{type: 'text/template'}
+  .col.s12.guide-title
+    <%- title %>

@@ -76,6 +76,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
       if screen_number == 'search-results'
         model_self.search_results = d.data
+      else if screen_number == '1'
+        model_self.guides = d.data['guides']
       else
         model_self.user_info = d.data.user_info
     )

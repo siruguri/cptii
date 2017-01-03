@@ -11,28 +11,6 @@
   height: 100%;
   width: 100%;
 
-  .switcher-tab {
-    display: block;
-    margin-bottom: 0;
-    width: 100%;
-    background-color: $basic-blue;
-    height: 53px;
-
-    .goto {
-      height: 100%;
-      padding-top: 12px;
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-align: center;
-      
-      &.selected {
-	border-bottom: solid 3px white;
-      }
-    }
-  }
-    
   &:hover {
     overflow-y: scroll;
   }

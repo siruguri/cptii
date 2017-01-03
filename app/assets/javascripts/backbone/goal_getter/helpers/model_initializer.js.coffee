@@ -41,6 +41,8 @@ GoalGetter.Helpers.ModelInitializer =
         has_done: true
       'add-an-achievement' :
         has_done: true
+      '1' :
+        has_search: true
       'search-results':
         has_search: true
       '0':

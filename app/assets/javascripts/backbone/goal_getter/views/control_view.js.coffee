@@ -31,11 +31,14 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     switch e.to
       when 'search'
         @header.$el.hide()
+        @header.model.search_back = @header.model.current_screen
+        
         @header_search.$el.show()
         @header_search.$el.find('input').focus()
       when 'base'
         @header.$el.show()
-        @header.change_screens {from: 'control', to: '0'}
+        @header.change_screens {from: 'control', to: @header.model.search_back}
+        @header.model.search_back = null
         @header_search.$el.hide()
     
   render: ->

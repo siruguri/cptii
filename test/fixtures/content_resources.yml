@@ -1,0 +1,13 @@
+cr_1:
+  resource_type: guides
+  title: guide 1
+  description: this is a guide 1
+cr_2:
+  resource_type: guides
+  title: guide 2
+  description: this is a guide 2
+cr_notguide:
+  resource_type: guides
+  title: go here
+  description: not a guide
+  
