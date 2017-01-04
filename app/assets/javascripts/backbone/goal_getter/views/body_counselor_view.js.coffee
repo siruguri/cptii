@@ -5,7 +5,10 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
     @listenTo @model, 'model:updated', @render
 
   events:
-    'click .nametext': ->
+    'click .nametext': 'chat_window',
+    'click .floating-action.chat': 'chat_window'
+    
+  chat_window: ->
       @trigger 'navigation:change', {from: 'counselor', to: 'chat'}
       
   render: ->

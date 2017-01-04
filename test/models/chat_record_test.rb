@@ -3,7 +3,7 @@ class ChatRecordTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
   
   test 'after_create' do
-    assert_enqueued_with(job: ActionMailer::DeliveryJob) do
+    assert_enqueued_with(job: CounselorMailJob) do
       r = ChatRecord.create(
         sender: users(:student_1),
         receiver: users(:counselor_1),

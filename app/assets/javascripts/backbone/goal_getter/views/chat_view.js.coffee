@@ -23,7 +23,7 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
         $.ajax('/chat_records',
           method: 'post',
           data:
-            message: txt
+            message_to_counselor: txt
           success: (d, s, x) ->
             view_self.$el.find('.userinput').text ''
             view_self.$el.find('#chatarea').addClass 'empty'

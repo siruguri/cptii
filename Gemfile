@@ -40,6 +40,7 @@ gem 'geocoder'
 gem 'devise'
 gem 'haml-rails'
 gem 'sidekiq'
+gem 'sendgrid-ruby'
 
 gem 'redis-namespace'
 # Required for sidekiq monitoring
