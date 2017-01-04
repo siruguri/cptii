@@ -23,11 +23,18 @@ class ChatRecordsControllerTest < ActionController::TestCase
     end
     sign_out :user
     cr = ChatRecord.last
-    to = "#{cr.token}+sms@counselors.com"
+    to = "first last <#{cr.token}+sms@counselors.com>"
 
     assert_difference('ChatRecord.count', 1) do
-      post :create, params: {to: to, text: 'response!'}
+      post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
     end
-    assert_equal 200, response.status
+    assert_equal 'response!', ChatRecord.last.message
+
+    to = "first last <123+sms@counselors.com>"
+    refute_difference('ChatRecord.count') do
+      post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: 'response!', api_key: 'testkey'}
+    end
+    
+    assert_equal 422, response.status
   end
 end

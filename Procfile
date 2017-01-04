@@ -1,3 +1,2 @@
 web: bin/rails s
-redis: redis-server
-worker: bundle exec sidekiq -q mailers
+worker: bundle exec sidekiq -q mailers  -e production -c 3
