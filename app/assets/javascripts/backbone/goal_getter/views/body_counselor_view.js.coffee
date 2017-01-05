@@ -9,7 +9,7 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
     'click .floating-action.chat': 'chat_window'
     
   chat_window: ->
-      @trigger 'navigation:change', {from: 'counselor', to: 'chat'}
+    @trigger 'navigation:change', {from: 'counselor', to: 'chat'}
       
   render: ->
     t_func = _.template $('#body_counselor_template').html()

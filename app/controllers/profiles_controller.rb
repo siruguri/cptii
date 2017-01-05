@@ -94,7 +94,7 @@ class ProfilesController < ApplicationController
             id = u.id
             recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).
                    map do |r|
-              {message: r.message, at: r.written_time, relation: (r.sender_id == id ? 'sent' : 'received')}
+              {message: r.message, at: r.written_time, is_response: (r.sender_id != id)}
             end
             
             ({data: {user_info: {rec_count: recs.count, recs: recs}}})

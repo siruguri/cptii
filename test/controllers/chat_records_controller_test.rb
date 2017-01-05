@@ -8,6 +8,38 @@ class ChatRecordsControllerTest < ActionController::TestCase
     sign_in @student
     jsonb_initializations!
   end
+
+  test '#index' do
+    # get latest chats (JS uses milliseconds in epoch calcs)
+    lrt = Time.now.to_i * 1000
+
+    cr = ChatRecord.new(
+      sender: @student, receiver: @student.counselor,
+      message: 'student says', written_time: Time.now + 2.hours, skip_callbacks: true
+    )
+    cr.save  
+    
+    cr = ChatRecord.new(
+      receiver: @student, sender: @student.counselor,
+      message: 'counselor says', written_time: Time.now + 3.hours, skip_callbacks: true
+    )
+    cr.save  
+    cr = ChatRecord.new(
+    receiver: @student, sender: @student.counselor,
+    message: 'counselor says again', written_time: Time.now + 4.hours, skip_callbacks: true
+    )
+    cr.save
+
+    get :index, params: {last_request_time: lrt}
+    b = JSON.parse response.body
+    assert_equal 2, b.size # less one of the above two messages
+    assert_equal 'counselor says', b[0]['message']
+
+    get :index, params: {last_request_time: '-1'}
+    b = JSON.parse response.body
+    assert_equal 3 + 3, b.size # all the above two messages, + 3 fixtures
+    assert_equal 'student says', b[3]['message']    
+  end
   
   test '#create from app' do
     assert_enqueued_with(job: CounselorMailJob) do

@@ -1,5 +1,33 @@
 class ChatRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token, if: :skip_token_on_auth
+
+  def index
+    d = 
+      if current_user
+        # JS returns epoch in milliseconds, but Postgres uses seconds :(
+        # a valid LRT means we only want responses.
+        reln = if (lrt = params[:last_request_time].to_i) > 0 
+                 ChatRecord.where('receiver_id = ? and extract(epoch from written_time) > ?',
+                                  current_user.id,
+                                  lrt/1000)
+               else
+                 # else, the full index
+                 ChatRecord.where('receiver_id = ?', current_user.id).or(
+                   ChatRecord.where('sender_id = ?', current_user.id)
+                 )
+               end
+        reln = reln.order(written_time: :asc)
+
+        # Generate response for UI
+        reln.to_a.map do |rec|
+          {written_time: rec.written_time, message: rec.message, is_response: rec.sender_id != current_user.id}
+        end
+      else
+        []
+      end
+
+    render json: d, status: :ok 
+  end
   
   def create
     resp, status =

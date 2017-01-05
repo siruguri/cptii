@@ -1,33 +1,61 @@
 .chat-window {
+  .send-icon {
+    height: 20px;
+    width: 20px;
+    margin-top: 11.5px;
+  }
+  
   position: relative;
   height: 100%;
   width: 100%;
   .chat-list {
     overflow-y: scroll;
     
-    .sent {
-      float: right;
-      color: white;
-      background-color: $basic-blue;      
+    .chat-bubble {
       padding: 5.5px 7.5px;
       clear: both;
       margin-bottom: 30px; 
       position: relative;
-    }      
-    .sent:after {
-      display: block;
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      right: 0;
-      height: 10px;
-      width: 10px;
-      border-width: 5px;
-      border-top-color: $basic-blue;
-      border-right-color: $basic-blue;
-
-      border-style: solid;
-    }
+      &.sent {
+	float: right;
+	color: white;
+	background-color: $basic-blue;
+	&:after {
+	  display: block;
+	  content: '';
+	  position: absolute;
+	  bottom: -10px;
+	  left: 0;
+	  height: 10px;
+	  width: 10px;
+	  border-width: 5px;
+	  border-top-color: $basic-blue;
+	  border-left-color: $basic-blue;
+	  border-style: solid;
+	}
+      }
+      
+      &.received {
+	float: left;
+	color: $darker-gray;
+	background-color: $medium-gray;
+	&:after {
+	  display: block;
+	  content: '';
+	  position: absolute;
+	  bottom: -10px;
+	  right: 0;
+	  height: 10px;
+	  width: 10px;
+	  border-width: 5px;
+	  border-top-color: $medium-gray;
+	  border-right-color: $medium-gray;
+	  border-left-color: transparent;
+	  border-bottom-color: transparent;
+	  border-style: solid;
+	}	
+      }
+    }    
   }
   
   #chatarea {

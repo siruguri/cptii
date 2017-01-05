@@ -49,7 +49,7 @@ def init_chats!
     receiver: u,
     sender: u.counselor,
     message: 'go now',
-    written_time: Time.now,
+    written_time: Time.now - 1.minute,
     skip_callbacks: true
   )
   cr1.save  

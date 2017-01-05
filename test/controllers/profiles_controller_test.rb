@@ -41,6 +41,10 @@ class ProfilesControllerTest < ActionController::TestCase
       # See fixtures
       assert_equal 3, d['rec_count']
       assert_match /now/, d['recs'].last['message']
+
+      # I sent two, and received a response
+      assert_equal false, d['recs'][1]['is_response']      
+      assert_equal true, d['recs'][2]['is_response']
     end
   end
 
