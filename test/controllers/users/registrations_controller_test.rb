@@ -4,7 +4,7 @@ module Users
     describe '#create' do
       before do
         @request.env["devise.mapping"] = Devise.mappings[:user]
-        @good_hash = {first_name: 'a', last_name: 'b', password_confirmation: 'sadfsadf1',
+        @good_hash = {first_name: 'first', last_name: 'last', password_confirmation: 'sadfsadf1',
                                        email: 'email@email.com', password: 'sadfsadf1'}
       end
       
@@ -30,6 +30,10 @@ module Users
         p = User.last.profile
         assert_equal @good_hash[:first_name], p.contact_details['first_name']
         assert_equal @good_hash[:last_name], p.contact_details['last_name']
+        assert_redirected_to root_path
+
+        # The user is signed in now - registration screen should redirect
+        get :new
         assert_redirected_to root_path
       end
     end

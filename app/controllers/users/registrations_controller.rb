@@ -1,5 +1,9 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
+    def new
+      super
+    end
+    
     def create
       p = params[:user]
       if !(p.select { |k, v| !v.nil? && v.strip != '' }.keys.sort == reqd_keys.sort &&
@@ -12,7 +16,8 @@ module Users
         p = u.build_profile
         p.contact_details = {first_name: params[:user][:first_name], last_name: params[:user][:last_name]}
         p.save
-        redirect_to root_path
+        
+        sign_in_and_redirect u
       end
     end
 
