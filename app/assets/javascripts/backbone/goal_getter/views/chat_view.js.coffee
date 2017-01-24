@@ -44,6 +44,7 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
 
   send_message: (e) ->
       view_self = @
+      
       tgt = $(e.target).siblings('.userinput')
       if tgt.length == 0
         tgt = $(e.target).closest('#sendit').siblings('.userinput')
@@ -64,7 +65,6 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
     'click #chatarea': (e) ->
       $(e.target).find('.userinput').focus()
 
-    'click #sendit': 'send_message'
     'click .send-icon': 'send_message'
     'keyup .userinput': (e) ->
       if $(e.target).text().trim().length > 0
