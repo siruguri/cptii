@@ -1,7 +1,7 @@
 RailsAdmin.config do |config|
   # Configure this
   config.included_models = ["User", "Profile", "School", "CounselorAssignment", "TaxonomyNode", "ProfileEntry",
-                            "PortfolioCategory", "Organization", "Program"]
+                            "PortfolioCategory", "Organization", "Program", "ContentResource"]
   
   ### Popular gems integration
 
@@ -36,20 +36,11 @@ RailsAdmin.config do |config|
   end
 
   # Configure some of this too.
-  config.model 'Task' do
-    object_label_method do
-      :task_name
-    end
-
-    configure :category do
-      label 'Pick a category'
-    end
-
-    # This decides the appearance of the list of records
-    list do
-      field :task_name do
-        label 'Task Titled As'
-      end
+  config.model 'ContentResource' do
+    edit do
+      field :title
+      field :description
+      field :should_broadcast, :boolean
     end
   end
 

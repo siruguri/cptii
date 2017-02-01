@@ -88,8 +88,8 @@ GoalGetter.Helpers.ModelInitializer =
       'chat' : '$counselor_name'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
-      'guide-single' : '$guide_title'
-      'search-results': '$query'
+      'guide-single' : 'body_guide_title'
+      'search-results': '$search_query'
       'logged-out': ''
 
   resolve_to_class_name: (index) ->

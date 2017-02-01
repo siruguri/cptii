@@ -13,7 +13,7 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
       
   render: ->
     t_func = _.template $('#body_counselor_template').html()
-    name = @model.user_info.counselor_name
+    name = @model.get('user_info')['counselor_name']
     
     @$el.html t_func({name: name})
     @$el

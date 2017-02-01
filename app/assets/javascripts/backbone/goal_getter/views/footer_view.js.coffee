@@ -19,6 +19,7 @@ GoalGetter.Views.FooterView = Backbone.View.extend
     
   render: ->
     @$el.html(_.template($('#footer_template').html())({}))
+
     @select_tab()
 
     @$el

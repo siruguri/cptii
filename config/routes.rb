@@ -21,7 +21,7 @@ GoalGetter::Application.routes.draw do
   require 'sidekiq/web'
   authenticate :admin, lambda { |u| u.is_a? Admin } do
     mount Sidekiq::Web => '/sidekiq_ui'
-    mount RailsAdmin::Engine => '/admin_interface', as: 'rails_admin'
+    mount RailsAdmin::Engine => '/admin_interface'
   end
 
   # Need a catch all to redirect to the errors controller, for catching 404s as an exception

@@ -4,16 +4,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @is_category = true
     @current_screen = '0'
     @taxonomy_list = []
-    @user_info =
+    @set('user_info',
       counselor_name: null
+    )
     GoalGetter.Helpers.ModelInitializer.initialize_model @
 
-    # Getters need to be bound to this object
+    # (Complex) getters need to be bound to this object
     _.bindAll @, 'header_title'
-    _.bindAll @, 'display_data'
-    _.bindAll @, 'counselor_name'
-    _.bindAll @, 'query'
-    _.bindAll @, 'guide_title'
+    null
     
   # entry point from views/control_view
   init_fetch: ->
@@ -49,11 +47,11 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     u =
       if ref == 'search-results'
         if @is_category
-          '/organizations?q=' + @search_query
+          '/organizations?q=' + @get('search_query')
         else
-          '/programs?q=' + @search_query
+          '/programs?q=' + @get('search_query')
       else if ref == 'guide-single'
-        '/guides/' + @body_guide_id
+        '/guides/' + @get('body_guide_id')
       else
         '/profile.json?screen_number=' + ref
     u
@@ -84,34 +82,30 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       else if screen_number == 'guide-single'
         model_self.guide_data = d.data
       else
-        model_self.user_info = d.data.user_info
+        model_self.set('user_info', d.data.user_info)
     )
 
   # /Sync
   
   # Getters
-  counselor_name: ->
-    @user_info.counselor_name
-  query: ->
-    @search_query
-  guide_title: ->
-    @body_guide_title
-        
+  guides: ->
+    @guides
+          
   header_title: ->
     if @texts[@current_screen][0] == '$'
       ref = @texts[@current_screen].slice(1)
       # The reference has to be an available method
-      @[ref].call()
+      @get ref
     else
       @texts[@current_screen]
 
-  display_data: ->
-    {text:  @texts[@current_screen]}
   # /Getters
 
   # Setters
   destroy_user_data: ->
-    @user_info.counselor_name = null
+    @set('user_info',
+      counselor_name: null
+    )
     @trigger 'model:updated'
 
   set_current_screen: (target) ->

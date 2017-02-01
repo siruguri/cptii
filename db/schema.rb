@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103201053) do
+ActiveRecord::Schema.define(version: 20170124195537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,18 +79,19 @@ ActiveRecord::Schema.define(version: 20170103201053) do
   end
 
   create_table "profile_entries", force: :cascade do |t|
-    t.jsonb    "entry_details"
+    t.jsonb    "entry_details", default: {}
     t.integer  "profile_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "entry_key"
   end
 
   create_table "profiles", force: :cascade do |t|
     t.string   "profile_type"
     t.integer  "user_id"
-    t.jsonb    "contact_details"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.jsonb    "contact_details",          default: {}
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "profile_pic_file_name"
     t.string   "profile_pic_content_type"
     t.integer  "profile_pic_file_size"
@@ -108,6 +109,12 @@ ActiveRecord::Schema.define(version: 20170103201053) do
     t.integer  "organization_id"
     t.float    "lat"
     t.float    "lon"
+  end
+
+  create_table "resource_alerts", force: :cascade do |t|
+    t.integer  "content_resource_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "schools", force: :cascade do |t|

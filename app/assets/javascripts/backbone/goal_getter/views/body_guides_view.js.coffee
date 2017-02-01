@@ -10,8 +10,8 @@ GoalGetter.Views.GuidesView = GoalGetter.Views.ScreenBase.extend
       else
         id = $(e.target).closest('.guide-title')
       
-      @model.body_guide_id = tgt.data 'guide-id'
-      @model.body_guide_title = tgt.text().trim()
+      @model.set('body_guide_id', tgt.data 'guide-id')
+      @model.set('body_guide_title', tgt.text().trim())
       @trigger 'navigation:change',
         from: '1',
         to: 'guide-single'

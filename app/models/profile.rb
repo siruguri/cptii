@@ -2,7 +2,7 @@ class Profile < ActiveRecord::Base
   belongs_to :user
   has_secure_token
 
-  before_create :initialize_empty_jsonb
+  before_create :initialize_empty_entries
   
   has_many :profile_entries, dependent: :destroy
   has_attached_file :profile_pic, storage: :s3, url: ":s3_domain_url", s3_protocol: :http,
@@ -37,9 +37,7 @@ class Profile < ActiveRecord::Base
   end
 
   private
-  def initialize_empty_jsonb
-    unless contact_details.present?
-      self.contact_details = {}
-    end
+  def initialize_empty_entries
+    self.profile_entries.build(entry_key: 'alerts-lrt', entry_details: {'lrt' => '0'})
   end
 end

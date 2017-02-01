@@ -1,8 +1,8 @@
 nd_1:
-  node_name: node1
+  node_name: node_top_left
   parent_id: -1
 nd_1_again:
-  node_name: node1.1
+  node_name: node_top_left.1
   parent_id: -1
 nd_2:
   node_name: node2

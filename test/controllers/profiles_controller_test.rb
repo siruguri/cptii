@@ -46,6 +46,16 @@ class ProfilesControllerTest < ActionController::TestCase
       assert_equal false, d['recs'][1]['is_response']      
       assert_equal true, d['recs'][2]['is_response']
     end
+
+    it 'shows alerts if there are some' do
+      ResourceAlert.create content_resource: content_resources(:cr_1)
+      p = ProfileEntry.create entry_key: 'alerts-lrt', profile: users(:student_1).profile
+      p.entry_details['lrt'] = (Time.now - 2.hours).to_i
+      p.save
+
+      get :show, xhr: true, params: {format: 'json', screen_number: '1'}
+      assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
+    end
   end
 
   describe '#update' do

@@ -37,8 +37,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
-    @$el.html t_func({username: @model.user_info.user_name})
-    @$el.find('#portfolio-img').attr('src', @model.user_info.profile_pic_url)
+    @$el.html t_func({username: @model.get('user_info')['user_name']})
+    @$el.find('#portfolio-img').attr('src', @model.get('user_info')['profile_pic_url'])
     view_self = @
 
     # Create drop zone
@@ -72,7 +72,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     # Add work experience
     wex_card = @$el.find('.portfolio-card#workex')
     
-    @model.user_info.work_experience.forEach (item) ->
+    @model.get('user_info')['work_experience'].forEach (item) ->
       t_func = _.template $('#body_portfolio_work_experience').html()
       wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))
 
@@ -84,7 +84,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       ach_list = view_self.$el.find('.portfolio-card.row').last()
       t_func_1 = _.template $('#body_portfolio_achievement').html()
       
-      avlbl_ach = view_self.model.user_info.achievements.filter( (e) ->
+      avlbl_ach = view_self.model.get('user_info')['achievements'].filter( (e) ->
         e.type == cat_name
       )
       if avlbl_ach.length > 0

@@ -9,12 +9,12 @@ GoalGetter.Views.HeaderSearchView = Backbone.View.extend
     'click #search': ->
       txt = @$el.find('input').val()
       if typeof txt != 'undefined' and txt.trim() != ''
-        @model.search_query = txt
+        @model.set('search_query', txt)
         @model.is_category = false
         @trigger 'do_search'
 
   render: ->
-    query = @model.query()
+    query = @model.get('search_query')
     if typeof query == 'undefined'
       query = ''
     placeholder = (if query.trim() == '' then '  Search...' else '')

@@ -9,6 +9,8 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     if obj.hasOwnProperty 'dest'
       window.document.location.href = '/?screen=' + obj.dest
   change_nav: (args...) ->
+    # The header might be showing the search bar. TODO NEXT
+    @flip_headers {to: 'hide'}
     @header.change_screens {from: 'control', to: args[0]}
   do_search: (args...) ->
     @header.change_screens {from: 'control', to: 'search-results'}
@@ -38,6 +40,10 @@ GoalGetter.Views.ControlView = Backbone.View.extend
       when 'base'
         @header.$el.show()
         @header.change_screens {from: 'control', to: @header.model.search_back}
+        @header.model.search_back = null
+        @header_search.$el.hide()
+      when 'hide'
+        @header.$el.show()
         @header.model.search_back = null
         @header_search.$el.hide()
     

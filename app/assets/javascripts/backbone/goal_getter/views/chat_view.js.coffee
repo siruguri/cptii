@@ -43,23 +43,23 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
     d.scrollTop d.prop("scrollHeight")
 
   send_message: (e) ->
-      view_self = @
+    view_self = @
       
-      tgt = $(e.target).siblings('.userinput')
-      if tgt.length == 0
-        tgt = $(e.target).closest('#sendit').siblings('.userinput')
+    tgt = $(e.target).siblings('.userinput')
+    if tgt.length == 0
+      tgt = $(e.target).closest('#sendit').siblings('.userinput')
         
-      txt = $(tgt[0]).text().trim()
-      if txt.length > 0
-        $.ajax('/chat_records',
-          method: 'post',
-          data:
-            message_to_counselor: txt
-          success: (d, s, x) ->
-            view_self.$el.find('.userinput').text ''
-            view_self.$el.find('#chatarea').addClass 'empty'
-            view_self.trigger 'add_sent_message', txt
-        )
+    txt = $(tgt[0]).text().trim()
+    if txt.length > 0
+      $.ajax('/chat_records',
+        method: 'post',
+        data:
+          message_to_counselor: txt
+        success: (d, s, x) ->
+          view_self.$el.find('.userinput').text ''
+          view_self.$el.find('#chatarea').addClass 'empty'
+          view_self.trigger 'add_sent_message', txt
+      )
 
   events:
     'click #chatarea': (e) ->
@@ -73,7 +73,7 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
         $(e.target).closest('#chatarea').addClass('empty')
 
   fill_existing_chats: ->
-    recs = @model.user_info['recs'].map (item) ->
+    recs = @model.get('user_info')['recs'].map (item) ->
       {message: item.message, is_response: item.is_response}
 
     view_self = @

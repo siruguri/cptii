@@ -13,13 +13,18 @@ class SearchScreensTest < Capybara::Rails::TestCase
   test 'switching between screens works' do
     page.all('.taxonomy-cell')[0].click
     sleep 1
+
+    # header has the query
+    assert page.has_content? 'node_top_left'
     # (org 1).programs.first is prog 4 (fin serv)
     assert page.has_content? 'fin serv'
     # (org 2).programs.first is prog 2 (tutors for children)
     assert page.has_content? 'tutors for'
 
-    # Move away via footer; come back; click on node 3
+    # Move away via footer ...
     page.all('.footer .nav-change')[3].click
+
+    # ... Come back; click on node 3
     page.all('.footer .nav-change')[0].click
     page.all('.taxonomy-cell')[3].click
 
@@ -28,7 +33,16 @@ class SearchScreensTest < Capybara::Rails::TestCase
 
   test 'search bar works' do
     page.find('.header #search').click
-    page.save_screenshot '/users/sameer/tmp/searchbar.png'    
-    page.find('.header-search input').send_keys 'search query'
+
+    q = 'search this'
+    page.find('.header-search input').send_keys q
+    page.find('.header #search').click
+
+    # This program should show up
+    assert page.has_content? 'counsel counsel'
+    page.all('.footer .nav-change')[3].click
+    refute page.has_content? 'counsel counsel'
+    # header changes correctly.
+    assert page.has_content? 'Portfolio'
   end
 end
