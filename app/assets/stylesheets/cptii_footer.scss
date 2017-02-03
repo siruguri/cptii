@@ -8,7 +8,14 @@
   .nav-change {
     max-width: $nav-action-area;
     margin: auto;
-    
+    position: relative;
+    .bubble {
+      top: -10px;
+      right: 17px;
+      font-size: $small-text;
+      display: none;
+    }
+      
     color: $basic-gray;
     .nav-img {
       height: $navicon-dim;

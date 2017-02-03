@@ -10,6 +10,14 @@ class User < ActiveRecord::Base
 
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name
+
+  def new_alerts_count
+    alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).
+                limit(1).first&.entry_details&.send(:[], 'lrt')
+    # if you haven't requested previously, you have requested at the dawn of time
+    alert_lrt ||= 0
+    {new_alerts_count: ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count}
+  end
   
   def counselor
     # Can return nil

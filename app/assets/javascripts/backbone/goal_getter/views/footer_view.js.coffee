@@ -13,6 +13,13 @@ GoalGetter.Views.FooterView = Backbone.View.extend
       # Let the rest of the app know the nav tab changed.
       @trigger 'footer:change_nav', trigger_target
 
+  show_guides_bubble: ->
+    ct = parseInt(@model.get('user_info')['new_alerts_count'])
+    unless isNaN(ct) or ct == 0
+      k = @$('.bubble')
+      k.show()
+      k.text ct
+      
   select_tab: ->
     tab_node = @$el.find('.nav-change').get @model.current_screen
     $(tab_node).addClass 'selected'
@@ -21,5 +28,6 @@ GoalGetter.Views.FooterView = Backbone.View.extend
     @$el.html(_.template($('#footer_template').html())({}))
 
     @select_tab()
-
+    @show_guides_bubble()
+    
     @$el

@@ -79,5 +79,8 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
+
+  # I am creating records in a Capybara test
+  gem 'database_cleaner'  
   gem 'selenium-webdriver'
 end

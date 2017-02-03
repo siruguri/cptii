@@ -109,15 +109,11 @@ class ProfilesController < ApplicationController
           end
          end
       end)
-      
+    
     if u
       # global data for logged-in case: broadcast alerts
-      alert_lrt = u.profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).
-                  limit(1).first&.entry_details&.send(:[], 'lrt')
-
       d[:data][:user_info] ||= {}
-      d[:data][:user_info][:new_alerts_count] = alert_lrt ?
-                                                   ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count : 0
+      d[:data][:user_info].merge!(u.new_alerts_count)
     end
     
     render json: d

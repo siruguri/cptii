@@ -78,7 +78,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
 
     # Add the remaining categories beneath work experience
     t_func = _.template $('#portfolio_category').html()
-    @model.portfolio_categories.forEach (cat_name) ->
+    @model.get('portfolio_categories').forEach (cat_name) ->
       view_self.$el.find('.signout-row').before t_func({card_name: cat_name})
       # This is in the #portfolio_category template
       ach_list = view_self.$el.find('.portfolio-card.row').last()

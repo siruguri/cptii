@@ -19,7 +19,7 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
     view_self = @
     colors = ['purple', 'orange', 'red', 'blue', 'yellow', 'green']
     
-    @model.taxonomy_list.forEach (rec, idx) ->
+    @model.get('taxonomy_list').forEach (rec, idx) ->
       name = rec[0]
       img_key = rec[1]
       t_func = _.template($('#body_services_item_template').html())

@@ -3,7 +3,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @logged_in = false
     @is_category = true
     @current_screen = '0'
-    @taxonomy_list = []
+
     @set('user_info',
       counselor_name: null
     )
@@ -20,9 +20,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
       model_self.screen_data_ready[0] = true
-      model_self.taxonomy_list = d.data.taxonomy_list
-      model_self.portfolio_categories = d.data.portfolio_categories
-      
+      model_self.attributes = d.data
       model_self.trigger 'body_model:ready'
     )
 

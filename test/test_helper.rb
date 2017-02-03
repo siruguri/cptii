@@ -52,3 +52,5 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 Capybara.default_driver = :poltergeist
+DatabaseCleaner.strategy = :truncation
+
