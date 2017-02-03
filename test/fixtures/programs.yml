@@ -37,4 +37,10 @@ prog_5:
   organization: org_2
   lat: <%= 37.8003216 %>
   lon: <%= -122.2728222 %>
-  
+
+prog_no_latlon:
+  title: prog no latlon  
+  description: no latlon
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_no_latlon
+  address: 123 Main St. Houston TX

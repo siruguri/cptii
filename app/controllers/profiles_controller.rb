@@ -34,7 +34,8 @@ class ProfilesController < ApplicationController
       when 'update-alerts-lrt'
         if params.dig(:payload, :data).is_a? String # Expect this in epoch milliseconds
           p = ProfileEntry.find_or_initialize_by(profile_id: u.profile.id, entry_key: 'alerts-lrt')
-          p.entry_details['lrt'] = params[:payload][:data]
+          p.entry_details['lrt'] = params[:payload][:data].to_i/1000
+          p.save
         end
       when 'add-work'
         if params.dig(:payload, :data).try(:size).try(:==, 2)

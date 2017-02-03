@@ -3,22 +3,35 @@ GoalGetter.Views.FooterView = Backbone.View.extend
   initialize: ->
     _.bindAll(@, 'render')
 
+  update_alert: ->
+    d =
+      payload:
+        code: 'update-alerts-lrt'
+        data: Date.now()
+    view_self = @
+    $.ajax('/profile.json',
+      data: d
+      method: 'put'
+      success: (d, s, x) ->
+        view_self.$('.bubble').hide()
+    )
+    null
+      
   events:
-    'click  .nav-change': (evt) ->
+    'click .nav-change': (evt) ->
       # I want to use the string value, even though the footer tabs are referenced as numerals.
       trigger_target = $(evt.target).closest('.nav-change').attr 'data-target'
       @$el.find('.nav-change').removeClass 'selected'
       $(evt.target).closest('.nav-change').addClass 'selected'
-
+      @update_alert()
+      
       # Let the rest of the app know the nav tab changed.
       @trigger 'footer:change_nav', trigger_target
 
   show_guides_bubble: ->
     ct = parseInt(@model.get('user_info')['new_alerts_count'])
     unless isNaN(ct) or ct == 0
-      k = @$('.bubble')
-      k.show()
-      k.text ct
+      @$('.bubble').text(ct).show()
       
   select_tab: ->
     tab_node = @$el.find('.nav-change').get @model.current_screen

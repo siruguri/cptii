@@ -6,3 +6,6 @@ org_2:
   
 org_no_cats:
   title: nocats
+
+org_no_latlon:
+  title: no latlon

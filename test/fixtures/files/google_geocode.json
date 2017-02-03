@@ -1,0 +1,68 @@
+{"results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "1218",
+               "short_name" : "1218",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Excelsior Avenue",
+               "short_name" : "Excelsior Ave",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Glenview",
+               "short_name" : "Glenview",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Oakland",
+               "short_name" : "Oakland",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Alameda County",
+               "short_name" : "Alameda County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "California",
+               "short_name" : "CA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "94610",
+               "short_name" : "94610",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "1218 Excelsior Ave, Oakland, CA 94610, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 37.8043864,
+               "lng" : -122.2311822
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 37.8057353802915,
+                  "lng" : -122.2298332197085
+               },
+               "southwest" : {
+                  "lat" : 37.8030374197085,
+                  "lng" : -122.2325311802915
+               }
+            }
+         },
+         "place_id" : "ChIJpd0LJw6Hj4AR2lRmIulfICg",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}

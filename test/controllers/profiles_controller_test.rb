@@ -71,7 +71,12 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   describe '#update' do
-    it 'needs login' do
+    it 'adds entries for some but only permitted codes' do
+      assert_difference('ProfileEntry.count') do
+        put :update, xhr: true, params: {format: 'json',
+                                         payload: {code: 'update-alerts-lrt', data: '1486084669000'}}
+      end
+      
       assert_difference('ProfileEntry.count') do
         put :update, xhr: true, params: {format: 'json',
                                          payload: {code: 'add-work', data: ['title', 'workplace']}}
