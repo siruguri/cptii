@@ -19,7 +19,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     # data will be an empty array if the form wasn't filled in: see models/base/form_processor
 
     # When going up from a form screen, it should be emptied out
-    if @model.header_config[@model.current_screen]['has_done'] == true
+    if @model.has_property('done') == true
       @garbage @model.current_screen
 
     # TODO There might be more complex logic for what needs to be refreshed; than simply what's the up level screen
@@ -38,6 +38,9 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
   pass_navigation: (obj) ->
     # Pass thru event arguments up to control app
     @trigger 'navigation:change', obj
+  pass_body_render: (obj) ->
+    # Pass thru event arguments up to control app
+    @trigger 'body:render', obj
     
   refresh_screen: (key) ->
     @garbage key
@@ -60,6 +63,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
         @screens[curr_screen_ref] = new GoalGetter.Views[klass]
           model: @model
       @listenTo @screens[curr_screen_ref], 'navigation:change', @pass_navigation
+      @listenTo @screens[curr_screen_ref], 'body:render', @pass_body_render
       @$el.append @screens[curr_screen_ref].wait_and_render(curr_screen_ref)
 
     @screens[curr_screen_ref].$el.show()

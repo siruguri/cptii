@@ -22,12 +22,6 @@ html, body {
   overflow: hidden;    
 }
 
-.main-app {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
-
 .header {
   flex: 0 1 $header-height;
 }

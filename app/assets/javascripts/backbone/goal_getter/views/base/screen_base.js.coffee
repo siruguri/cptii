@@ -23,5 +23,8 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
     else
       context.$el.find('.special').hide()
       context.render()
+      # Body might have to tell header and footer about its data
+      context.trigger('body:render')
+    
       
     @$el

@@ -1,6 +1,7 @@
 profile_student_1:
   user: student_1
   profile_type: student
+  published: <%= true %>
   contact_details: <%= {}.to_json %>
 
 profile_noschool_student:

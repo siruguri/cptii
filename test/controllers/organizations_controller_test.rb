@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
+  def setup
+    set_net_stubs
+  end
+  
   test 'no query' do
     get :index, xhr: true
     assert_equal Organization.count, JSON.parse(response.body)['data'].length

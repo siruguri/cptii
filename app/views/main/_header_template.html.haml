@@ -5,7 +5,7 @@
     %input{name: 'query', placeholder: '<%- placeholder %>'.html_safe, autofocus: true, value: '<%- query %>'.html_safe}
   .header-actions.pointer
     .item#search
-      .responsive-img.search-icon-img
+      .responsive-img.tool-icon-img
         %svg
           %use{x: '0', y: '0', "xlink:href" => '#search-icon'}
 
@@ -15,9 +15,16 @@
   .header-title
     <%- header_title %>
   .header-actions.pointer
-    .item#search
-      .responsive-img.search-icon-img
+    .item.dynamic#published
+      .button-rectangular.pointer
+        loading
+    .item.dynamic#share
+      .responsive-img.tool-icon-img
+        %svg
+          %use{x: '0', y: '0', "xlink:href" => '#share-icon'}
+    .item.dynamic#search
+      .responsive-img.tool-icon-img
         %svg
           %use{x: '0', y: '0', "xlink:href" => '#search-icon'}
-    .item#submit-body-form
+    .item.dynamic#submit-body-form
       = t('header.done')

@@ -37,6 +37,7 @@ RailsAdmin.config do |config|
 
   # Configure some of this too.
   config.model 'ContentResource' do
+    label 'Guide'
     edit do
       field :title
       field :description

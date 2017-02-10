@@ -29,10 +29,12 @@ class ProfilesControllerTest < ActionController::TestCase
       get :show, xhr: true, params: {format: 'json', screen_number: '3'}
       b = JSON.parse response.body
       
-      # see fixtures for these size numbers
+      # see fixtures for this data
       assert_equal 1, b['data']['user_info']['work_experience'].size
       assert_equal 2, b['data']['user_info']['work_experience'][0].keys.size
       assert_equal 2, b['data']['user_info']['achievements'].size
+
+      assert b['data']['user_info']['published']
     end
 
     it 'works for chat screen' do
@@ -71,6 +73,13 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   describe '#update' do
+    it 'toggles publish' do
+      current_state = @student_1.profile.published
+      put :update, xhr: true, params: {format: 'json',
+                                       payload: {code: 'toggle-publish', data: ''}}
+      assert (@student_1.reload.profile.published != current_state)
+    end
+    
     it 'adds entries for some but only permitted codes' do
       assert_difference('ProfileEntry.count') do
         put :update, xhr: true, params: {format: 'json',

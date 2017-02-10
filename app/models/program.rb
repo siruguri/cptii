@@ -14,7 +14,7 @@ class Program < ActiveRecord::Base
         self.lon = -1
       end
       save
-      sleep 0.33      
+      sleep 0.33 unless Rails.env.test?
     end
 
     {program_id: id, lat: lat, lon: lon}

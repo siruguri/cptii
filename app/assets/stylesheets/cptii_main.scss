@@ -1,6 +1,24 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+.main-app {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  position: relative;  
+}
+.x-out {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  height: 20px;
+  width: 20px;
+  color: $dark-gray;
+  font-size: $top-navbar-text;
+  cursor: pointer;
+  font-weight: bold;
+}
 
 .bubble {
   height: 20px;

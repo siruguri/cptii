@@ -3,7 +3,16 @@ GoalGetter.Views.ControlView = Backbone.View.extend
   initialize: ->
     _.bindAll @, 'render'
     _.bindAll @, 'load_and_render'
-    
+
+  close_overlay: ->
+    @overlay.$el.hide()
+    @footer.$el.show()
+        
+  show_overlay: ->
+    @overlay.ready = true
+    @overlay.render().css('display', 'flex')
+    @footer.$el.hide()
+        
   reload_app: (obj) ->
     # Nuclear option to just load the app again
     if obj.hasOwnProperty 'dest'
@@ -12,6 +21,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     # The header might be showing the search bar. TODO NEXT
     @flip_headers {to: 'hide'}
     @header.change_screens {from: 'control', to: args[0]}
+
   do_search: (args...) ->
     @header.change_screens {from: 'control', to: 'search-results'}
     
@@ -61,7 +71,9 @@ GoalGetter.Views.ControlView = Backbone.View.extend
       model: @body_model
 
     @listenTo @header, 'query', @flip_headers
+    @listenTo @header, 'show_overlay', @show_overlay
     @listenTo @header, 'post_redirect', @reload_app
+    
     @footer = new GoalGetter.Views.FooterView
       model: @body_model
 
@@ -70,4 +82,10 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     view_self = @
     @header.render_with_body().forEach (node_elt) ->
       view_self.$el.append node_elt
+
+    # Create the overlay but it will be hidden
+    @overlay = new GoalGetter.Views.OverlayView
+      model: @body_model
+    @listenTo @overlay, 'close', @close_overlay
+    @$el.append @overlay.render()
     @$el.append @footer.render()

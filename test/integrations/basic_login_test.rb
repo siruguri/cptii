@@ -15,6 +15,14 @@ class BasicLoginTest < Capybara::Rails::TestCase
       visit "/"
       sleep 1
       assert page.has_css?('.bubble', visible: true)
+
+      # clicking elsewhere on the footer than the Guides tab, doesn't forget the notification
+      page.all('.footer .nav-change')[3].click
+      assert page.has_css?('.bubble', visible: true)
+
+      page.all('.footer .nav-change')[1].click
+      sleep 1 # wait for put to finish
+      refute page.has_css?('.bubble', visible: true)
     end
   end
   

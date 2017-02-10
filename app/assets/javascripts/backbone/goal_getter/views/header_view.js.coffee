@@ -7,12 +7,34 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       model: @model
 
     @listenTo @body_view, 'navigation:change', @change_screens
+    @listenTo @body_view, 'body:render', @render_and_pass
+
+  render_and_pass: ->
+    # Let control know there's a data change, for the footer's sake. Right now, this trigger is
+    # entirely ignored.
+
+    @trigger 'body:render'
+    @render()
 
   events:
     'click .nav-back': ->
       @change_screens({from: 'header', to: 'up'})
     'click #search': ->
       @trigger 'query', {to: 'search'}
+    'click #published': ->
+      view_self = @
+      $.ajax('/profile.json',
+        method: 'put'
+        data:
+          payload:
+            code: 'toggle-publish'
+        success: (d, s, x) ->
+          view_self.model.get('user_info').published = d.data.published
+          view_self.render()
+      )
+          
+    'click #share': ->
+      @trigger 'show_overlay'
       
     'click #submit-body-form': ->
       @body_view.trigger 'header:submit-body-form'
@@ -59,7 +81,14 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     top_parts.push(@body_view.render())
 
     top_parts
-    
+
+  set_publish_status: ->
+    if @model.get('user_info').published == true
+      @$el.find('#published .button-rectangular').removeClass('private').addClass('public').text('unpublish')
+    else
+      @$el.find('#published .button-rectangular').removeClass('public').addClass('private').text('publish')
+    @$el
+        
   render: ->
     header_obj =
       header_title: @model.header_title()
@@ -71,9 +100,17 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     else
       @$el.find('.nav-back').hide()
 
-    if @model.has_search()
-      @$el.find('#search').show()
-    if @model.has_done()
-      @$el.find('#submit-body-form').show()
+    # portfolio manages header
+    if @model.current_screen == '3'
+      @$el.find('#published').css('display', 'inline-block')
+      @set_publish_status()
+      
+    if @model.has_property('share')
+      @$el.find('.header-actions .item#share').css('display', 'inline-block')
+    if @model.has_property('search')
+      @$el.find('.header-actions .item#search').css('display', 'inline-block')
+      
+    if @model.has_property('done')
+      @$el.find('#submit-body-form').css('display', 'inline-block')
       
     @$el

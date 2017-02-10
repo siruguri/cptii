@@ -25,10 +25,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     )
 
   # Directory navigation helpers
-  has_done: ->
-    @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].has_done == true
-  has_search: ->
-    @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].has_search == true
+  has_property: (key) ->
+    @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].properties[key] == true
     
   up: ->
     # Move up from the current screen

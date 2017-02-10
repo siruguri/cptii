@@ -23,7 +23,9 @@ GoalGetter.Views.FooterView = Backbone.View.extend
       trigger_target = $(evt.target).closest('.nav-change').attr 'data-target'
       @$el.find('.nav-change').removeClass 'selected'
       $(evt.target).closest('.nav-change').addClass 'selected'
-      @update_alert()
+
+      if trigger_target == '1'
+        @update_alert()
       
       # Let the rest of the app know the nav tab changed.
       @trigger 'footer:change_nav', trigger_target

@@ -1,5 +1,9 @@
 GoalGetter.Helpers.ModelInitializer =
   initialize_model: (model_obj) ->
+    model_obj.overlay_texts =
+      '3':
+        title: 'Share Portfolio'
+        body: 'Share your portfolio: http://www.goalgetterapp.com/portfolio'
     model_obj.logged_out_texts =
       '2':
         title: 'Get in touch with your school\'s counselor'
@@ -39,19 +43,25 @@ GoalGetter.Helpers.ModelInitializer =
       'guide-single': '1'
       
     model_obj.header_config =
+      '3' :
+        properties:
+         share: true
+        has_tools: true
       'add-work-experience' :
-        has_done: true
+        properties:
+          done: true
       'add-an-achievement' :
-        has_done: true
+        properties:
+          done: true
       '1' :
-        has_search: true
+        properties:
+          search: true
       'search-results':
-        has_search: true
-      'guide-single' :
-        has_star: true
-        has_share: true
+        properties:
+          search: true
       '0':
-        has_search: true
+        properties:
+          search: true
         
     model_obj.requires_login =
       '0': false
@@ -88,7 +98,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat' : '$counselor_name'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
-      'guide-single' : 'body_guide_title'
+      'guide-single' : '$body_guide_title'
       'search-results': '$search_query'
       'logged-out': ''
 

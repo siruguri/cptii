@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authorize_actions
-  before_action :require_xhr, only: [:show, :update]
+  before_action :require_xhr, only: [:show, :update] # this requires the format to end in .json
 
   def index
   end
@@ -27,15 +27,22 @@ class ProfilesController < ApplicationController
     # [:payload][:code] parameter.
     
     u = current_user || (current_admin and User.find_by_id(params[:user]))
-    if !u
-      resp = {}
-    else
+    resp = {}
+
+    if u
       case params.dig(:payload, :code)
+      when 'toggle-publish'
+        p = u.profile
+        p.published = !(p.published)
+        p.save
+        resp = {published: p.published}
       when 'update-alerts-lrt'
         if params.dig(:payload, :data).is_a? String # Expect this in epoch milliseconds
           p = ProfileEntry.find_or_initialize_by(profile_id: u.profile.id, entry_key: 'alerts-lrt')
           p.entry_details['lrt'] = params[:payload][:data].to_i/1000
           p.save
+
+          resp = {lrt: p.entry_details['lrt']}          
         end
       when 'add-work'
         if params.dig(:payload, :data).try(:size).try(:==, 2)
@@ -59,6 +66,7 @@ class ProfilesController < ApplicationController
         end
       end
     end
+    
     render json: ({data: resp})
   end
 
@@ -74,7 +82,7 @@ class ProfilesController < ApplicationController
     d[:data].merge!(
       if screen_number == '1'
         # Data that doesn't require login
-        list = ContentResource.where(resource_type: 'guides').pluck(:title, :id).map { |rec_pair| ({title: rec_pair[0], id: rec_pair[1]})}
+        list = ContentResource.order(created_at: :desc).where(resource_type: 'guides').pluck(:title, :id).map { |rec_pair| ({title: rec_pair[0], id: rec_pair[1]})}
         {guides: list}
       else
         if u
@@ -98,7 +106,9 @@ class ProfilesController < ApplicationController
             ({user_info: {profile_pic_url: p.profile_pic&.url,
                           work_experience: work_ex_list,
                           achievements: achievements,
-                          user_name: u.profile.full_name}})
+                          user_name: u.profile.full_name,
+                          published: p.published?
+                         }})
           when 'chat'
             id = u.id
             recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).

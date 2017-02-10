@@ -1,4 +1,22 @@
 .header {
+  .button-rectangular {
+    width: 103px;
+    height: 29px;
+    padding: 7px 14px;
+    text-transform: uppercase;
+    color: $white;
+    text-align: center;
+    margin-top: -4px;
+    font-size: $small-text;
+    
+    &.private {
+      background-color: $arrow-gray;
+    }
+    &.public {
+      background-color: $basic-red;
+    }
+  }
+  
   background-color: $basic-blue;
   color: $white;  
   
@@ -43,12 +61,12 @@
   .header-actions {
     float: right;
     .item {
-      display: none;
       margin: 20px 46px 0 0;
-    }
-    
-    #search {
-      .search-icon-img {
+      display: inline-block;
+      &.dynamic {
+	display: none;
+      }
+      .tool-icon-img {
 	height: 30px;
 	width: 30px;
 	color: $arrow-gray;
