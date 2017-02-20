@@ -65,3 +65,35 @@ svg.defs {
     }
   }
 }
+
+.clipboard {
+  position: absolute;
+  top: -5px;
+  right: -130px;
+  height: 25px;
+  * {
+    display: inline-block;
+  }
+  
+  .flash {
+    padding-top: 5px;
+    margin-left: 5px;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+  .clickbox {
+    color: #ee6123;
+    background-color: #fff;
+    border: 1px solid #ee6123;
+    font: normal normal 1rem/1rem "Proxima Nova";
+    padding: 5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #ee6123;
+      color: #fff;
+    }
+  }
+}

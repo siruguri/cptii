@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :authorize_actions
+  before_action :authorize_actions!
   before_action :require_xhr, only: [:show, :update] # this requires the format to end in .json
 
   def index
@@ -88,7 +88,9 @@ class ProfilesController < ApplicationController
         if u
           case screen_number
           when '2'
-            ({user_info: {counselor_name: u.counselor&.profile&.full_name}})
+            ({user_info: {counselors: u.counselors.to_a.map { |c| {name: c.profile.full_name, id: c.id,
+                                                                   img_url: c.profile.profile_pic&.url,
+                                                                   description: ''} } }})
           when '3'
             p = u.profile
             entries = p.profile_entries.to_a
@@ -110,13 +112,18 @@ class ProfilesController < ApplicationController
                           published: p.published?
                          }})
           when 'chat'
-            id = u.id
-            recs = ChatRecord.where(sender_id: id).or(ChatRecord.where(receiver_id: id)).order(written_time: :asc).
-                   map do |r|
-              {message: r.message, at: r.written_time, is_response: (r.sender_id != id)}
+            if current_user.valid_counselor_id?(params[:counselor_id])
+              counselor_id = params[:counselor_id].to_i
+              student_id = u.id
+              recs = ChatRecord.where('sender_id = ? and receiver_id = ? or sender_id = ? and receiver_id = ?',
+                                      student_id, counselor_id, counselor_id, student_id).
+                     order(written_time: :asc).
+                     map do |r|
+                {message: r.message, at: r.written_time, is_response: (r.sender_id != student_id)}
+              end
+              
+              ({user_info: {rec_count: recs.count, recs: recs}})
             end
-            
-            ({user_info: {rec_count: recs.count, recs: recs}})
           end
          end
       end)
@@ -131,7 +138,7 @@ class ProfilesController < ApplicationController
   end
 
   private
-  def authorize_actions
+  def authorize_actions!
     _abort = false
     case params[:action]
     when :index

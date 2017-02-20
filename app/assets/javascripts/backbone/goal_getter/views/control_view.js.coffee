@@ -5,12 +5,14 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     _.bindAll @, 'load_and_render'
 
   close_overlay: ->
-    @overlay.$el.hide()
+    @model.screen_data_ready['overlay'] = false
+    @overlay.$el.empty().hide() # are both necessary?
     @footer.$el.show()
         
   show_overlay: ->
     @overlay.ready = true
-    @overlay.render().css('display', 'flex')
+    @model.get_screen_data 'overlay'
+    @overlay.wait_and_render('overlay').css('display', 'flex')
     @footer.$el.hide()
         
   reload_app: (obj) ->
@@ -18,7 +20,6 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     if obj.hasOwnProperty 'dest'
       window.document.location.href = '/?screen=' + obj.dest
   change_nav: (args...) ->
-    # The header might be showing the search bar. TODO NEXT
     @flip_headers {to: 'hide'}
     @header.change_screens {from: 'control', to: args[0]}
 
@@ -26,23 +27,24 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     @header.change_screens {from: 'control', to: 'search-results'}
     
   load_and_render: ->
-    @body_model = new GoalGetter.Models.AppBodyModel()
-
     # If there is a valid parameter, use it to generate a specific tab.
     if window.document.location.search != ''
       x = window.document.location.search.split('?')[1].split('screen=')
       if x.length > 1
         screen_param = x[1]
-        unless isNaN((num = parseInt(screen_param))) or typeof @body_model.directory_level[screen_param] == 'undefined'
-          @body_model.set_current_screen screen_param
+        unless isNaN((num = parseInt(screen_param))) or typeof @model.directory_level[screen_param] == 'undefined'
+          @model.set_current_screen screen_param
     
-    @listenTo @body_model, 'body_model:ready', @render
-    @body_model.init_fetch()
+    @listenTo @model, 'body_model:ready', @render
+    @model.init_fetch()
 
   flip_headers: (e) ->
     switch e.to
       when 'search'
         @header.$el.hide()
+    # not sure if this is the place to do it but the header needs to always return to Services
+    # if we are now searching a query - here it won't. TODO NEXT
+
         @header.model.search_back = @header.model.current_screen
         
         @header_search.$el.show()
@@ -62,20 +64,20 @@ GoalGetter.Views.ControlView = Backbone.View.extend
     # that make sense?
     
     @header_search = new GoalGetter.Views.HeaderSearchView
-      model: @body_model
+      model: @model
     @$el.append @header_search.render()
     @listenTo @header_search, 'flip_header', @flip_headers
     @listenTo @header_search, 'do_search', @do_search
     
     @header = new GoalGetter.Views.HeaderView
-      model: @body_model
+      model: @model
 
     @listenTo @header, 'query', @flip_headers
     @listenTo @header, 'show_overlay', @show_overlay
     @listenTo @header, 'post_redirect', @reload_app
     
     @footer = new GoalGetter.Views.FooterView
-      model: @body_model
+      model: @model
 
     @listenTo @footer, 'footer:change_nav', @change_nav
     
@@ -85,7 +87,7 @@ GoalGetter.Views.ControlView = Backbone.View.extend
 
     # Create the overlay but it will be hidden
     @overlay = new GoalGetter.Views.OverlayView
-      model: @body_model
+      model: @model
     @listenTo @overlay, 'close', @close_overlay
     @$el.append @overlay.render()
     @$el.append @footer.render()

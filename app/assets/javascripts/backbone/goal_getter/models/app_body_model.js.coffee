@@ -48,6 +48,10 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/programs?q=' + @get('search_query')
       else if ref == 'guide-single'
         '/guides/' + @get('body_guide_id')
+      else if ref == 'overlay'
+        '/overlay_data.json?key=' + @current_screen
+      else if ref == 'chat'
+        '/profile.json?screen_number=chat&counselor_id=' + @get('current_chat_counselor_id')
       else
         '/profile.json?screen_number=' + ref
     u
@@ -77,6 +81,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.guides = d.data['guides']
       else if screen_number == 'guide-single'
         model_self.guide_data = d.data
+      else if screen_number == 'overlay'
+        model_self.set('overlay_data', d.data)
       else
         model_self.set('user_info', d.data.user_info)
     )

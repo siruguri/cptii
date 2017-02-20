@@ -21,6 +21,7 @@ class CounselorChatFlowTest < Capybara::Rails::TestCase
       
       sleep 1
       assert page.has_content?('counselor the first')      
+      assert page.has_content?('counselor the second')      
     end
   end
   

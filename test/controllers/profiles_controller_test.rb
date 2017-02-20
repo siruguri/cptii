@@ -22,7 +22,10 @@ class ProfilesControllerTest < ActionController::TestCase
     
     it 'works for counselor screen' do
       get :show, xhr: true, params: {format: 'json', screen_number: '2'}
-      assert_match /the first/i, JSON.parse(response.body)['data']['user_info']['counselor_name']
+
+      # let student 1 have two counselors in fixtures
+      assert_equal 2, JSON.parse(response.body)['data']['user_info']['counselors'].size
+      assert_match /the first/, JSON.parse(response.body)['data']['user_info']['counselors'][0]['name']
     end
 
     it 'works for portfolio screen' do
@@ -37,8 +40,8 @@ class ProfilesControllerTest < ActionController::TestCase
       assert b['data']['user_info']['published']
     end
 
-    it 'works for chat screen' do
-      get :show, xhr: true, params: {format: 'json', screen_number: 'chat'}
+    it 'works for chat screen with couns 1' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 'chat', counselor_id: users(:counselor_1).id}
       d = JSON.parse(response.body)['data']['user_info']
       # See fixtures
       assert_equal 3, d['rec_count']

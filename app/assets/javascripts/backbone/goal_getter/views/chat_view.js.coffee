@@ -3,10 +3,8 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @chat_fetcher = new GoalGetter.Helpers.ChatRecordFetcher()
+    @chat_fetcher.counselor_id = @model.get('current_chat_counselor_id')
     @chat_fetcher.last_request_time(Date.now())
-    
-    # remove this later.
-    window.cf = @chat_fetcher
     
     # The view will start the fetcher; in some future version, we need a way to have the
     # view stop the fetcher if it gets garbaged.
@@ -44,17 +42,14 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
 
   send_message: (e) ->
     view_self = @
-      
-    tgt = $(e.target).siblings('.userinput')
-    if tgt.length == 0
-      tgt = $(e.target).closest('#sendit').siblings('.userinput')
-        
-    txt = $(tgt[0]).text().trim()
+    txt = @$el.find('.userinput').text().trim()
+    
     if txt.length > 0
       $.ajax('/chat_records',
         method: 'post',
         data:
           message_to_counselor: txt
+          counselor_id: @model.get('current_chat_counselor_id')
         success: (d, s, x) ->
           view_self.$el.find('.userinput').text ''
           view_self.$el.find('#chatarea').addClass 'empty'
@@ -67,12 +62,15 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
 
     'click .send-icon': 'send_message'
     'keyup .userinput': (e) ->
-      if $(e.target).text().trim().length > 0
-        $(e.target).closest('#chatarea').removeClass('empty')
+      if @$el.find('.userinput').text().trim().length > 0
+        @$el.find('#chatarea').removeClass('empty')
       else
-        $(e.target).closest('#chatarea').addClass('empty')
-
+        @$el.find('#chatarea').addClass('empty')
+      keycode = e.keyCode
+      if keycode == 13
+        @send_message()
   fill_existing_chats: ->
+    # TODO next - this needs to be sensitive to whom I'm chatting with
     recs = @model.get('user_info')['recs'].map (item) ->
       {message: item.message, is_response: item.is_response}
 

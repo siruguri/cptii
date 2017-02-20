@@ -48,8 +48,11 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
     view_self = @
     @model.previous_screen = @model.current_screen
-
-    if @model.previous_screen == 'search-results' || @model.previous_screen == 'guide-single'
+    @body_view.screens[@model.previous_screen].$el.hide()
+    
+    if @model.previous_screen == 'search-results' || @model.previous_screen == 'guide-single' \
+       || @model.previous_screen == 'chat' || @model.previous_screen == 'add-work-experience' \
+       || @model.previous_screen == 'add-an-achievement'
       @body_view.garbage @model.previous_screen
       
     dest = change_obj.to

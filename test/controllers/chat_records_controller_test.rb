@@ -12,38 +12,39 @@ class ChatRecordsControllerTest < ActionController::TestCase
   test '#index' do
     # get latest chats (JS uses milliseconds in epoch calcs)
     lrt = Time.now.to_i * 1000
-
+    couns_1 = @student.counselors.where(email: 'couns_1@valid.com').first
+    
     cr = ChatRecord.new(
-      sender: @student, receiver: @student.counselor,
+      sender: @student, receiver: couns_1,
       message: 'student says', written_time: Time.now + 2.hours, skip_callbacks: true
     )
     cr.save  
     
     cr = ChatRecord.new(
-      receiver: @student, sender: @student.counselor,
+      receiver: @student, sender: couns_1, 
       message: 'counselor says', written_time: Time.now + 3.hours, skip_callbacks: true
     )
     cr.save  
     cr = ChatRecord.new(
-    receiver: @student, sender: @student.counselor,
+    receiver: @student, sender: couns_1,
     message: 'counselor says again', written_time: Time.now + 4.hours, skip_callbacks: true
     )
     cr.save
 
-    get :index, params: {last_request_time: lrt}
+    get :index, params: {last_request_time: lrt, counselor_id: couns_1.id}
     b = JSON.parse response.body
     assert_equal 2, b.size # less one of the above two messages
     assert_equal 'counselor says', b[0]['message']
 
-    get :index, params: {last_request_time: '-1'}
+    get :index, params: {last_request_time: '-1', counselor_id: couns_1.id}
     b = JSON.parse response.body
-    assert_equal 3 + 3, b.size # all the above two messages, + 3 fixtures
+    assert_equal 3 + 3, b.size # both the above messages, + 6 fixtures
     assert_equal 'student says', b[3]['message']    
   end
   
   test '#create from app' do
     assert_enqueued_with(job: CounselorMailJob) do
-      post :create, xhr: true, params: {message_to_counselor: 'hey'}
+      post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
     end
 
     assert_equal 200, response.status
@@ -51,7 +52,7 @@ class ChatRecordsControllerTest < ActionController::TestCase
   
   test '#create from sendgrid' do
     assert_enqueued_with(job: CounselorMailJob) do
-      post :create, xhr: true, params: {message_to_counselor: 'hey'}
+      post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
     end
     sign_out :user
     cr = ChatRecord.last

@@ -35,6 +35,8 @@ GoalGetter::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # In case you use route helpers in your mailer views
+  config.default_url_options = { :host => 'localhost', port: 3000 }
+  
   config.action_mailer.default_url_options = { :host => 'testhost.com' }
   config.action_mailer.default_options = { :from => 'testhost@testhost.com' }
   

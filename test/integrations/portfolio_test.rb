@@ -4,7 +4,7 @@ class PortfolioTest < Capybara::Rails::TestCase
   self.use_transactional_tests = false
   
   def setup
-    Capybara.current_driver = :poltergeist
+    Capybara.current_driver = :selenium
     login_as users(:student_1), scope: :user, run_callbacks: false
     jsonb_initializations!
 
@@ -31,6 +31,17 @@ class PortfolioTest < Capybara::Rails::TestCase
       page.all('#submit-body-form')[0].click
       assert page.has_content? 'personal best 1'
     end      
+  end
+
+  describe 'seeing public url' do
+    it 'shows for public portfolios' do
+      sleep 1
+
+      assert_match /unpublish/, page.body
+      page.find('#share').click
+      sleep 1
+      assert page.has_content? '127'
+    end
   end
   
   def teardown

@@ -20,5 +20,13 @@ uncounseled_student:
   <<: *DEFAULTS
 
 counselor_1:
-  email: user2@valid.com
+  email: couns_1@valid.com
+  <<: *DEFAULTS
+  
+counselor_2:
+  email: couns_2@valid.com
+  <<: *DEFAULTS
+
+student_private:
+  email: student_private@private.com
   <<: *DEFAULTS

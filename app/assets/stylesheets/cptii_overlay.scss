@@ -18,9 +18,16 @@
     color: $black;
 
     .message {
+      > * {
+	text-align: center;
+	margin: 10px;
+      }
       .message-title {
       }
       .message-body {
+	position: relative;
+	margin: auto;
+	width: 25%;
       }
     }
   }

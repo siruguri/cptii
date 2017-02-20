@@ -9,12 +9,16 @@ GoalGetter::Application.routes.draw do
   resources :chat_records, only: [:create, :index]
   resource :profile, only: [:show, :update] do
     get :index, path: '/all'
+    get :public, path: '/public/:identifier'
     post :add_photo, path: '/photo'
   end
   
   scope :taxonomy, controller: :taxonomy do
     get :list_names
-  end  
+  end
+  
+  # Miscellaneous logic
+  get '/overlay_data' => 'overlay#data'
 
   root to: 'main#main' # Change this to something else in your app.
 

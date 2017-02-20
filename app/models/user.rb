@@ -19,16 +19,25 @@ class User < ActiveRecord::Base
     {new_alerts_count: ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count}
   end
   
-  def counselor
-    # Can return nil
-    self.profile.school ? self.profile.school.counselors.first : nil
+  def counselors
+    self.profile.school ? self.profile.school.counselors : User.none
   end
   
+  def valid_counselor_id?(id)
+    counselors.pluck(:id).include?(id.to_i)
+  end
+
   def student?
     is_a_type? :student
   end
   def counselor?
     is_a_type? :counselor
+  end
+
+  def identifier
+    # identifier for use in public profile urls
+    # tr is a lot faster than gsub
+    email.tr('+!.@-', '_____')
   end
 
   private

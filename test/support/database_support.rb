@@ -29,7 +29,7 @@ def init_chats!
 
   cr1 = ChatRecord.new(
     sender: u,
-    receiver: u.counselor,
+    receiver: User.find_by_email('couns_1@valid.com'),
     message: 'hey',
     written_time: Time.now - 2.hours,
     skip_callbacks: true
@@ -38,7 +38,7 @@ def init_chats!
 
   cr1 = ChatRecord.new(
     sender: u,
-    receiver: u.counselor,
+    receiver: User.find_by_email('couns_1@valid.com'),
     message: 'when do i go',
     written_time: Time.now - 1.hours,
     skip_callbacks: true
@@ -47,10 +47,22 @@ def init_chats!
 
   cr1 = ChatRecord.new(
     receiver: u,
-    sender: u.counselor,
+    sender: User.find_by_email('couns_1@valid.com'),
     message: 'go now',
     written_time: Time.now - 1.minute,
     skip_callbacks: true
   )
-  cr1.save  
+  cr1.save
+
+  r = User.find_by_email('couns_2@valid.com')
+  3.times.each do |idx|
+    cr = ChatRecord.new(
+      sender: u,
+      receiver: r,
+      message: "when do i go Mr 2 #{idx}",
+      written_time: Time.now - (idx + 1).hours,
+      skip_callbacks: true
+    )
+    cr.save
+  end
 end

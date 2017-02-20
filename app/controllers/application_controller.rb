@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from UncaughtThrowError do |exception|
     if exception.message =~ /:abort/
-      head :bad_request
+      head (@_status == :unauthorized ? :unauthorized : :bad_request)
     end
   end
 

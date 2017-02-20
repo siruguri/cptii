@@ -1,6 +1,6 @@
 GoalGetter.Helpers.ChatRecordFetcher = Backbone.Collection.extend
-  urlRoot: '/chat_records'
-  url: '/chat_records'
+  url: ->
+    '/chat_records?counselor_id=' + @counselor_id
   initialize: ->
     @_lrt = -1
     @stop_interval = false

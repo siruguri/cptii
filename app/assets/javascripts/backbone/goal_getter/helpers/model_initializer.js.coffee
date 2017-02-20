@@ -45,7 +45,7 @@ GoalGetter.Helpers.ModelInitializer =
     model_obj.header_config =
       '3' :
         properties:
-         share: true
+          share: true
         has_tools: true
       'add-work-experience' :
         properties:
@@ -75,6 +75,7 @@ GoalGetter.Helpers.ModelInitializer =
       'search-results': false
       'guide-single' : false
       'logged-out': false
+      'overlay' : true
       
     model_obj.screen_data_ready =
       '0': true
@@ -88,6 +89,7 @@ GoalGetter.Helpers.ModelInitializer =
       'search-results': false
       'guide-single' : false
       'logged-out': true
+      'overlay': false
       
     model_obj.texts =
       '0': 'Services',
@@ -95,7 +97,7 @@ GoalGetter.Helpers.ModelInitializer =
       '2': 'Counselor'
       '3': 'Portfolio',
       '4': 'Contact',
-      'chat' : '$counselor_name'
+      'chat' : '$current_chat_counselor'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
       'guide-single' : '$body_guide_title'
