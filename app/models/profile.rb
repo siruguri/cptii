@@ -36,6 +36,15 @@ class Profile < ActiveRecord::Base
     contact_details.present? ? ("#{contact_details['first_name']} #{contact_details['last_name']}") : ''
   end
 
+  def description_string(type: :counselor)
+    s = []
+    if type == :counselor
+      s << "Phone: #{contact_details['phone']}" if contact_details['phone'].present?
+      s << "Role:  #{contact_details['role']}" if contact_details['role'].present?
+    end
+    s.join(' / ')
+  end
+
   private
   def initialize_empty_entries
     self.profile_entries.build(entry_key: 'alerts-lrt', entry_details: {'lrt' => '0'})

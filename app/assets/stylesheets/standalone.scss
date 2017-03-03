@@ -1,0 +1,36 @@
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.header-bar {
+  height: $header-height;
+  background-color: $basic-blue;
+  color: $white;
+  font-size: 22px;
+  padding: 20px;
+}
+.body-bar {
+  padding: 10px;
+  form {
+    background-color: rgba(245, 245, 220, 0.52);
+    padding: 15px 10px;
+    border: solid 1px black;
+    border-radius: 5px;
+
+    select {
+      display: block;
+      width: 85%;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+  }
+}

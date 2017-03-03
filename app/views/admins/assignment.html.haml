@@ -1,0 +1,11 @@
+= form_tag('/admin/complete_assignment') do
+  = hidden_field_tag :assignment_type, @type
+  .form-group
+    = label_tag :assignee_id, 'Select student'
+    = select_tag :assignee_id, options_from_collection_for_select(@assignee[:users].all, :id, :full_name)
+  .form-group
+    Select School
+    .radio-button-collection
+      = collection_radio_buttons :student, :school_id, School.all, :id, :name
+  .form-group
+    = submit_tag 'Submit'

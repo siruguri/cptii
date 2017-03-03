@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name
 
+  delegate :full_name, to: :profile
+  
   def new_alerts_count
     alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).
                 limit(1).first&.entry_details&.send(:[], 'lrt')
@@ -18,6 +20,7 @@ class User < ActiveRecord::Base
     alert_lrt ||= 0
     {new_alerts_count: ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count}
   end
+  delegate :school, to: :profile
   
   def counselors
     self.profile.school ? self.profile.school.counselors : User.none

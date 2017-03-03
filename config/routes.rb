@@ -24,6 +24,10 @@ GoalGetter::Application.routes.draw do
 
   require 'sidekiq/web'
   authenticate :admin, lambda { |u| u.is_a? Admin } do
+    resource :admin, only: [:show] do
+      get :assignment
+      post :complete_assignment
+    end
     mount Sidekiq::Web => '/sidekiq_ui'
     mount RailsAdmin::Engine => '/admin_interface'
   end

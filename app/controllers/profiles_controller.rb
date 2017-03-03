@@ -90,7 +90,7 @@ class ProfilesController < ApplicationController
           when '2'
             ({user_info: {counselors: u.counselors.to_a.map { |c| {name: c.profile.full_name, id: c.id,
                                                                    img_url: c.profile.profile_pic&.url,
-                                                                   description: ''} } }})
+                                                                   description_string: c.profile.description_string(type: :counselor)} } }})
           when '3'
             p = u.profile
             entries = p.profile_entries.to_a

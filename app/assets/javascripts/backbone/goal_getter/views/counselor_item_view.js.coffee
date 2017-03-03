@@ -13,7 +13,7 @@ GoalGetter.Views.CounselorItemView = GoalGetter.Views.ScreenBase.extend
     t_func = _.template $('#body_counselor_item_template').html()
     @$el.html(t_func(
       name: @model.name
-      description: @model.description
+      description_string: @model.description_string
     ))
 
     @$el.find('.namepic img').attr('src', @model.img_url)

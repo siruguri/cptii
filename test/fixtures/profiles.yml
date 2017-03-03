@@ -18,12 +18,12 @@ profile_uncounseled_student:
 profile_couns_1:
   user: counselor_1
   profile_type: counselor
-  contact_details: <%= {"first_name" => "counselor", "last_name" => 'the first in school 1'}.to_json %>
+  contact_details: <%= {"first_name" => "counselor", "last_name" => 'the first in school 1', phone: '5576309'}.to_json %>
   
 profile_couns_2:
   user: counselor_2
   profile_type: counselor
-  contact_details: <%= {"first_name" => "counselor", "last_name" => 'the second in school 1'}.to_json %>
+  contact_details: <%= {"first_name" => "counselor", "last_name" => 'the second in school 1', phone: '5576309', role: 'teacher'}.to_json %>
 
 profile_student_private:
   user: student_private

@@ -13,4 +13,9 @@ class ProfileTest < ActiveSupport::TestCase
     
     assert_equal({}, p.contact_details)
   end
+
+  test '#description_string' do
+    assert_match /phone: \d+ \/ role/i, profiles(:profile_couns_2).description_string
+    assert_match /phone: \d+$/i, profiles(:profile_couns_1).description_string
+  end
 end
