@@ -1,4 +1,11 @@
 .portfolio {
+  .portfolio-sub-card {
+    display: none;
+    &.selected {
+      display: block;
+    }
+  }
+  
   .portfolio-img {
     &.loading {
       display: none;

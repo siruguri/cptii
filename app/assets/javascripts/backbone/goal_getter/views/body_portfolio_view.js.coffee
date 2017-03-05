@@ -2,8 +2,22 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   className: 'portfolio'
   initialize: ->
     _.bindAll @, 'render'
+    @shown_id = 'public'
 
   events:
+    # Tab switching
+    'click .goto': (e) ->
+      @previous_tab.removeClass('selected')
+      @previous_tab = $(e.target)
+      @previous_tab.addClass('selected')
+      
+      target_id = $(e.target).attr('id').replace('goto-', '')
+      $(document.getElementById(@shown_id)).removeClass('selected')
+      
+      @shown_id = target_id
+      $(document.getElementById(@shown_id)).addClass('selected')
+      $(document.getElementById(target_id)).show()
+
     # Generic handler for all portfolio additions
     'click .add-card': (e) ->
       if $(e.target).data('card-type')
@@ -38,6 +52,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
     @$el.html t_func({username: @model.get('user_info')['user_name']})
+
+    @previous_tab = @$el.find('.goto.selected')
     @$el.find('#portfolio-img').attr('src', @model.get('user_info')['profile_pic_url'])
     view_self = @
 
