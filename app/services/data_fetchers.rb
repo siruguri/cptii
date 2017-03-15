@@ -28,12 +28,11 @@ module DataFetchers
                     published: p.published?
                    }})
     when 'friends'
-
       ret = ProfileEntry.joins(profile: :user).where('users.id in (?)', u.friends.pluck(:id)).
             order(created_at: :desc).to_a.map do |p_e|
-        {description: p_e.entry_key == 'work' ? p_e.entry_details['title'] : p_e.entry_details['text']}
+        {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['title'] : p_e.entry_details['text']}
       end
-      
+
       ({user_info: {friend_entries: ret} })
     when 'likes'
     end

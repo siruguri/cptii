@@ -4,7 +4,6 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
     _.bindAll @, 'render'
     @chat_fetcher = new GoalGetter.Helpers.ChatRecordFetcher()
     @chat_fetcher.counselor_id = @model.get('current_chat_counselor_id')
-    @chat_fetcher.last_request_time(Date.now())
     
     # The view will start the fetcher; in some future version, we need a way to have the
     # view stop the fetcher if it gets garbaged.
