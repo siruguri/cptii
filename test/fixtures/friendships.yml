@@ -1,0 +1,6 @@
+fship1.1:
+  first_friend: student_1
+  second_friend: student_1_f1
+fship1.2:
+  first_friend: student_1_f2
+  second_friend: student_1

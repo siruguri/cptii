@@ -30,3 +30,12 @@ counselor_2:
 student_private:
   email: student_private@private.com
   <<: *DEFAULTS
+
+student_1_f1:
+  email: friendOf1.1@friends.com
+  <<: *DEFAULTS
+  
+student_1_f2:
+  email: friendOf1.2@friends.com
+  <<: *DEFAULTS
+  

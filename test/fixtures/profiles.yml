@@ -1,4 +1,9 @@
 # schools are assigned via test/support/database_support.rb
+DEFAULTS: &DEFAULTS
+  profile_type: student
+  published: <%= false %>
+  contact_details: <%= {}.to_json %>
+  
 profile_student_1:
   user: student_1
   profile_type: student
@@ -30,4 +35,12 @@ profile_student_private:
   profile_type: student
   published: <%= false %>
   contact_details: <%= {}.to_json %>
+
+profile_student_1_f1:
+  user: student_1_f1
+  <<: *DEFAULTS
+  
+profile_student_1_f2:
+  user: student_1_f2
+  <<: *DEFAULTS
   

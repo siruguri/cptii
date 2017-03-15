@@ -29,5 +29,10 @@ class UserTest < ActiveSupport::TestCase
     it 'works' do
       assert_equal users(:counselor_1).email, users(:student_1).counselors.order(created_at: :asc).first.email
     end
-  end  
+  end
+
+  test '#friends' do
+    # 2, in fixtures.
+    assert_equal 2, users(:student_1).friends.count
+  end
 end

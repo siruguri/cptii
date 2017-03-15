@@ -25,30 +25,5 @@
       color: white;
     }
     
-    .details {
-      margin-top: 10px;
-      .name {
-	font-size: $body-text;
-	font-weight: bold;
-	line-height: 24px;
-      }
-      .description {
-	color: $darkest-gray;
-      }
-    }
-    
-    .namepic {
-      float: left;
-      margin: 0 20px 0 10px;
-      
-      @media(min-width: 768px) {
-	height: 75px;
-	width: 75px;
-      }
-      @media(max-width: 768px) {
-	height: 40px;
-	width: 40px;
-      }
-    }
   }
 }

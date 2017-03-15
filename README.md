@@ -16,7 +16,10 @@ Note: requires Ruby knowledge, Heroku experience
     heroku run rake db:seed:make_taxonomy_nodes  -a appname
     
   ```
-  
+# Friends
+
+For demo purposes, you can run `rake db:seed:make_students` to create some students. There should already be a school in the database for this to work.
+
 # Admin Interface Manual
 
 ## Create a new user

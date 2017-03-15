@@ -1,5 +1,5 @@
 GoalGetter.Views.CounselorItemView = GoalGetter.Views.ScreenBase.extend
-  className: 'counselor-item row'
+  className: 'counselor-item card-item row'
   initialize: ->
     _.bindAll @, 'render'
 

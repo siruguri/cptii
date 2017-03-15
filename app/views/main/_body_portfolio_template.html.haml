@@ -1,4 +1,5 @@
 = render 'portfolio_category'
+= render 'portfolio_tab'
 %script#body_add-work_template{type: 'text/template'}
   .portfolio-card.row.input-form{"data-server-code" => 'add-work'}
     .card-entry.tight.col.s-ninety
@@ -38,9 +39,9 @@
   .switcher-tab.row
     .col.s4#goto-public.goto.selected.pointer
       public
-    .col.s4#goto-friends.goto.pointer
+    .col.s4#goto-portfolio-friends.goto.pointer
       friends
-    .col.s4#goto-likes.goto.pointer
+    .col.s4#goto-portfolio-likes.goto.pointer
       likes
   .portfolio-sub-card#public.selected
     .portfolio-name.row
@@ -59,8 +60,3 @@
     .row.signout-row
       .col.s12.btn.pointer#sign-out
         Sign Out
-        
-  .portfolio-sub-card#friends
-    Friends
-  .portfolio-sub-card#likes
-    Likes

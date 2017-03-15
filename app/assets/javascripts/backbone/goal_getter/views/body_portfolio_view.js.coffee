@@ -2,8 +2,27 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   className: 'portfolio'
   initialize: ->
     _.bindAll @, 'render'
+    @tab_views =
+      'public': {}      
+      'portfolio-friends': null
+      'portfolio-likes': null
+        
     @shown_id = 'public'
 
+  delayed_render: (key) ->
+    if key != 'public' and @tab_views[key] == null
+      klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name key
+      @model.get_screen_data key
+
+      @tab_views[key] = {}
+      @tab_views[key].view_obj = new GoalGetter.Views[klass]
+        model: @model
+      el = @tab_views[key].view_obj.wait_and_render(key)
+      @tab_views[key].root_el = el
+            
+      @$el.append el
+    else
+      @tab_views[key].root_el.show()
   events:
     # Tab switching
     'click .goto': (e) ->
@@ -11,12 +30,11 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @previous_tab = $(e.target)
       @previous_tab.addClass('selected')
       
-      target_id = $(e.target).attr('id').replace('goto-', '')
-      $(document.getElementById(@shown_id)).removeClass('selected')
+      target_view_key = $(e.target).attr('id').replace('goto-', '')
+      @tab_views[@shown_id].root_el.hide()
+      @shown_id = target_view_key
       
-      @shown_id = target_id
-      $(document.getElementById(@shown_id)).addClass('selected')
-      $(document.getElementById(target_id)).show()
+      @delayed_render @shown_id
 
     # Generic handler for all portfolio additions
     'click .add-card': (e) ->
@@ -47,6 +65,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         success: (d, s, x) ->
           # assume correctness of response
           view_self.model.destroy_user_data()
+          document.location.href = '/'
       )
       
   render: ->
@@ -108,5 +127,6 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
           ach_list.append $(t_func_1({text: txt}))
         )
       null
-    
+
+    @tab_views.public.root_el = @$el.find('#public')
     @$el

@@ -43,6 +43,16 @@ class User < ActiveRecord::Base
     email.tr('+!.@-', '_____')
   end
 
+  def friends
+    fs = Friendship.where('first_friend_id = ? or second_friend_id = ?', self.id, self.id).pluck :first_friend_id, :second_friend_id
+
+    friend_ids = fs.map do |pair|
+      pair[0] == self.id ? pair[1] : pair[0]
+    end
+
+    User.where('id in (?)', friend_ids)
+  end
+
   private
   def make_blank_profile
     p = Profile.new(

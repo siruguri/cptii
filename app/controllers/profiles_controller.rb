@@ -2,6 +2,8 @@ class ProfilesController < ApplicationController
   before_action :authorize_actions!
   before_action :require_xhr, only: [:show, :update] # this requires the format to end in .json
 
+  include DataFetchers
+  
   def index
   end
 
@@ -88,42 +90,15 @@ class ProfilesController < ApplicationController
         if u
           case screen_number
           when '2'
-            ({user_info: {counselors: u.counselors.to_a.map { |c| {name: c.profile.full_name, id: c.id,
-                                                                   img_url: c.profile.profile_pic&.url,
-                                                                   description_string: c.profile.description_string(type: :counselor)} } }})
+            counselor_list u
           when '3'
-            p = u.profile
-            entries = p.profile_entries.to_a
-            work_ex_list = entries.select { |e| e.entry_key == 'work'}.
-                           map { |entry| {work_title: entry.entry_details['title'],
-                                          work_workplace: entry.entry_details['workplace']}}
-
-            achievements = entries.select { |e| e.entry_key == 'achievement'}.
-                           group_by { |e| e.entry_details['type']}.
-                           map { |type, recs| {type: type,
-                                               texts: recs.map { |r| r.entry_details['text']}
-                                 }
-            }
-
-            ({user_info: {profile_pic_url: p.profile_pic&.url,
-                          work_experience: work_ex_list,
-                          achievements: achievements,
-                          user_name: u.profile.full_name,
-                          published: p.published?
-                         }})
+            portfolio_data u, tab: 'public'
+          when 'portfolio-friends'
+            portfolio_data u, tab: 'friends'
+          when 'portfolio-likes'
+            portfolio_data u, tab: 'likes'
           when 'chat'
-            if current_user.valid_counselor_id?(params[:counselor_id])
-              counselor_id = params[:counselor_id].to_i
-              student_id = u.id
-              recs = ChatRecord.where('sender_id = ? and receiver_id = ? or sender_id = ? and receiver_id = ?',
-                                      student_id, counselor_id, counselor_id, student_id).
-                     order(written_time: :asc).
-                     map do |r|
-                {message: r.message, at: r.written_time, is_response: (r.sender_id != student_id)}
-              end
-              
-              ({user_info: {rec_count: recs.count, recs: recs}})
-            end
+            user_chat_data u, counselor_id: params[:counselor_id]
           end
          end
       end)

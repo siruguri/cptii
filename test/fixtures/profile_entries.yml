@@ -14,4 +14,12 @@ profile_entry_student_1_4:
   profile: profile_student_1
   entry_key: achievement
   entry_details: <%= ({type: 'personal achievement', text: 'pers ach 1'}).to_json %>
+profile_entry_student_1_f1_1:
+  profile: profile_student_1_f1
+  entry_key: achievement
+  entry_details: <%= ({type: 'personal achievement for f1', text: 'pers ach f1.1'}).to_json %>
+profile_entry_student_1_f2_1:
+  profile: profile_student_1_f2
+  entry_key: work
+  entry_details: <%= ({title: 'personal achievement', workplace: 'job f2 1'}).to_json %>
   
