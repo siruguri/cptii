@@ -110,7 +110,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
       
-    if @model.has_property('add')
+    if @model.has_property('add') and @model.logged_in
       @$el.find('.header-actions .item#add').css('display', 'inline-block')
     if @model.has_property('share')
       @$el.find('.header-actions .item#share').css('display', 'inline-block')

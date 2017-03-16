@@ -28,12 +28,24 @@ module DataFetchers
                     published: p.published?
                    }})
     when 'friends'
-      ret = ProfileEntry.joins(profile: :user).where('users.id in (?)', u.friends.pluck(:id)).
+
+      ret1 = ProfileEntry.joins(profile: :user).where('profile_entries.entry_key in (?) and users.id in (?)',
+                                                      ['work', 'achievement'],
+                                                      u.friends.pluck(:id)).
             order(created_at: :desc).to_a.map do |p_e|
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
-         entry_type: p_e.entry_key,
+         entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
          img_url: p_e.profile.profile_pic&.url}
       end
+
+      ret2 = ProgramSuggestion.joins(:program).includes(:program).where('user_id != ?', u.id).
+             order(created_at: :desc).to_a.map do |p_s|
+        {id: p_s.id, entry_type: "program", timestamp: p_s.created_at.to_i,
+         description: p_s.program.title, img_url: p_s.user.profile.profile_pic&.url}
+      end
+
+      # Sort in descending order of created_at timestamp
+      ret = (ret1 + ret2).sort_by { |i| -1 * i[:timestamp] }
 
       ({user_info: {friend_entries: ret} })
     when 'likes'

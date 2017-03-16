@@ -25,7 +25,7 @@ friend_connections.each do |pair|
 
   u0 = User.find_by email: "#{f0.downcase}@students.com"
   u1 = User.find_by email: "#{f1.downcase}@students.com"
-  fr = Friendship.new first_friend: u0, second_friend: u1
-  fr.save
+  fr = Friendship.find_or_initialize_by first_friend: u0, second_friend: u1
+  fr.save unless fr.persisted?
 end
 
