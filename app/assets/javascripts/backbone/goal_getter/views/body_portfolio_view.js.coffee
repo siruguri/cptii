@@ -19,7 +19,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         model: @model
       el = @tab_views[key].view_obj.wait_and_render(key)
       @tab_views[key].root_el = el
-            
+      el.show()
+      
       @$el.append el
     else
       @tab_views[key].root_el.show()

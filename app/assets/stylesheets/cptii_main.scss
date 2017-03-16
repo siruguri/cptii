@@ -40,6 +40,7 @@ body {
 }
 
 .app-body {
+  background-color: $light-gray;
   height: 100%;
   display: flex;
   position: relative;
@@ -120,6 +121,8 @@ body {
 
 /* cards in a list */
 .card-item {
+  padding-top: 13px;
+  
   .details {
     margin-top: 10px;
     .name {

@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
   before_action :require_xhr, only: [:show, :update] # this requires the format to end in .json
 
   include DataFetchers
+  include ProfileUpdaters
   
   def index
   end
@@ -46,26 +47,12 @@ class ProfilesController < ApplicationController
 
           resp = {lrt: p.entry_details['lrt']}          
         end
+      when 'add-service'
+        add_service u, params
       when 'add-work'
-        if params.dig(:payload, :data).try(:size).try(:==, 2)
-          data = params[:payload][:data]
-          p = ProfileEntry.new profile: u.profile, entry_key: 'work',
-                               entry_details: {title: data[0], workplace: data[1]}
-          p.save
-          resp = {id: p.id}
-        else
-          resp = {}
-        end
+        add_work u, params
       when 'add-an-achievement'
-        if params.dig(:payload, :data).try(:size).try(:==, 2)
-          data = params[:payload][:data]
-          p = ProfileEntry.new profile: u.profile, entry_key: 'achievement',
-                               entry_details: {type: data[0], text: data[1]}
-          p.save
-          resp = {id: p.id}
-        else
-          resp = {}
-        end
+        add_achievement u, params
       end
     end
     

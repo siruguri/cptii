@@ -1,7 +1,7 @@
 class GuidesController < ApplicationController
-  before_action :authorize_actions, only: [:put]
+  before_action :authorize_actions, only: [:update]
 
-  def put
+  def update
   end
 
   def show
@@ -21,8 +21,9 @@ class GuidesController < ApplicationController
   private
   def authorize_actions
     _abort = false
+    
     case params[:action]
-    when :put
+    when 'update'
       # Saving a guide requires a user, or an admin attempting to supply a user.
       _abort = current_user.nil? && (current_admin.nil? || params[:user_id].nil?)
     end

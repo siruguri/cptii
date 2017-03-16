@@ -19,6 +19,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
   events:
     'click .nav-back': ->
       @change_screens({from: 'header', to: 'up'})
+    'click #add': ->
+      @change_screens({from: 'header', to: 'add-service'})
     'click #search': ->
       @trigger 'query', {to: 'search'}
     'click #published': ->
@@ -108,6 +110,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
       
+    if @model.has_property('add')
+      @$el.find('.header-actions .item#add').css('display', 'inline-block')
     if @model.has_property('share')
       @$el.find('.header-actions .item#share').css('display', 'inline-block')
     if @model.has_property('search')

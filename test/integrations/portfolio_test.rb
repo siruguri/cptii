@@ -27,7 +27,7 @@ class PortfolioTest < Capybara::Rails::TestCase
       sleep 1
       refute page.has_content? 'Add achievement'
       page.all('.add-card')[1].click
-      page.fill_in 'add_achievement', with: 'personal best 1'
+      page.fill_in 'text', with: 'personal best 1'
       page.all('#submit-body-form')[0].click
       assert page.has_content? 'personal best 1'
     end      

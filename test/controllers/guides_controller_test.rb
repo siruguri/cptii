@@ -18,4 +18,13 @@ class GuidesControllerTest < ActionController::TestCase
       assert_equal 304, response.status
     end
   end
+
+  describe '#put' do
+    let(:p) { ({id: -1, title: 'guide title', description: 'description'}) }
+    it 'needs admin' do
+      sign_out :admin
+      put :update, params: p
+      assert_equal 400, response.status
+    end
+  end
 end

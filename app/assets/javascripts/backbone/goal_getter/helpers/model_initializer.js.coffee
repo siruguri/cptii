@@ -31,6 +31,7 @@ GoalGetter.Helpers.ModelInitializer =
       'chat': 1
       'add-work-experience' : 1
       'add-an-achievement' : 1
+      'add-service': 1
       'search-results': 1
       'guide-single': 1
       'logged-out': 0
@@ -41,25 +42,32 @@ GoalGetter.Helpers.ModelInitializer =
       'add-an-achievement' : '3'
       'search-results': '0'
       'guide-single': '1'
+      'add-service': '0'
       
     model_obj.header_config =
-      '3' :
+      '0' :
         properties:
-          share: true
-        has_tools: true
-      'add-work-experience' :
-        properties:
-          done: true
-      'add-an-achievement' :
-        properties:
-          done: true
+          search: true
+          add: true
       '1' :
         properties:
           search: true
-      'search-results':
+      '3' :
         properties:
-          search: true
-      '0':
+          share: true
+      'add-service':
+        properties:
+          done: true
+          needs_refresh: false
+      'add-work-experience' :
+        properties:
+          done: true
+          needs_refresh: true
+      'add-an-achievement' :
+        properties:
+          done: true
+          needs_refresh: true
+      'search-results':
         properties:
           search: true
         
@@ -71,6 +79,7 @@ GoalGetter.Helpers.ModelInitializer =
       '4': true
       'add-work-experience': true
       'add-an-achievement' : true
+      'add-service': true
       'chat': true
       'search-results': false
       'guide-single' : false
@@ -86,6 +95,7 @@ GoalGetter.Helpers.ModelInitializer =
       '3': false
       '4': false
       'chat': false
+      'add-service': true
       'add-work-experience': true
       'add-an-achievement' : true
       'search-results': false
@@ -102,6 +112,7 @@ GoalGetter.Helpers.ModelInitializer =
       '3': 'Portfolio',
       '4': 'Contact',
       'chat' : '$current_chat_counselor'
+      'add-service': 'Add Service'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
       'guide-single' : '$body_guide_title'
@@ -117,6 +128,7 @@ GoalGetter.Helpers.ModelInitializer =
       when '4' then 'ContactsView'
       when 'chat' then 'ChatView'
       when 'add-work-experience' then 'AddWorkView'
+      when 'add-service' then 'AddService'
       when 'add-an-achievement' then 'AddAnAchievement'
       when 'search-results' then 'SearchResultsView'
       when 'guide-single' then 'GuideSingleView'

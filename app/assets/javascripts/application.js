@@ -10,12 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require underscore
 //= require jquery
 //= require jquery_ujs
 //= require leaflet
 //= require dropzone
-//= require materialize-sprockets
-//= require underscore
+//= require materialize
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink

@@ -1,3 +1,19 @@
+%script#body_add-service_template{type: 'text/template'}
+  .portfolio-card.row.input-form{"data-server-code" => 'add-service'}
+    .card-entry.tight.col.s-ninety
+      .input-field      
+        %input#add-service-title{autofocus: true, type: 'text', name: 'title'}
+        %label{for: 'add-service-title'}
+          Service Title
+      .input-field      
+        %input#add-service-description{type: 'text', name: 'description'}
+        %label{for: 'add-service-description'}
+          Short Description
+      .input-field      
+        %input#add-service-location{type: 'text', name: 'location'}
+        %label{for: 'add-service-location'}
+          Location
+    
 %script#body_services_template{type: 'text/template'}
   .taxonomy-list
     

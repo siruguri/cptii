@@ -4,16 +4,19 @@ class GoalGetter.Helpers.FormProcessor
     code = @process_code
 
     # This part might have to be built out into subclasses for each form.
-    data = _.map(@node_array, (node) ->
-      $(node).val()
+    data = _.reduce(
+      @node_array, (memo, elt) ->
+        memo[$(elt).attr('name')] = $(elt).val()
+        memo
+      , {}
     )
 
-    all_filled = _.filter(data, (item) ->
+    all_filled = _.filter(_.values(data), (item) ->
       item.trim().length > 0
     )
     
     @promise = new Promise (done, fail) ->
-      if all_filled.length == data.length
+      if all_filled.length == _.keys(data).length
         $.ajax
           url: '/profile.json',
           method: 'put',
@@ -26,6 +29,8 @@ class GoalGetter.Helpers.FormProcessor
           error: (x, s, e) ->
             fail(e)
       else
+        # TODO this really should be the error function because the form wasn't filled in.
+        # TODO Also, this should be based on which form fields are required. 
         done([])
         
     @
