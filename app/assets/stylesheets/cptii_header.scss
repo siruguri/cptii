@@ -61,6 +61,10 @@
   .header-actions {
     float: right;
     .item {
+      &#save svg use.saved {
+	color: white;
+      }
+      
       margin: 20px 46px 0 0;
       display: inline-block;
       &.dynamic {

@@ -1,4 +1,5 @@
 cr_1:
+  id: 912
   resource_type: guides
   title: guide 1
   description: this is a guide 1
@@ -10,4 +11,8 @@ cr_notguide:
   resource_type: guides
   title: go here
   description: not a guide
-  
+cr_unsaved:
+  resource_type: guides
+  title: not saved
+  description: not saved yet
+  created_at: <%= DateTime.now - 3.days %>

@@ -55,6 +55,10 @@ GoalGetter.Helpers.ModelInitializer =
       '3' :
         properties:
           share: true
+      'guide-single':
+        properties:
+          save: true
+          share: true
       'add-service':
         properties:
           done: true
@@ -87,7 +91,8 @@ GoalGetter.Helpers.ModelInitializer =
       'overlay' : true
       'portfolio-friends': true
       'portfolio-likes': true
-                  
+      'guides-saved': true
+      
     model_obj.screen_data_ready =
       '0': true
       '1': false
@@ -102,6 +107,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guide-single' : false
       'logged-out': true
       'overlay': false
+      'guides-saved': false
       'portfolio-friends': false
       'portfolio-likes': false
       
@@ -135,4 +141,4 @@ GoalGetter.Helpers.ModelInitializer =
       when 'logged-out' then 'LoggedOutView'
       when 'portfolio-friends' then 'PortfolioTabView'
       when 'portfolio-likes' then 'PortfolioTabView'
-            
+      when 'guides-saved' then 'GuidesTabView'

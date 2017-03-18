@@ -46,6 +46,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/organizations?q=' + @get('search_query')
         else
           '/programs?q=' + @get('search_query')
+      else if ref == '1'
+        '/guides/'
       else if ref == 'guide-single'
         '/guides/' + @get('body_guide_id')
       else if ref == 'overlay'
@@ -80,7 +82,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       else if screen_number == '1'
         model_self.guides = d.data['guides']
       else if screen_number == 'guide-single'
-        model_self.guide_data = d.data
+        model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
       else

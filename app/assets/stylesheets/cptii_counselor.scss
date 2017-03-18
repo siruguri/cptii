@@ -1,9 +1,5 @@
 .counselor {
-  &:hover {
-    overflow-y: scroll;
-  }
-  overflow: hidden;
-  
+  overflow-y: scroll;
   width: 100%;
   .contact-details {
     clear: both;

@@ -12,15 +12,6 @@ class ProfilesControllerTest < ActionController::TestCase
   end
   
   describe '#show' do
-    it 'works for guides screen without login' do
-      sign_out @student_1
-      get :show, xhr: true, params: {format: 'json', screen_number: '1'}
-      b = JSON.parse(response.body)
-      assert b['data'].keys.include? 'guides'
-      assert_equal ContentResource.where(resource_type: 'guides').count, b['data']['guides'].size
-      assert_equal ['id', 'title'], b['data']['guides'][0].keys.sort
-    end
-    
     it 'works for counselor screen' do
       get :show, xhr: true, params: {format: 'json', screen_number: '2'}
 
@@ -63,7 +54,8 @@ class ProfilesControllerTest < ActionController::TestCase
       p.entry_details['lrt'] = (Time.now - 2.hours).to_i
       p.save
 
-      get :show, xhr: true, params: {format: 'json', screen_number: '1'}
+      # new alerts show up for screen keys that don't exist
+      get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
       # r_older won't be shown
       assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
     end
@@ -71,7 +63,7 @@ class ProfilesControllerTest < ActionController::TestCase
     it 'shows alerts with dawn of time logic' do
       ResourceAlert.create content_resource: content_resources(:cr_1)
 
-      get :show, xhr: true, params: {format: 'json', screen_number: '1'}
+      get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
       assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
     end
   end

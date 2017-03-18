@@ -62,6 +62,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
           model: @model
       @listenTo @screens[curr_screen_ref], 'navigation:change', @pass_navigation
       @listenTo @screens[curr_screen_ref], 'body:render', @pass_body_render
+      
       @$el.append @screens[curr_screen_ref].wait_and_render(curr_screen_ref)
 
     @screens[curr_screen_ref].$el.show()

@@ -19,6 +19,21 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
   events:
     'click .nav-back': ->
       @change_screens({from: 'header', to: 'up'})
+    'click #save': (e) ->
+      button = $(e.target)
+      $.ajax('/resource_bookmarks',
+        method: 'post'
+        data:
+          resource_id: @model.get('body_guide_id')
+          resource_type: 'content-resource-guide'
+        success: (d, s, x) ->
+          if d.data.status == 'deleted'
+            button.removeClass 'saved'
+          else
+            button.addClass 'saved'
+      )
+      null
+      
     'click #add': ->
       @change_screens({from: 'header', to: 'add-service'})
     'click #search': ->
@@ -41,6 +56,9 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     'click #submit-body-form': ->
       @body_view.trigger 'header:submit-body-form'
 
+  fill_save: (event_name) ->
+    @$el.find('#save use').addClass 'saved'
+    
   change_screens: (change_obj) ->
     # This method does a lot.
     # Gonna make it double up to also do redirects
@@ -109,7 +127,12 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     if @model.current_screen == '3'
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
-      
+
+    if @model.has_property('save') and @model.logged_in
+      @$el.find('.header-actions .item#save').css('display', 'inline-block')
+      gd = @model.get('guide_data')
+      if typeof gd != 'undefined' and gd.is_saved == true
+        @$el.find('#save use').addClass('saved')
     if @model.has_property('add') and @model.logged_in
       @$el.find('.header-actions .item#add').css('display', 'inline-block')
     if @model.has_property('share')

@@ -19,11 +19,7 @@
     border-color: white;
   }
   
-  &:hover {
-    overflow-y: scroll;
-  }
-  overflow: hidden;
-  
+  overflow-y: scroll;
   background-color: $light-gray;
   width: 100%;
 

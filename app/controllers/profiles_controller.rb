@@ -68,29 +68,24 @@ class ProfilesController < ApplicationController
     u = current_user
     d = ({data: {}})
     
-    d[:data].merge!(
-      if screen_number == '1'
-        # Data that doesn't require login
-        list = ContentResource.order(created_at: :desc).where(resource_type: 'guides').pluck(:title, :id).map { |rec_pair| ({title: rec_pair[0], id: rec_pair[1]})}
-        {guides: list}
-      else
-        if u
-          case screen_number
-          when '2'
-            counselor_list u
-          when '3'
-            portfolio_data u, tab: 'public'
-          when 'portfolio-friends'
-            portfolio_data u, tab: 'friends'
-          when 'portfolio-likes'
-            portfolio_data u, tab: 'likes'
-          when 'chat'
-            user_chat_data u, counselor_id: params[:counselor_id]
-          end
-         end
-      end)
-    
     if u
+      d[:data].merge!(
+        case screen_number
+        when '2'
+          counselor_list u
+        when '3'
+          portfolio_data u, tab: 'public'
+        when 'portfolio-friends'
+          portfolio_data u, tab: 'friends'
+        when 'portfolio-likes'
+          portfolio_data u, tab: 'likes'
+        when 'chat'
+          user_chat_data u, counselor_id: params[:counselor_id]
+        else
+          {}
+        end
+      )
+    
       # global data for logged-in case: broadcast alerts
       d[:data][:user_info] ||= {}
       d[:data][:user_info].merge!(u.new_alerts_count)
