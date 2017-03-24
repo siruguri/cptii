@@ -3,7 +3,7 @@ GoalGetter.Views.GuidesView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @tab_views =
-      'list': {}      
+      'list': {}
       'guides-saved': null
     @shown_id = 'list'
 

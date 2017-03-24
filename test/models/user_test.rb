@@ -5,6 +5,13 @@ class UserTest < ActiveSupport::TestCase
     jsonb_initializations!
   end
 
+  test '#identifier' do
+    s = users(:student_1)
+    assert_nil s.slug
+    assert_equal 'user1_valid_com', s.identifier!
+    assert s.slug
+  end
+    
   describe '#valid_counselor_id' do
     before do
       @s = users(:student_1)

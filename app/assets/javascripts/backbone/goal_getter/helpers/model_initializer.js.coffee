@@ -21,7 +21,8 @@ GoalGetter.Helpers.ModelInitializer =
         img_url: '/images/logged_out_contacts.png'
         bkgrd_color: '#00b9e6'
         
-        
+
+    # without this entry, you can't navigate directly to this.
     model_obj.directory_level =
       '0': 0
       '1': 0
@@ -35,13 +36,15 @@ GoalGetter.Helpers.ModelInitializer =
       'search-results': 1
       'guide-single': 1
       'logged-out': 0
-            
+      'public-portfolio': 1
+      
     model_obj.up_level =
       'chat': '2'
       'add-work-experience' : '3'
       'add-an-achievement' : '3'
       'search-results': '0'
       'guide-single': '1'
+      'public-portfolio': '3'
       'add-service': '0'
       
     model_obj.header_config =
@@ -74,7 +77,9 @@ GoalGetter.Helpers.ModelInitializer =
       'search-results':
         properties:
           search: true
-        
+      'public-portfolio':
+        properties: {}
+
     model_obj.requires_login =
       '0': false
       '1': false
@@ -92,6 +97,7 @@ GoalGetter.Helpers.ModelInitializer =
       'portfolio-friends': true
       'portfolio-likes': true
       'guides-saved': true
+      'public-portfolio': false
       
     model_obj.screen_data_ready =
       '0': true
@@ -110,6 +116,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guides-saved': false
       'portfolio-friends': false
       'portfolio-likes': false
+      'public-portfolio': false
       
     model_obj.texts =
       '0': 'Services',
@@ -123,7 +130,11 @@ GoalGetter.Helpers.ModelInitializer =
       'add-an-achievement' : 'Add achievement'
       'guide-single' : '$body_guide_title'
       'search-results': '$search_query'
+      'guides-saved': 'Guides'
+      'portfolio-friends': 'Portfolio'
+      'portfolio-likes': 'Portfolio'      
       'logged-out': ''
+      'public-portfolio': '$public_portfolio_name'
 
   resolve_to_class_name: (index) ->
     switch index
@@ -142,3 +153,4 @@ GoalGetter.Helpers.ModelInitializer =
       when 'portfolio-friends' then 'PortfolioTabView'
       when 'portfolio-likes' then 'PortfolioTabView'
       when 'guides-saved' then 'GuidesTabView'
+      when 'public-portfolio' then 'PortfolioView'

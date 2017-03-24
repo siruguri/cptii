@@ -31,8 +31,8 @@ GoalGetter.Views.GuidesTabView = GoalGetter.Views.ScreenBase.extend
       
     @entry_refresher.each (m, i) ->
       cell = $(t_func({title: m.get('title')}))
-      cell.addClass colors[i % colors.length]      
-      view_self.$el.append cell 
+      cell.addClass colors[i % colors.length]
+      view_self.$el.append cell
 
     @$el
     

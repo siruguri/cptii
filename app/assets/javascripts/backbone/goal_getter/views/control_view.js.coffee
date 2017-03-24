@@ -29,12 +29,27 @@ GoalGetter.Views.ControlView = Backbone.View.extend
   load_and_render: ->
     # If there is a valid parameter, use it to generate a specific tab.
     if window.document.location.search != ''
-      x = window.document.location.search.split('?')[1].split('screen=')
-      if x.length > 1
-        screen_param = x[1]
-        unless isNaN((num = parseInt(screen_param))) or typeof @model.directory_level[screen_param] == 'undefined'
-          @model.set_current_screen screen_param
-    
+      all_params = window.document.location.search.split('?')[1]
+      params_hash = {}
+      view_self = @
+      all_params.split('&').forEach (e, i) ->
+        pair = e.split('=')
+        key = pair[0]
+        value = pair[1]
+        if typeof value == 'undefined'
+          value = null
+        params_hash[key] = value
+
+      if params_hash.hasOwnProperty('screen')
+        unless @model.directory_level[params_hash['screen']] == null
+          @model.set_current_screen params_hash['screen']
+      if params_hash.hasOwnProperty('public-portfolio-name')
+        view_self.model.set('public_portfolio_name', params_hash['public-portfolio-name'])
+          
+      # Both of the below must be specified to be valid
+      if params_hash['screen'] == 'public-portfolio' && params_hash['public-portfolio-name'] == null
+        @model.set_current_screen '0'
+          
     @listenTo @model, 'body_model:ready', @render
     @model.init_fetch()
 

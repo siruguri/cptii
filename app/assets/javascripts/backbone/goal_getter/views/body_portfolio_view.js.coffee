@@ -3,7 +3,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @tab_views =
-      'public': {}      
+      'public': {}
       'portfolio-friends': null
       'portfolio-likes': null
         
@@ -84,28 +84,29 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       headers:
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     )
-    
-    dz = $("#portfolio-img").dropzone(
-      url: "/profile/photo"
-      headers:
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      init: ->
-        @on('success', (file, resp) ->
-          if resp.hasOwnProperty('redirect')
-            view_self.trigger 'navigation:change', {redirect: resp.redirect}
-        )
-    )
-    dz.on('dragenter', (e) ->
-      $(e.target).addClass('dragged')
-    )
-    dz.on('dragleave', (e) ->
-      $(e.target).removeClass('dragged')
-    )
-    dz.on('drop', (e) ->
-      $(e.target).removeClass('dragged')
-      $(e.target).hide()
-      $('.portfolio-img.loading').show()
-    )
+
+    if @model.current_screen == '2'
+      dz = $("#portfolio-img").dropzone(
+        url: "/profile/photo"
+        headers:
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        init: ->
+          @on('success', (file, resp) ->
+            if resp.hasOwnProperty('redirect')
+              view_self.trigger 'navigation:change', {redirect: resp.redirect}
+          )
+      )
+      dz.on('dragenter', (e) ->
+        $(e.target).addClass('dragged')
+      )
+      dz.on('dragleave', (e) ->
+        $(e.target).removeClass('dragged')
+      )
+      dz.on('drop', (e) ->
+        $(e.target).removeClass('dragged')
+        $(e.target).hide()
+        $('.portfolio-img.loading').show()
+      )
           
     # Add work experience
     wex_card = @$el.find('.portfolio-card#workex')

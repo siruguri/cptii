@@ -10,7 +10,7 @@ class OverlayControllerTest < ActionController::TestCase
   describe 'works' do
     it 'for public' do
       get :data, xhr: true, params: {format: :json, key: '3'}
-      assert_match /#{@student_1.identifier}/, JSON.parse(response.body)['data']['url']
+      assert_match /#{@student_1.identifier!}/, JSON.parse(response.body)['data']['url']
     end
 
     it 'for private' do

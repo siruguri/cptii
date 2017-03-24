@@ -5,8 +5,8 @@ module DataFetchers
                                                            description_string: c.profile.description_string(type: :counselor)} } }})
   end
 
-  def portfolio_data(u, tab: 'public')
-    case tab
+  def portfolio_data(u, opts = {})
+    case opts[:tab]
     when 'public'
       p = u.profile
       entries = p.profile_entries.to_a
@@ -25,7 +25,7 @@ module DataFetchers
                     work_experience: work_ex_list,
                     achievements: achievements,
                     user_name: u.profile.full_name,
-                    published: p.published?
+                    published: p.published?, is_friends: opts[:is_friend] || false
                    }})
     when 'friends'
 
@@ -52,11 +52,13 @@ module DataFetchers
     end
   end
 
-  def user_chat_data(u, counselor_id: nil)
+  def user_chat_data(u)
+    counselor_id = params[:counselor_id].to_i
+    
     if counselor_id.nil? || !(u.valid_counselor_id?(counselor_id))
       return ({user_info: {rec_count: 0, recs: []}})
     end
-    counselor_id = params[:counselor_id].to_i
+
     student_id = u.id
     recs = ChatRecord.where('sender_id = ? and receiver_id = ? or sender_id = ? and receiver_id = ?',
                             student_id, counselor_id, counselor_id, student_id).

@@ -18,6 +18,8 @@ en:
     portfolio:
       work_experience: 'Work Experience'
       add_work_experience: 'Add Work Experience'
+      achievement: 'Achievement'
+      add_achievement: 'Add Achievement'
   messages:
     profiles:
       profile_not_public: 'Your profile is not public. Please publish to get a URL you can share'

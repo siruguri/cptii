@@ -37,7 +37,7 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
         str = "Feed entry " + m.get('description')
         
       card_html = _.template($('#body_portfolio-tab-item_template').html())(description_string: str)
-      e = $(card_html)      
+      e = $(card_html)
       view_self.$el.append e
       e.find('img').attr('src', m.get('img_url'))
 

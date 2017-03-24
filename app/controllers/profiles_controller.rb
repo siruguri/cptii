@@ -65,9 +65,17 @@ class ProfilesController < ApplicationController
     end
 
     screen_number = params[:screen_number]
-    u = current_user
     d = ({data: {}})
+
+    public_user = nil
+    u = if screen_number == 'public-portfolio'
+          public_user = User.find_by(slug: params[:public_name])
+          (public_user && public_user.profile.published?) ? public_user : current_user
+        else
+          current_user
+        end
     
+    is_friend = public_user && current_user.friends.include?(public_user)
     if u
       d[:data].merge!(
         case screen_number
@@ -80,7 +88,9 @@ class ProfilesController < ApplicationController
         when 'portfolio-likes'
           portfolio_data u, tab: 'likes'
         when 'chat'
-          user_chat_data u, counselor_id: params[:counselor_id]
+          user_chat_data u
+        when 'public-portfolio'
+          portfolio_data u, tab: 'public', is_friend: is_friend
         else
           {}
         end

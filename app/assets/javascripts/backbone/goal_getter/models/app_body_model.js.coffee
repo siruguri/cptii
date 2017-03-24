@@ -20,7 +20,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
       model_self.screen_data_ready[0] = true
-      model_self.attributes = d.data
+      # clobbers existing keys in attributes
+      _.extend(model_self.attributes, d.data)
       model_self.trigger 'body_model:ready'
     )
 
@@ -54,6 +55,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         '/overlay_data.json?key=' + @current_screen
       else if ref == 'chat'
         '/profile.json?screen_number=chat&counselor_id=' + @get('current_chat_counselor_id')
+      else if ref == 'public-portfolio'
+        '/profile.json?screen_number=public-portfolio&public_name=' + @get('public_portfolio_name')
       else
         '/profile.json?screen_number=' + ref
     u
@@ -85,6 +88,9 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
+      else if screen_number == 'public-portfolio'
+        model_self.set('user_info', d.data.user_info)
+        model_self.set('public_portfolio_name', d.data.user_info.user_name)
       else
         model_self.set('user_info', d.data.user_info)
     )

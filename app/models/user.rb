@@ -37,10 +37,12 @@ class User < ActiveRecord::Base
     is_a_type? :counselor
   end
 
-  def identifier
+  def identifier!
     # identifier for use in public profile urls
-    # tr is a lot faster than gsub
-    email.tr('+!.@-', '_____')
+
+    slug.present? ? slug : 
+      # tr is a lot faster than gsub
+      (self.slug = email.tr('+!.@-', '_____'); self.save; slug)
   end
 
   def friends

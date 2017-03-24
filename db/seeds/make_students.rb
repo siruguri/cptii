@@ -6,7 +6,7 @@ friend_connections = [[0, 1], [0,2]]
 
 students.each do |name|
   u = User.find_or_initialize_by email: "#{name.downcase}@students.com"
-  u.password = 'password'
+  u.password = (Rails.env.production? ? ENV['GENERIC_STUDENT_PASSWORD'] : 'password')
   u.save
 
   p = u.profile
