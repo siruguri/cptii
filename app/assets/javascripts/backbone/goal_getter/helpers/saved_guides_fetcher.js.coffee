@@ -11,7 +11,8 @@ GoalGetter.Helpers.SavedGuidesFetcher = GoalGetter.Helpers.HeartbeatFetcher.exte
     _.bindAll @, 'modify_data'
 
   modify_data: (coll, resp, opts) ->
-    @set resp.data.user_info.friend_entries
+    if resp.data.guides.length > 0
+      coll.set resp.data.guides
     
   lrt_data: ->
     {last_request_time: @_lrt}

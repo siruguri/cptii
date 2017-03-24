@@ -15,6 +15,8 @@ GoalGetter.Views.GuidesView = GoalGetter.Views.ScreenBase.extend
       @tab_views[key] = {}
       @tab_views[key].view_obj = new GoalGetter.Views[klass]
         model: @model
+      @listenTo @tab_views[key].view_obj, 'body:render', @tab_views[key].view_obj.render
+        
       el = @tab_views[key].view_obj.wait_and_render(key)
       @tab_views[key].root_el = el
       el.show()

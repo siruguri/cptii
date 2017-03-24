@@ -11,7 +11,9 @@ GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher
     _.bindAll @, 'modify_data'
 
   modify_data: (coll, resp, opts) ->
-    @set resp.data.user_info.friend_entries
+    # entry_refresher is a backbone collection, remember?
+    if resp.data.user_info.friend_entries.length > 0
+      coll.set resp.data.user_info.friend_entries
     
   lrt_data: ->
     {last_request_time: @_lrt}
