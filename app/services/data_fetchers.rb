@@ -35,6 +35,7 @@ module DataFetchers
             order(created_at: :desc).to_a.map do |p_e|
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
+         entry_name: p_e.profile.contact_details['first_name'],
          img_url: p_e.profile.profile_pic&.url}
       end
 

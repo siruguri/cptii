@@ -28,15 +28,15 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       
     @entry_refresher.each (m, i) ->
       if m.get('entry_type') == 'profile_achievement'
-        str = "Added an achievement " + m.get('description')
+        str = "added an achievement " + m.get('description')
       else if m.get('entry_type') == 'profile_work'
-        str = "Added job experience at " + m.get('description')
+        str = "added job experience at " + m.get('description')
       else if m.get('entry_type') == 'program'
-        str = "Suggested a service at " + m.get('description')
+        str = "suggested a service at " + m.get('description')
       else
         str = "Feed entry " + m.get('description')
-        
-      card_html = _.template($('#body_portfolio-tab-item_template').html())(description_string: str)
+      name = m.get('entry_name')
+      card_html = _.template($('#body_portfolio-tab-item_template').html())(description_string: str, entry_name: name)
       e = $(card_html)
       view_self.$el.append e
       e.find('img').attr('src', m.get('img_url'))
