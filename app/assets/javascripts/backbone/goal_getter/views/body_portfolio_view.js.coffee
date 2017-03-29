@@ -85,7 +85,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     )
 
-    if @model.current_screen == '2'
+    if @model.current_screen == '3'
       dz = $("#portfolio-img").dropzone(
         url: "/profile/photo"
         headers:
