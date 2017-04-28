@@ -69,6 +69,20 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   describe '#update' do
+    it '(un)makes friendships' do
+      sign_out :user
+      sign_in users(:student_1)
+
+      assert_difference('Friendship.count', -1) do
+        put :update, xhr: true, params: {format: 'json',
+                                         payload: {code: 'unfriend'}, friend_id: users(:student_1_f1).id}
+      end
+      assert_difference('Friendship.count', 1) do
+        put :update, xhr: true, params: {format: 'json',
+                                         payload: {code: 'add-friend'}, friend_id: users(:noschool_student).id}
+      end      
+    end
+    
     it 'toggles publish' do
       current_state = @student_1.profile.published
       put :update, xhr: true, params: {format: 'json',

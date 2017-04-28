@@ -39,6 +39,7 @@ class ProfilesController < ApplicationController
   end
   
   def update
+    # This call has to be via XMLHTTPRequest.
     # The payload comes in as a specific ordering of data that is determined by the
     # [:payload][:code] parameter.
     
@@ -60,6 +61,9 @@ class ProfilesController < ApplicationController
 
           resp = {lrt: p.entry_details['lrt']}          
         end
+      when /friend$/
+      # add or remove friends
+        resp = process_friendship u, params
       when 'add-service'
         add_service u, params
       when 'add-work'

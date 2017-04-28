@@ -1,4 +1,28 @@
 module ProfileUpdaters
+  def process_friendship(u, params)
+    success = false
+    fr = Friendship.find_or_initialize_by first_friend_id: u.id, second_friend_id: params[:friend_id]
+    is_friend = 'self'
+    
+    case params.dig(:payload, :code)
+    when 'unfriend'
+      if fr.present?
+        fr.delete
+        is_friend = 'not-friend'
+        success = true
+      end
+    when 'add-friend'
+      if fr.new_record? and User.find_by_id(params[:friend_id]).present?
+        fr.save
+        success = true
+        is_friend = 'friend'
+      end
+    end
+
+    Rails.logger.debug ">>> status: #{status}, is_friend: #{is_friend}"
+    {status: success, is_friend: is_friend}
+  end  
+  
   def add_work(u, params)
     if params.dig(:payload, :data).try(:keys).try(:size).try(:==, 2)
       data = params[:payload][:data]

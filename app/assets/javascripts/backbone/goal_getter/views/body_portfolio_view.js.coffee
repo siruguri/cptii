@@ -9,6 +9,23 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         
     @shown_id = 'public'
 
+  set_friend_action: () ->
+    status = @model.get('user_info')['is_friend']
+    return if status == 'self'
+    
+    button_text = switch status
+      when 'friend'
+        'unfriend'
+      when 'not-friend'
+        'add friend'
+
+    # Change this later if we change the text above.
+    action = button_text.replace(' ', '-')
+    b = @$el.find('#change-friend-status')
+    b.text button_text
+
+    b.data 'action', action
+  
   delayed_render: (key) ->
     if key != 'public' and @tab_views[key] == null
       klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name key
@@ -59,7 +76,25 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         400,
         @
       )
+
+    'click #change-friend-status': (e) ->
+      f = $('form#make-friend-form')
+      data =
+        payload:
+          code: $('#change-friend-status').data('action')
+        friend_id: @model.get('user_info')['id']
+      view_self = @
       
+      $.ajax(
+        method: 'PUT'
+        url: '/profile.json'
+        data: data
+        success: (d, s, x) ->
+          if d.data.status
+            view_self.model.get('user_info')['is_friend'] = d.data.is_friend
+            view_self.set_friend_action()
+      )
+            
     'click #sign-out': ->
       view_self = @
       $.ajax(
@@ -74,16 +109,9 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
 
-    friend_status = @model.get('user_info')['is_friend']
     @$el.html t_func({username: @model.get('user_info')['user_name']})
-
-    button_text = switch friend_status
-      when 'friend'
-        'friends'
-      when 'not-friend'
-        'add friend'
-
-    @$el.find('#add-friend').text button_text
+    @set_friend_action()
+    
     @previous_tab = @$el.find('.goto.selected')
     @$el.find('#portfolio-img').attr('src', @model.get('user_info')['profile_pic_url'])
     view_self = @

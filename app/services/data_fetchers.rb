@@ -24,8 +24,9 @@ module DataFetchers
       ({user_info: {profile_pic_url: p.profile_pic&.url,
                     work_experience: work_ex_list,
                     achievements: achievements,
-                    user_name: u.profile.full_name,
-                    published: p.published?, is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
+                    id: u.id, user_name: u.profile.full_name,
+                    published: p.published?,
+                    is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
                    }})
     when 'friends'
 
