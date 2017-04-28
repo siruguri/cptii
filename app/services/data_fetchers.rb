@@ -25,7 +25,7 @@ module DataFetchers
                     work_experience: work_ex_list,
                     achievements: achievements,
                     user_name: u.profile.full_name,
-                    published: p.published?, is_friends: opts[:is_friend] || false
+                    published: p.published?, is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
                    }})
     when 'friends'
 

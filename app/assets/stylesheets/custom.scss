@@ -1,3 +1,20 @@
+/* alerts */
+
+.header-notice {
+  min-width: 200px;
+  text-align: center;
+
+  background-color: beige;
+
+  position: fixed;
+  right: 78px;
+  top: 5px;
+
+  z-index: 1;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 /* Colors */
 .light-text {
   color: $opaque-black;

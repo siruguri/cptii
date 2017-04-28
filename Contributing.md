@@ -15,6 +15,10 @@ These are notes to help folks contribute to this code base.
   * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method
   * This dynamic creation also runs a data fetch prior to view rendering
 
+## Styling
+
+The styles are largely dependent on the [Materialize framework](http://materializecss.com/). Make sure to read through `variables.scss` and `mixins.scss` to get a sense of the conventions used specific to the app.
+
 # Backend
 
 * Attemps to be XHR only, though it doesn't use Rails 5 API which it probably should.

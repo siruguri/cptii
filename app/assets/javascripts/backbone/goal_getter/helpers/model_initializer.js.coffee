@@ -132,7 +132,7 @@ GoalGetter.Helpers.ModelInitializer =
       'search-results': '$search_query'
       'guides-saved': 'Guides'
       'portfolio-friends': 'Portfolio'
-      'portfolio-likes': 'Portfolio'      
+      'portfolio-likes': 'Portfolio'
       'logged-out': ''
       'public-portfolio': '$public_portfolio_name'
 

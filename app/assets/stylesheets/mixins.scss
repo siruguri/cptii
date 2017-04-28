@@ -1,0 +1,9 @@
+@mixin button($background-color: transparent, $text-color: white) {
+  cursor: pointer;
+  padding: 5px;
+  text-transform: uppercase;
+  font-size: $small-text;
+  display: inline-block;
+  color: $text-color;
+  background-color: $background-color;
+}

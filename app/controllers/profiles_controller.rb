@@ -4,6 +4,19 @@ class ProfilesController < ApplicationController
 
   include DataFetchers
   include ProfileUpdaters
+
+  def public
+    if current_user
+      redirect_to root_path(screen: 'public-portfolio', 'public-portfolio-name' => params[:identifier])
+    else
+      session[:return_to] = public_profile_path(identifier: params[:identifier])
+      u = User.find_by_slug params[:identifier]
+      if u
+        flash[:notice] = t('messages.login_to_view', fullname: u.full_name)
+      end
+      redirect_to new_user_session_path
+    end
+  end
   
   def index
   end
@@ -74,9 +87,9 @@ class ProfilesController < ApplicationController
         else
           current_user
         end
-    
-    is_friend = public_user && current_user.friends.include?(public_user)
+
     if u
+      is_friend = public_user && current_user.friends.include?(public_user)
       d[:data].merge!(
         case screen_number
         when '2'

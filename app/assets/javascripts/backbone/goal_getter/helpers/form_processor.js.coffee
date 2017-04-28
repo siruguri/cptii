@@ -30,7 +30,7 @@ class GoalGetter.Helpers.FormProcessor
             fail(e)
       else
         # TODO this really should be the error function because the form wasn't filled in.
-        # TODO Also, this should be based on which form fields are required. 
+        # TODO Also, this should be based on which form fields are required.
         done([])
         
     @

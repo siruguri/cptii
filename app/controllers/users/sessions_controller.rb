@@ -15,7 +15,7 @@ module Users
         if request.xhr?
           head :ok
         else
-          redirect_to root_path
+          redirect_to after_sign_in_path_for(resource)
         end
       else
         invalid_login_attempt

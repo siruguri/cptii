@@ -73,8 +73,17 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
+
+    friend_status = @model.get('user_info')['is_friend']
     @$el.html t_func({username: @model.get('user_info')['user_name']})
 
+    button_text = switch friend_status
+      when 'friend'
+        'friends'
+      when 'not-friend'
+        'add friend'
+
+    @$el.find('#add-friend').text button_text
     @previous_tab = @$el.find('.goto.selected')
     @$el.find('#portfolio-img').attr('src', @model.get('user_info')['profile_pic_url'])
     view_self = @

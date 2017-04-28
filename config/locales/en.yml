@@ -23,3 +23,4 @@ en:
   messages:
     profiles:
       profile_not_public: 'Your profile is not public. Please publish to get a URL you can share'
+    login_to_view: 'To view the profile of %{fullname}, please sign in.'

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if resource.is_a? Admin
       '/admin_interface'
     else
-      root_path
+      session[:return_to] || root_path
     end
   end
   
