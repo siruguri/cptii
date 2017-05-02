@@ -22,7 +22,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     # data will be an empty array if the form wasn't filled in: see models/base/form_processor
 
     # TODO There might be more complex logic for what needs to be refreshed; than simply what's the up level screen
-    obj = {from: @model.current_screen, to: 'up'}
+    obj = {to: 'up'}
     if @model.has_property('needs_refresh')
       obj.refresh_screen = [@model.up_level[@model.current_screen]]
     @pass_navigation obj

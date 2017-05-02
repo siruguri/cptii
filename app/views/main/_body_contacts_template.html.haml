@@ -1,0 +1,18 @@
+%script#body_contacts_template{type: 'text/template'}
+  #logged-in-screen
+    .contacts-list.row
+
+// this might change later - for now it looks the same as the counselor_item template
+      
+%script#body_contact_item_template{type: 'text/template'}
+  .floating-action.pointer.chat
+    %svg
+      %use{x: '6px', y: '6px', "xlink:href" => '#chat-action'}
+  .col.s12
+    .namepic
+      %img.rounded-border{src: ''}
+    .details.pointer
+      .name
+        <%- name %>
+      .description
+        <%- description_string %>

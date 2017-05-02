@@ -21,10 +21,10 @@ GoalGetter.Views.ControlView = Backbone.View.extend
       window.document.location.href = '/?screen=' + obj.dest
   change_nav: (args...) ->
     @flip_headers {to: 'hide'}
-    @header.change_screens {from: 'control', to: args[0]}
+    @header.change_screens {to: args[0]}
 
   do_search: (args...) ->
-    @header.change_screens {from: 'control', to: 'search-results'}
+    @header.change_screens {to: 'search-results'}
     
   load_and_render: ->
     # If there is a valid parameter, use it to generate a specific tab.

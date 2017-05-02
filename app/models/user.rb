@@ -45,9 +45,12 @@ class User < ActiveRecord::Base
       (self.slug = email.tr('+!.@-', '_____'); self.save; slug)
   end
 
+  def friendships
+    Friendship.where('first_friend_id = ? or second_friend_id = ?', id, id)
+  end
+  
   def friends
-    fs = Friendship.where('first_friend_id = ? or second_friend_id = ?', self.id, self.id).pluck :first_friend_id, :second_friend_id
-
+    fs = friendships.pluck :first_friend_id, :second_friend_id
     friend_ids = fs.map do |pair|
       pair[0] == self.id ? pair[1] : pair[0]
     end

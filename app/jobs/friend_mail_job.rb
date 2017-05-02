@@ -1,9 +1,9 @@
-class CounselorMailJob < ActiveJob::Base
+class FriendMailJob < ActiveJob::Base
   queue_as :mailers
   include SendgridManager
   
   def perform(record)
-    @msg_header = "<h1>CPTii<h1><h2>You have received an email from a student with email #{record.sender.email}, written at #{record.written_time}.</h2>"
+    @msg_header = "<h1>CPTii<h1><h2>You have received an email from your friend #{record.sender.full_name}, written at #{record.written_time}.</h2>"
     @msg_text = "<p>#{record.message}</p>"
     
     sendgrid_email to: record.receiver.email,

@@ -4,14 +4,10 @@ GoalGetter.Views.CounselorView = GoalGetter.Views.ScreenBase.extend
     _.bindAll @, 'render'
     @listenTo @model, 'model:updated', @render
 
-  events:
-    'click .nametext': 'chat_window',
-    
   chat_window: (opts) ->
-    @model.set('current_chat_counselor', opts.name)
-    @model.set('current_chat_counselor_id', opts.id)
-    @trigger 'navigation:change', {from: 'counselor', to: 'chat'}
-      
+    # pass the chat click up the chain from here
+    @trigger 'navigation:change',  opts
+
   render: ->
     t_func = _.template $('#body_counselor_template').html()
     @$el.html t_func()

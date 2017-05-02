@@ -3,7 +3,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @logged_in = false
     @is_category = true
     @current_screen = '0'
-
+    @history = []
+    
     @set('user_info',
       counselor_name: null
     )
@@ -32,6 +33,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   up: ->
     # Move up from the current screen
     @up_level[@current_screen]
+    
   at_root: ->
     if @directory_level.hasOwnProperty(@current_screen)
       @directory_level[@current_screen] == 0

@@ -100,6 +100,9 @@ class ProfilesController < ApplicationController
           counselor_list u
         when '3'
           portfolio_data u, tab: 'public'
+        when '4'
+          contacts_data u
+          
         when 'portfolio-friends'
           portfolio_data u, tab: 'friends'
         when 'portfolio-likes'

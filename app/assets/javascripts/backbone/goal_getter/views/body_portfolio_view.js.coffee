@@ -72,7 +72,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @wave_wait = setInterval(
         (ctx) ->
           clearInterval ctx.wave_wait
-          ctx.trigger 'navigation:change', {from: 'portfolio', to: ('add-' + click_on)}
+          ctx.trigger 'navigation:change', {to: ('add-' + click_on)}
         400,
         @
       )

@@ -5,13 +5,16 @@ class ChatRecord < ActiveRecord::Base
   attr_accessor :skip_callbacks
   has_secure_token
 
-  after_create :schedule_counselor_mail, unless: ->(rec) { rec.skip_callbacks.present? }
+  after_create :schedule_chat_mail, unless: ->(rec) { rec.skip_callbacks.present? }
 
   private
-  def schedule_counselor_mail
-    Rails.logger.debug 'run mail: check'
-    return if !self.sender.student?
-    Rails.logger.debug 'run mail: schedule'
-    CounselorMailJob.perform_later self
+  def schedule_chat_mail
+    return if !sender.student?
+
+    if receiver.counselor?
+      CounselorMailJob.perform_later self
+    else
+      FriendMailJob.perform_later self
+    end
   end
 end

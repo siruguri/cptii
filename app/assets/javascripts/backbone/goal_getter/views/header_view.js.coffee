@@ -18,7 +18,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
   events:
     'click .nav-back': ->
-      @change_screens({from: 'header', to: 'up'})
+      @change_screens
+        to: 'up'
     'click #save': (e) ->
       button = $(e.target)
       $.ajax('/resource_bookmarks',
@@ -35,7 +36,9 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       null
       
     'click #add': ->
-      @change_screens({from: 'header', to: 'add-service'})
+      @change_screens
+        to: 'add-service'
+        
     'click #search': ->
       @trigger 'query', {to: 'search'}
     'click #published': ->
@@ -76,8 +79,16 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @body_view.garbage @model.previous_screen
       
     dest = change_obj.to
+
+    if change_obj.hasOwnProperty('from')
+      @model.history.push change_obj.from
+      
+    if dest == 'chat'
+      @model.set 'current_chat_counselor_id', change_obj.with.id
+      @model.set 'current_chat_counselor', change_obj.with.name
+      
     if dest == 'up'
-      @model.current_screen = @model.up()
+      @model.current_screen = if @model.history.length > 0 then @model.history.pop() else @model.up()
     else
       @model.current_screen = dest
 

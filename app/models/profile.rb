@@ -36,9 +36,15 @@ class Profile < ActiveRecord::Base
     contact_details.present? ? ("#{contact_details['first_name']} #{contact_details['last_name']}") : ''
   end
 
-  def description_string(type: :counselor)
+  def description_string(opts = {})
+    type = opts[:type] || :counselor
     s = []
-    if type == :counselor
+    case type
+    when :friend
+      date = opts[:friend_of].nil? ? nil :
+               user.friendships.where('first_friend_id = ? or second_friend_id = ?', opts[:friend_of], opts[:friend_of]).first.created_at
+      s << "Friend since #{date.strftime('%Y-%m-%d')}"
+    when :counselor
       s << "Phone: #{contact_details['phone']}" if contact_details['phone'].present?
       s << "Role:  #{contact_details['role']}" if contact_details['role'].present?
     end

@@ -2,6 +2,7 @@ class ChatRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token, if: :skip_token_on_auth
 
   def index
+    # The "counselor_id" could also be a non-counselor user - at this point.
     counselor_id = params[:counselor_id].to_i
     counselor = User.find_by_id counselor_id
     
@@ -33,27 +34,34 @@ class ChatRecordsController < ApplicationController
   end
   
   def create
+    # The "counselor_id" could also be a non-counselor user - at this point.
+
+    counselor_id = params[:counselor_id]
     resp,
     status =
     if params[:message_to_counselor]
+      counselor = current_user.counselors.where(id: counselor_id).first
+      friend = current_user.friends.where(id: counselor_id).first
+      receiver = counselor || friend
+      
       if !current_user
         [{}, :forbidden]
-      elsif ((counselor_id = params[:counselor_id].to_i) <= 0) ||
-         !(counselor = current_user.counselors.where(id: counselor_id).first).present?
+      elsif receiver.nil?
         [{}, :unprocessable_entity]
       else
-          cr = ChatRecord.new(
-            sender: current_user,
-            receiver: counselor,
-            message: params[:message_to_counselor],
-            written_time: Time.now
-          )
+        receiver = counselor || friend
+        cr = ChatRecord.new(
+          sender: current_user,
+          receiver: receiver,
+          message: params[:message_to_counselor],
+          written_time: Time.now
+        )
           
-          cr.save
-          [{chat_id: cr.id}, :ok]
+        cr.save
+        [{chat_id: cr.id}, :ok]
       end
     else
-      # No message - better be sendgrid - should try to secure it. ISSUE
+      # No message - better be sendgrid - should try to secure it. ISSUE TODO
       valid_sendgrid = false
       if params[:to].present? && /\<[A-Za-z0-9]+\+sms/.match(params[:to])
         matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]

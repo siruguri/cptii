@@ -42,4 +42,9 @@ class UserTest < ActiveSupport::TestCase
     # 2, in fixtures.
     assert_equal 2, users(:student_1).friends.count
   end
+
+  test '#friendships' do
+    # 2, in fixtures
+    assert_equal 2, users(:student_1).friendships.count
+  end
 end

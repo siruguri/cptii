@@ -3,7 +3,7 @@ def set_net_stubs
     to_return(:status => 200, body: fixture_file('google_geocode.json'), :headers => {})
   
   stub_request(:post, "https://api.sendgrid.com/v3/mail/send").
-    with(body: /[A-Za-z0-9]+\+sms.testhost.com.*\"to\":..\"email\":\"couns_1@valid.com\".....\"content\":..\"type\":\"text.html\".*u003eYou have received an email from user1@valid.com, written at/,
+    with(body: /[A-Za-z0-9]+\+sms.testhost.com.*\"to\":..\"email\":\"couns_1@valid.com\".....\"content\":..\"type\":\"text.html\".*u003eYou have received an email from a student with email user1@valid.com, written at/,
          :headers => {'Authorization'=>/Bearer SG.8x/, 'Content-Type'=>'application/json'}).
     to_return(:status => 200, :body => fixture_file('google_geocode.json'), :headers => {})
 end

@@ -42,12 +42,18 @@ class ChatRecordsControllerTest < ActionController::TestCase
     assert_equal 'student says', b[3]['message']    
   end
   
-  test '#create from app' do
-    assert_enqueued_with(job: CounselorMailJob) do
-      post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
+  describe '#create from app' do
+    it 'works for counselors' do
+      assert chat_loop?(users(:counselor_1))
     end
 
-    assert_equal 200, response.status
+    it 'works for friends' do
+      assert chat_loop?(users(:student_1_f1), job: FriendMailJob)
+    end
+    
+    it 'can make errors' do
+      refute chat_loop?(users(:noschool_student))
+    end
   end
   
   test '#create from sendgrid' do
@@ -69,5 +75,17 @@ class ChatRecordsControllerTest < ActionController::TestCase
     end
     
     assert_equal 422, response.status
+  end
+
+  private
+  def chat_loop?(u, job: CounselorMailJob)
+    status = (enqueued_jobs.select {|j| j[:job] == job }.length == 0)
+    post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: u.id}
+
+    status &&= ChatRecord.last.receiver_id = u.id
+    status &&= (enqueued_jobs.select {|j| j[:job] == job }.length == 1)
+    status &&= (200 == response.status)
+
+    status
   end
 end

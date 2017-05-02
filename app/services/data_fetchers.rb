@@ -1,4 +1,14 @@
 module DataFetchers
+  def contacts_data(u)
+    ({user_info: ({friends: (u.friends.to_a.map do |friend|
+                    {name: friend.profile.full_name, id: friend.id,
+                     img_url: friend.profile.profile_pic&.url,
+                     description_string: friend.profile.description_string(type: :friend, friend_of: u.id)}
+                  end)
+                 })
+     })
+  end
+  
   def counselor_list(u)
     ({user_info: {counselors: u.counselors.to_a.map { |c| {name: c.profile.full_name, id: c.id,
                                                            img_url: c.profile.profile_pic&.url,

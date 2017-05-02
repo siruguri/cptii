@@ -15,6 +15,10 @@ These are notes to help folks contribute to this code base.
   * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method
   * This dynamic creation also runs a data fetch prior to view rendering
 
+## Under the hood
+
+* Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also calls `change_screens` directly - the main reason is to supply special parameters, like `from` and `to` that help manage the custom history within the SPA.
+
 ## Styling
 
 The styles are largely dependent on the [Materialize framework](http://materializecss.com/). Make sure to read through `variables.scss` and `mixins.scss` to get a sense of the conventions used specific to the app.
