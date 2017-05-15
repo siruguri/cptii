@@ -51,6 +51,10 @@ class Profile < ActiveRecord::Base
     s.join(' / ')
   end
 
+  def self.search_hash(key, value)
+    where('contact_details->>? = ?', key, value)
+  end
+  
   private
   def initialize_empty_entries
     self.profile_entries.build(entry_key: 'alerts-lrt', entry_details: {'lrt' => '0'})

@@ -14,6 +14,7 @@ Note: requires Ruby knowledge, Heroku experience
     heroku run rake db:seed:make_admin -a appname
     heroku run rake db:seed:make_portfolio_categories  -a appname
     heroku run rake db:seed:make_taxonomy_nodes  -a appname
+    heroku run rake db:seed:make_programs_and_organizations  -a appname # This currently loads Alameda County (CA) data
     
   ```
 # Friends
