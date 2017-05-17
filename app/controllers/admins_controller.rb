@@ -65,7 +65,13 @@ class AdminsController < ApplicationController
       s.save if s.new_record?
       p.save
 
-      s.add_to_network u if profile_type == 'student'
+      if profile_type == 'student'
+        s.add_to_network u
+      else # Counselor
+        unless s.counselors.pluck(:id).include?(u.id)
+          s.counselors << u
+        end
+      end
     end
 
     flash[:upload_details] = "Created #{saved_users} new users; found #{old_users} existing ones.<br/>Password list is <br/>#{password_list}"

@@ -130,6 +130,17 @@ class ProfilesControllerTest < ActionController::TestCase
     end
   end
 
+  describe '#public' do
+    it 'shows login message' do
+      sign_out :user
+
+      # student 1 is published
+      u = users(:student_1)
+      get :public, params: {identifier: u.identifier!}
+      assert_equal I18n.t('messages.login_to_view', fullname: u.full_name), flash[:notice]
+    end
+  end
+  
   describe '#add_photo' do
     it 'fails without login' do
       sign_out @student_1

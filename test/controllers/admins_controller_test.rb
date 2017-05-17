@@ -24,9 +24,13 @@ class AdminsControllerTest < ActionController::TestCase
   end
 
   test '#csv_assignment' do
-    assert_difference('Profile.where(profile_type: "counselor").count', 1) do
-      assert_difference('User.count', 2) do
-        post :csv_assignment, params: {details_csv: fixture_file_upload('files/student_data.tsv', 'text/xml')}
+    assert_difference('School.count', 1) do
+      assert_difference('CounselorAssignment.count', 1) do
+        assert_difference('Profile.where(profile_type: "counselor").count', 1) do
+          assert_difference('User.count', 2) do
+            post :csv_assignment, params: {details_csv: fixture_file_upload('files/student_data.tsv', 'text/xml')}
+          end
+        end
       end
     end
     

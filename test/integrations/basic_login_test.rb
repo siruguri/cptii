@@ -9,6 +9,18 @@ class BasicLoginTest < Capybara::Rails::TestCase
     login_as users(:student_1), scope: :user, run_callbacks: false
   end
 
+  describe 'basic signup' do
+    it 'shows error box' do
+      logout :user
+      visit '/users/sign_up'
+      fill_in 'user_email', with: 'email@email.com'
+      fill_in 'user_password', with: 'samepassword'
+      fill_in 'user_password_confirmation', with: 'notsamepassword'
+      page.find('[name=commit]').click
+      assert page.has_content?('ensure passwords')
+    end
+  end
+  
   describe 'basic login' do
     it 'shows alerts' do
       ResourceAlert.create content_resource: content_resources(:cr_1)
