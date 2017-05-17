@@ -1,4 +1,20 @@
 .contacts {
+  .contact-item,.card-item {
+    .details {
+      .name {
+	position: relative;
+	.floating-action.chat {
+	  @media (max-width: $mobile-breakpoint) {
+	    left: 275px;
+	    top: -8px;
+	  }
+	  left: 300px;
+	  top: 0;
+	}
+      }
+    }
+  }
+  
   overflow-y: scroll;
   width: 100%;
   .contact-details {

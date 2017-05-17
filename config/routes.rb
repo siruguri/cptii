@@ -28,6 +28,7 @@ GoalGetter::Application.routes.draw do
     resource :admin, only: [:show] do
       get :assignment
       post :complete_assignment
+      post :csv_assignment
     end
     mount Sidekiq::Web => '/sidekiq_ui'
     mount RailsAdmin::Engine => '/admin_interface'

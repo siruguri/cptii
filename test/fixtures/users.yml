@@ -39,3 +39,13 @@ student_1_f2:
   email: friendOf1.2@friends.com
   <<: *DEFAULTS
   
+uploaded_1:
+  email: uploaded_1@friends.com
+  <<: *DEFAULTS
+
+uploaded_2:
+  email: uploaded_2@friends.com
+  <<: *DEFAULTS
+uploaded_3:
+  email: uploaded_3@friends.com
+  <<: *DEFAULTS

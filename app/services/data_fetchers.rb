@@ -50,7 +50,7 @@ module DataFetchers
          img_url: p_e.profile.profile_pic&.url}
       end
 
-      ret2 = ProgramSuggestion.joins(:program).includes(:program).where('user_id != ?', u.id).
+      ret2 = ProgramSuggestion.joins(:program).includes(:program).where('user_id in (?)', u.friends.pluck(:id)).
              order(created_at: :desc).to_a.map do |p_s|
         {id: p_s.id, entry_type: "program", timestamp: p_s.created_at.to_i,
          description: p_s.program.title, img_url: p_s.user.profile.profile_pic&.url}

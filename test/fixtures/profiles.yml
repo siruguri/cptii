@@ -43,4 +43,15 @@ profile_student_1_f1:
 profile_student_1_f2:
   user: student_1_f2
   <<: *DEFAULTS
+
+profile_uploaded_1:
+  user: uploaded_1
+  contact_details: <%= {"school_id" => 4242}.to_json %>  
+profile_uploaded_2:
+  user: uploaded_2
+  contact_details: <%= {"school_id" => 4242}.to_json %>
   
+profile_uploaded_3:
+  user: uploaded_3
+  contact_details: <%= {}.to_json %>
+    

@@ -3,3 +3,8 @@ school_1:
 
 nocounselor_school:
   name: has no counselor
+
+uploaded_school:
+  id: 4242
+  name: upload 4242
+  

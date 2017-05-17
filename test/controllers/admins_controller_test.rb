@@ -22,4 +22,15 @@ class AdminsControllerTest < ActionController::TestCase
     assert s.school == schools(:school_1)
     assert_redirected_to assignment_admin_path(type: 'student-to-school')
   end
+
+  test '#csv_assignment' do
+    assert_difference('Profile.where(profile_type: "counselor").count', 1) do
+      assert_difference('User.count', 2) do
+        post :csv_assignment, params: {details_csv: fixture_file_upload('files/student_data.tsv', 'text/xml')}
+      end
+    end
+    
+    assert_match /<p>uploaded_4.friends\.com.([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
+    assert_match /<p>.*@counselors\.com.([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
+  end
 end

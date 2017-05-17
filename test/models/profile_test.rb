@@ -1,5 +1,9 @@
 require 'test_helper'
 class ProfileTest < ActiveSupport::TestCase
+  test '##search_hash' do
+    assert_equal 2, Profile.search_hash('first_name', 'counselor').count
+  end
+  
   test 'hooks and defaults' do
     p = nil
     assert_difference('ProfileEntry.count', 1) do

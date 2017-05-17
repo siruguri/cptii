@@ -47,12 +47,6 @@ $tall-height: 24px;
 $medium-height: 20px;
 $normal-height: 16px;
 
-/*
-Nav bar 20px medium
-Subheadings 16px medium
-Body small 14px regular
-Buttons 14px medium all caps
-Hint text 12px regular
-Nav bar selected 14px regular
-Nav bar deselected 12px regular
-*/
+/* Breakpoints */
+
+$mobile-breakpoint: 400px;
