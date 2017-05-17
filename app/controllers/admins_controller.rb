@@ -51,7 +51,7 @@ class AdminsController < ApplicationController
       m = MemorablePassword.new(dictionary_paths: [File.join(Rails.application.root, 'public', 'dict.txt')],
                                 digits: [' '])    
       password = "#{m.generate} #{m.generate}"
-      password_list += "<p>#{key},#{password}</p>"
+      password_list += "<p>#{key}, #{password}</p>"
       u.password = password
       u.save
 

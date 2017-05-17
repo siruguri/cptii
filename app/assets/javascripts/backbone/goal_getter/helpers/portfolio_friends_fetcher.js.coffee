@@ -4,8 +4,6 @@ GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher
 
   initialize: ->
     @_lrt = -1
-    @last_request_time(Date.now())
-    
     @stop_interval = false
     _.bindAll @, 'lrt_data'
     _.bindAll @, 'modify_data'
@@ -14,6 +12,7 @@ GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher
     # entry_refresher is a backbone collection, remember?
     if resp.data.user_info.friend_entries.length > 0
       coll.set resp.data.user_info.friend_entries
+    @last_request_time(Date.now())
     
   lrt_data: ->
     {last_request_time: @_lrt}

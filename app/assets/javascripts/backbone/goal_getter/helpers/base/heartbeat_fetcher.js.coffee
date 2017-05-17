@@ -15,7 +15,15 @@ GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
   modify_data: ->
     # Do nothing; expect to be overridden
 
+  lrt_data: ->
+    # Do nothing; expect to be overridden
+
   run: ->
+    @fetch(
+      data: $.param(@lrt_data())
+      success: @modify_data
+    )
+    
     obj_self = @
     @interval = setInterval(
       ->
@@ -24,7 +32,6 @@ GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
             data: $.param(obj_self.lrt_data())
             success: obj_self.modify_data
           )
-          obj_self.last_request_time Date.now()
           
       4000
     )

@@ -27,8 +27,12 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
       is_response = opts.is_response
       
     # emails might have newlines in them.
-    txt = txt.replace(/\n/g, "<br>")
-    div = $('<div>').addClass('chat-bubble').html(txt)
+    # make the displayed text "tweet length"
+    short_txt = txt.replace(/\n/g, "<br>").substr(0, 140)
+    div = $('<div>').addClass('chat-bubble').html(short_txt)
+
+    if txt.length > 140
+      div.append($('<div>').addClass('truncate-message').txt('Truncated'))
     if is_response
       div.addClass 'received'
     else

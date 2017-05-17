@@ -34,7 +34,7 @@ class AdminsControllerTest < ActionController::TestCase
       end
     end
     
-    assert_match /<p>uploaded_4.friends\.com.([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
-    assert_match /<p>.*@counselors\.com.([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
+    assert_match /<p>uploaded_4.friends\.com..([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
+    assert_match /<p>.*@counselors\.com..([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]
   end
 end
