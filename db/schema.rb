@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170324214300) do
+ActiveRecord::Schema.define(version: 20170518044250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,14 @@ ActiveRecord::Schema.define(version: 20170324214300) do
     t.integer  "counselor_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "entry_likes", force: :cascade do |t|
+    t.integer  "liked_by_id"
+    t.integer  "like_target_id"
+    t.string   "like_target_type"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "friendships", force: :cascade do |t|

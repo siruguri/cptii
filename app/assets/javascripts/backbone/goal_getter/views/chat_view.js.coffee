@@ -32,7 +32,7 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
     div = $('<div>').addClass('chat-bubble').html(short_txt)
 
     if txt.length > 140
-      div.append($('<div>').addClass('truncate-message').txt('Truncated'))
+      div.append($('<div>').addClass('truncate-message').text('Truncated'))
     if is_response
       div.addClass 'received'
     else

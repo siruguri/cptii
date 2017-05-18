@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   has_one :profile, dependent: :destroy
   has_many :schools, through: :counselor_assignments
   has_many :counselor_assignments, inverse_of: :counselor, foreign_key: :counselor_id
-
+  has_many :chat_records, foreign_key: :sender_id
+  
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name
 

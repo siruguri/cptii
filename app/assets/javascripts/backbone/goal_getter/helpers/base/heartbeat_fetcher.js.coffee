@@ -1,4 +1,7 @@
 GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
+  initialize: ->
+    @interval = ''
+    
   stop: ->
     @pause()
     clearInterval @interval
@@ -19,20 +22,22 @@ GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
     # Do nothing; expect to be overridden
 
   run: ->
-    @fetch(
-      data: $.param(@lrt_data())
-      success: @modify_data
-    )
+    unless @stop_interval
+      @fetch(
+        data: $.param(@lrt_data())
+        success: @modify_data
+      )
     
     obj_self = @
-    @interval = setInterval(
-      ->
-        unless obj_self.stop_interval
-          obj_self.fetch(
-            data: $.param(obj_self.lrt_data())
-            success: obj_self.modify_data
-          )
+    if @interval == ''
+      @interval = setInterval(
+        ->
+          unless obj_self.stop_interval
+            obj_self.fetch(
+              data: $.param(obj_self.lrt_data())
+              success: obj_self.modify_data
+            )
           
-      4000
-    )
+        4000
+      )
   

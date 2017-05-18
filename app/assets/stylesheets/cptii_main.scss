@@ -63,23 +63,6 @@ body {
   -webkit-transform: translate3d(0,0,0);
   -webkit-perspective: 1000;
   
-  .floating-action {
-    position: absolute;
-    height: 56px;
-    width: 56px;
-    right: 15px;
-    bottom: 15px;
-    
-    border-radius: 50%;
-    border-color: transparent;
-    box-shadow: 0px 8px 8px rgba(0,0,0,.24);
-    
-    &.chat {
-      background-color: red;
-      color: white;
-    }
-  }
-
   .portfolio-card {
     margin-top: 34px;
     .title {
@@ -137,6 +120,7 @@ body {
 /* cards in a list */
 .card-item {
   padding-top: 13px;
+  position: relative;
   
   .details {
     margin-top: 10px;
@@ -165,18 +149,46 @@ body {
   }
 }
 
-.floating-action.chat {
+.floating-action {
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 56px;
+  width: 56px;
   right: 15px;
-  top: 15px;
+  bottom: 15px;
   
   border-radius: 50%;
   border-color: transparent;
   box-shadow: 0px 8px 8px rgba(0,0,0,.24);
     
-  background-color: red;
-  color: white;
+  &.chat {
+    background-color: red;
+    color: white;
+  }
+}
+
+.floating-action {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  right: 15px;
+  top: 15px;
+  border-radius: 50%;
+  box-shadow: 0px 8px 8px rgba(0,0,0,.24);
+  border-color: transparent;
+  
+  &.chat {
+    background-color: red;
+    color: white;
+  }
+
+  &.like {
+    background-color: #f1f1f1;
+    color: black;
+    padding: 11px 10px 10px 9px;
+    &.liked {
+      background-color: $basic-red;
+      color: white;
+    }
+  }
 }
     
