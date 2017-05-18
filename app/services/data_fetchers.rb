@@ -67,7 +67,7 @@ module DataFetchers
   def user_chat_data(u)
     counselor_id = params[:counselor_id].to_i
     
-    if counselor_id.nil? || !(u.valid_counselor_id?(counselor_id))
+    if counselor_id.nil? 
       return ({user_info: {rec_count: 0, recs: []}})
     end
 

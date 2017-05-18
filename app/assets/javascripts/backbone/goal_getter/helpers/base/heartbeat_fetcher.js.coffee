@@ -1,7 +1,7 @@
 GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
   initialize: ->
-    @interval = ''
-    
+    # all initializations should take place in the inheritor class
+
   stop: ->
     @pause()
     clearInterval @interval

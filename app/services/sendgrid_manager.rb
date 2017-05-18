@@ -12,7 +12,12 @@ module SendgridManager
     
     mail = Mail.new(_from, subject, _to, content)
     sg = SendGrid::API.new api_key: Rails.application.secrets.sendgrid_api_key
-    
-    response = sg.client.mail._('send').post(request_body: mail.to_json)
+
+    begin
+      response = sg.client.mail._('send').post(request_body: mail.to_json)
+    rescue SocketError => e
+      # In case we lose the Internet (while demoing)
+      return nil
+    end
   end
 end

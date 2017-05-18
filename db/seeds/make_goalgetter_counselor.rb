@@ -1,5 +1,5 @@
 # Goalgetter is everyone's counselor
-u = User.find_or_initialize_by email: 'info@goalgetterapp.org'
+u = User.find_or_initialize_by email: 'nickw@urbanstrategies.org'
 u.password = ENV['ADMIN_PASSWORD']
 u.save
 

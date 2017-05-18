@@ -54,6 +54,12 @@ class ChatRecordsControllerTest < ActionController::TestCase
     it 'can make errors' do
       refute chat_loop?(users(:noschool_student))
     end
+
+    it 'needs auth' do
+      sign_out :user
+      post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:student_1).id}
+      assert_equal 401, response.status
+    end
   end
   
   test '#create from sendgrid' do

@@ -39,29 +39,7 @@ class ChatRecordsController < ApplicationController
     counselor_id = params[:counselor_id]
     resp,
     status =
-    if params[:message_to_counselor]
-      counselor = current_user.counselors.where(id: counselor_id).first
-      friend = current_user.friends.where(id: counselor_id).first
-      receiver = counselor || friend
-      
-      if !current_user
-        [{}, :forbidden]
-      elsif receiver.nil?
-        [{}, :unprocessable_entity]
-      else
-        receiver = counselor || friend
-        cr = ChatRecord.new(
-          sender: current_user,
-          receiver: receiver,
-          message: params[:message_to_counselor],
-          written_time: Time.now
-        )
-          
-        cr.save
-        [{chat_id: cr.id}, :ok]
-      end
-    else
-      # No message - better be sendgrid - should try to secure it. ISSUE TODO
+    if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key
       valid_sendgrid = false
       if params[:to].present? && /\<[A-Za-z0-9]+\+sms/.match(params[:to])
         matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]
@@ -78,10 +56,30 @@ class ChatRecordsController < ApplicationController
           valid_sendgrid = true
         end
       end
-      if valid_sendgrid
-        [{}, :ok]
-      else  
-        [{}, :unprocessable_entity]
+
+      # Response to sendgrid
+      valid_sendgrid ? [{}, :ok] : [{}, :unprocessable_entity]
+    else
+      if !current_user
+          [{}, :unauthorized]
+      else 
+        counselor = current_user.counselors.where(id: counselor_id).first
+        friend = current_user.friends.where(id: counselor_id).first
+        receiver = counselor || friend
+        
+        if receiver.nil? || params[:message_to_counselor].blank?
+          [{}, :unprocessable_entity]
+        else
+          cr = ChatRecord.new(
+            sender: current_user,
+            receiver: receiver,
+            message: params[:message_to_counselor],
+            written_time: Time.now
+          )
+        
+          cr.save
+          [{chat_id: cr.id}, :ok]
+        end
       end
     end
 
