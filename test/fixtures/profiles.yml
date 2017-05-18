@@ -20,6 +20,11 @@ profile_uncounseled_student:
   profile_type: student
   contact_details: <%= {}.to_json %>
 
+profile_couns_3:
+  user: counselor_3
+  profile_type: counselor
+  contact_details: <%= {"first_name" => "counselor", "last_name" => 'no school 3', phone: '5576309'}.to_json %>
+
 profile_couns_1:
   user: counselor_1
   profile_type: counselor
@@ -46,7 +51,9 @@ profile_student_1_f2:
 
 profile_uploaded_1:
   user: uploaded_1
-  contact_details: <%= {"school_id" => 4242}.to_json %>  
+  contact_details: <%= {"school_id" => 4242}.to_json %>
+  profile_type: student
+  
 profile_uploaded_2:
   user: uploaded_2
   contact_details: <%= {"school_id" => 4242}.to_json %>
@@ -54,4 +61,7 @@ profile_uploaded_2:
 profile_uploaded_3:
   user: uploaded_3
   contact_details: <%= {}.to_json %>
-    
+
+profile_nothing:
+  user: nothing_user
+  contact_details: <%= {}.to_json %>

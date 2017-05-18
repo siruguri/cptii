@@ -22,7 +22,15 @@ class Profile < ActiveRecord::Base
   end
   
   def school
-    contact_details.present? ? School.find_by_id(contact_details["school_id"]) : nil
+    # counselor's school is through assignment
+    case profile_type
+    when 'counselor'
+      user.schools.to_a
+    when 'student'
+      contact_details.present? ? School.find_by_id(contact_details["school_id"]) : nil
+    else
+      nil
+    end
   end
 
   def school=(s)

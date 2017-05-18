@@ -18,8 +18,18 @@ Note: requires Ruby knowledge, Heroku experience
     
   ```
 
-* To use the email-to-app feature, you need to set up a Sendgrid account for transactional email. The environment variables SENDGRID_USERNAME` and `SENDGRID_PASSWORD` need to be set - the latter is a Sendgrid API key. The app sends emails from the domain set in the variable `MAILER_HOST` - responses to that host need to be set up to trigger a webhook, which points to the path `/chat_records?api_key=1` on the app's domain. This parses the email and the `To:` header to figure out how to store the email in the database.
+* To use the email-to-app feature, you need to do the following:
+  * set up a Sendgrid account for transactional email.
+  * The environment variables SENDGRID_USERNAME` and `SENDGRID_PASSWORD` need to be set - the latter is a Sendgrid API key. The app sends emails from the domain set in the variable `MAILER_HOST`.
+  * Responses to the above host need to be set up to trigger a webhook, which points to the path `/chat_records?api_key=1` on the app's domain. This parses the email and the `To:` header to figure out how to store the email in the database.
 * Admin accounts can use a [special interface](https://www.goalgetterapp.org/admin/assignment?type=student-to-school) to upload data - the upload file should be in [this format](https://docs.google.com/spreadsheets/d/16KGSdv0TC0qGP9ZC5r356ivdqCWrpXcCwBvobOMEmsc/edit#gid=0)
+* Profile Images are stored in S3 - via Paperclip. The following environment variables have to be set:
+  * AWS_AKI: access key id (IAM)
+  * AWS_SAK: secret access key (IAM)
+  * S3_REGION
+  * S3_BUCKET
+  
+  Make sure you turn on bucket hosting on the bucket for Paperclip to work.
 
 # Friends
 

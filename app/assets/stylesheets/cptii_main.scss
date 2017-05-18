@@ -28,6 +28,7 @@ body {
 
 .red-button {
   @include button($basic-red, white);
+  display: none;
 }
 
 .bubble {

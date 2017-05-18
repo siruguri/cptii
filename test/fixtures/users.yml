@@ -26,6 +26,10 @@ counselor_1:
 counselor_2:
   email: couns_2@valid.com
   <<: *DEFAULTS
+  
+counselor_3:
+  email: couns_3@valid.com
+  <<: *DEFAULTS
 
 student_private:
   email: student_private@private.com
@@ -48,4 +52,8 @@ uploaded_2:
   <<: *DEFAULTS
 uploaded_3:
   email: uploaded_3@friends.com
+  <<: *DEFAULTS
+
+nothing_user:
+  email: nothing_user@users.com
   <<: *DEFAULTS

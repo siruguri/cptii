@@ -11,7 +11,6 @@ class AddAFriendTest < Capybara::Rails::TestCase
 
     # needs this fo sho
     sleep 1
-    page.all('.footer .nav-change')[3].click
   end
   
   test 'start' do

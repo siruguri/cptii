@@ -15,12 +15,20 @@ class AdminsControllerTest < ActionController::TestCase
 
   test '#complete_assignment' do
     s = users(:student_1)
-    get :complete_assignment, method: :post, params: {assignment_type: 'student-to-school',
+    post :complete_assignment, params: {assignment_type: 'student-to-school',
                                                     assignee_id: s.id,
                                                     "student[school_id]" => schools(:school_1).id}
     s.reload
     assert s.school == schools(:school_1)
     assert_redirected_to assignment_admin_path(type: 'student-to-school')
+
+    c = users :counselor_3
+    refute c.school.include?(schools(:school_1))
+
+    post :complete_assignment, params: {assignment_type: 'counselor-to-school',
+                                                    assignee_id: c.id,
+                                                    "student[school_id]" => schools(:school_1).id}
+    assert c.reload.school.include?(schools(:school_1))
   end
 
   test '#csv_assignment' do

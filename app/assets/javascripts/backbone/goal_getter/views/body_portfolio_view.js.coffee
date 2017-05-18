@@ -22,6 +22,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     # Change this later if we change the text above.
     action = button_text.replace(' ', '-')
     b = @$el.find('#change-friend-status')
+    b.show()
     b.text button_text
 
     b.data 'action', action

@@ -1,7 +1,7 @@
 require 'test_helper'
 class ProfileTest < ActiveSupport::TestCase
   test '##search_hash' do
-    assert_equal 2, Profile.search_hash('first_name', 'counselor').count
+    assert_equal 3, Profile.search_hash('first_name', 'counselor').count
   end
   
   test 'hooks and defaults' do
@@ -21,5 +21,17 @@ class ProfileTest < ActiveSupport::TestCase
   test '#description_string' do
     assert_match /phone: \d+ \/ role/i, profiles(:profile_couns_2).description_string
     assert_match /phone: \d+$/i, profiles(:profile_couns_1).description_string
+  end
+
+  describe '#school' do
+    it 'works for counselors' do
+      assert_equal 1, users(:counselor_1).school.length
+    end
+    it 'works for students' do
+      assert_equal 4242, users(:uploaded_1).school.id
+    end
+    it 'works for neither' do
+      assert_nil users(:nothing_user).school
+    end
   end
 end
