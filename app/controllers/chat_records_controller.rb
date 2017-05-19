@@ -39,7 +39,7 @@ class ChatRecordsController < ApplicationController
     counselor_id = params[:counselor_id]
     resp,
     status =
-    if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key
+    if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key.to_s
       valid_sendgrid = false
       if params[:to].present? && /\<[A-Za-z0-9]+\+sms/.match(params[:to])
         matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]
