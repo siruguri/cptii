@@ -64,6 +64,8 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       e = $(card_html)
       
       e.data 'entry_id', m.get('id')
+      e.data 'liked_status', m.get('liked_status')
+      
       view_self.$el.append e
       e.find('img').attr('src', m.get('img_url'))
 

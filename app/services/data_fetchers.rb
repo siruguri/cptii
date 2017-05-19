@@ -40,13 +40,12 @@ module DataFetchers
                    }})
     when 'friends'
 
-      ret1 = ProfileEntry.joins(profile: :user).where('profile_entries.entry_key in (?) and users.id in (?)',
-                                                      ['work', 'achievement'],
-                                                      u.friends.pluck(:id)).
-            order(created_at: :desc).to_a.map do |p_e|
+      ret1 = u.friend_entries(of_types: ['work', 'achievement']).
+             order(created_at: :desc).to_a.map do |p_e|
+        
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
-         entry_name: p_e.profile.contact_details['first_name'],
+         entry_name: p_e.profile.contact_details['first_name'], liked_status: p_e.entry_likes.present?,
          img_url: p_e.profile.profile_pic&.url}
       end
 

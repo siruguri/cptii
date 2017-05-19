@@ -49,6 +49,19 @@ class User < ActiveRecord::Base
   def friendships
     Friendship.where('first_friend_id = ? or second_friend_id = ?', id, id)
   end
+
+  def make_friend(v)
+    unless friendship_ids.include?(v.id)
+      Friendship.create first_friend_id: self.id, second_friend_id: v.id
+    end
+  end
+
+  def friend_entries(opts)
+    ProfileEntry.left_outer_joins(:entry_likes).
+      joins(profile: :user).where(
+      'profile_entries.entry_key in (?) and users.id in (?) and (entry_likes.liked_by_id = ? or entry_likes.liked_by_id is null)',
+      opts[:of_type], friends.pluck(:id), id)
+  end
   
   def friends
     fs = friendships.pluck :first_friend_id, :second_friend_id
@@ -60,6 +73,10 @@ class User < ActiveRecord::Base
   end
 
   private
+  def friendship_ids
+    friendships.pluck(:first_friend_id, :second_friend_id).flatten.uniq - [self.id]
+  end
+  
   def make_blank_profile
     p = Profile.new(
       user: self,

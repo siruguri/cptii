@@ -47,4 +47,10 @@ class UserTest < ActiveSupport::TestCase
     # 2, in fixtures
     assert_equal 2, users(:student_1).friendships.count
   end
+
+  test 'making friends' do
+    assert_difference('Friendship.count', 1) do
+      users(:student_1).make_friend(users(:nothing_user))
+    end
+  end
 end
