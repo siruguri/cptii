@@ -21,8 +21,7 @@ GoalGetter::Application.routes.draw do
   
   # Miscellaneous logic
   get '/overlay_data' => 'overlay#data'
-
-  root to: 'main#main' # Change this to something else in your app.
+  root to: 'main#main'
 
   require 'sidekiq/web'
   authenticate :admin, lambda { |u| u.is_a? Admin } do

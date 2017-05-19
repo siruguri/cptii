@@ -4,6 +4,7 @@ u.password = ENV['ADMIN_PASSWORD']
 u.save
 
 p = u.profile
+p.profile_type = 'counselor'
 p.contact_details = {first_name: 'GoalGetter', last_name: 'App'}
 p.save
 

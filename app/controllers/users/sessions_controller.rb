@@ -9,7 +9,7 @@ module Users
     end
     
     def create
-      resource = User.find_for_database_authentication(email: params[:user][:email])
+      resource = User.find_for_database_authentication(email: params[:user][:email].downcase)
       if resource and resource.valid_password?(params[:user][:password])
         sign_in :user, resource
         if request.xhr?
@@ -25,7 +25,7 @@ module Users
     protected
     def invalid_login_attempt
       set_flash_message(:alert, :invalid)
-      render json: flash[:alert], status: 401
+      redirect_to new_user_session_path
     end
   end
 end
