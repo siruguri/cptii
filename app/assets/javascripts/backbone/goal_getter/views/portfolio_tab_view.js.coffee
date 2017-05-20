@@ -48,8 +48,6 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       @entry_refresher.set @model.get('user_info')['friend_entries']
     return if @entry_refresher.models.length == 0
 
-    @entry_refresher.pause
-    
     @entry_refresher.each (m, i) ->
       if m.get('entry_type') == 'profile_achievement'
         str = "added an achievement " + m.get('description')

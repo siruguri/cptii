@@ -40,7 +40,7 @@ module DataFetchers
                    }})
     when 'friends'
 
-      ret1 = u.friend_entries(of_types: ['work', 'achievement']).
+      ret1 = u.friend_entries(of_type: ['work', 'achievement']).
              order(created_at: :desc).to_a.map do |p_e|
         
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],

@@ -5,6 +5,8 @@ GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher
   initialize: ->
     @_lrt = -1
     @stop_interval = false
+    @interval = ''
+    
     _.bindAll @, 'lrt_data'
     _.bindAll @, 'modify_data'
 
