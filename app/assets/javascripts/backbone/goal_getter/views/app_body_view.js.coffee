@@ -14,8 +14,8 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
   garbage: (ref, opts) ->
     @model.screen_data_ready[ref] = false
     @screens[ref].$el.empty()
-    if ref == 'chat' # stop fetching
-      @screens[ref].chat_fetcher.stop()
+    if @screens[ref].hasOwnProperty('fetcher') # stop fetching
+      @screens[ref].fetcher.stop()
     delete @screens[ref] unless typeof opts != 'undefined' and opts.hasOwnProperty('soft') and opts.soft == true
     
   close_and_up: (data) ->

@@ -8,11 +8,20 @@ class ResourceBookmarksControllerTest < ActionController::TestCase
   end
   
   describe '#create' do
-    it 'works for signed in XHR' do
+    it 'creates for signed in XHR' do
       assert_difference('ResourceBookmark.count', 1) do
         post :create, xhr: true, params: {resource_id: content_resources(:cr_1)}
       end
       assert_equal @student_private, ResourceBookmark.last.user
+    end
+
+    it 'deletes for signed in XHR' do
+      sign_out :user
+      sign_in users(:student_1)
+      assert_difference('ResourceBookmark.count', -1) do
+        post :create, xhr: true, params: {resource_id: 912}
+      end
+      assert_equal 'deleted', JSON.parse(response.body)['data']['status']
     end
   end
   

@@ -75,7 +75,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     
     if @model.previous_screen == 'search-results' || @model.previous_screen == 'guide-single' \
        || @model.previous_screen == 'chat' || @model.previous_screen == 'add-work-experience' \
-       || @model.previous_screen == 'add-an-achievement'
+       || @model.previous_screen == 'add-an-achievement' || @model.previous_screen == 'portfolio-friends'
       @body_view.garbage @model.previous_screen
       
     dest = change_obj.to

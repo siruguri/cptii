@@ -40,9 +40,10 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       el = @tab_views[key].view_obj.wait_and_render(key)
       @tab_views[key].root_el = el
       el.show()
-      
       @$el.append el
     else
+      if @tab_views[key].hasOwnProperty('view_obj') and @tab_views[key].view_obj.hasOwnProperty('fetcher')    
+        @tab_views[key].view_obj.fetcher.resume()
       @tab_views[key].root_el.show()
   events:
     # Tab switching
@@ -50,11 +51,13 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @previous_tab.removeClass('selected')
       @previous_tab = $(e.target)
       @previous_tab.addClass('selected')
-      
+      if @shown_id == 'portfolio-friends' #stop fetching
+        @tab_views[@shown_id].view_obj.fetcher.pause()
+        
       target_view_key = $(e.target).attr('id').replace('goto-', '')
       @tab_views[@shown_id].root_el.hide()
       @shown_id = target_view_key
-      
+
       @delayed_render @shown_id
 
     # Generic handler for all portfolio additions

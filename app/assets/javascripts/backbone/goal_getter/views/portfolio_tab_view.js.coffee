@@ -3,6 +3,7 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @entry_refresher = new GoalGetter.Helpers.PortfolioFriendsFetcher()
+    @fetcher = @entry_refresher
     
     # The view will start to refresh entries; in some future version, we need a way to have the
     # view stop the fetcher if it gets garbaged.
@@ -13,8 +14,10 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
   events:
     'click .like': (e) ->
       tgt = $(e.target)
-      entryid = tgt.closest('.row').data('entry_id')
-
+      r = tgt.closest('.row')
+      entryid = r.data('entry-id')
+      current_status = r.data('liked-status')
+      
       update_like_class = ((d, s, x) ->
         btn = @$el.find('.floating-action')
         btn.toggleClass 'liked'
@@ -27,8 +30,11 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
         data:
           payload:
             code: 'like'
+            data:
+              current_status: current_status
         statusCode:
           201: update_like_class
+          202: update_like_class
       )
       
   show_new_entries: ->
@@ -61,10 +67,14 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       card_html = _.template($('#body_portfolio-tab-item_template').html())(description_string: str, entry_name: name)
       e = $(card_html)
       
-      e.data 'entry_id', m.get('id')
-      e.data 'liked_status', m.get('liked_status')
+      e.data 'entry-id', m.get('id')
+      e.data 'liked-status', m.get('liked_status')
       
       view_self.$el.append e
+
+      if m.get('liked_status')
+        e.find('.like').addClass 'liked'
+        
       e.find('img').attr('src', m.get('img_url'))
 
     @$el

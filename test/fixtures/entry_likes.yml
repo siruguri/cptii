@@ -1,0 +1,8 @@
+el_1:
+  like_target_id: 4200
+  like_target_type: ProfileEntry
+  liked_by: student_private
+el_2:
+  like_target_id: 4201
+  like_target_type: ProfileEntry
+  liked_by: uploaded_3

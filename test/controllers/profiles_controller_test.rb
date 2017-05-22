@@ -24,8 +24,8 @@ class ProfilesControllerTest < ActionController::TestCase
       get :show, xhr: true, params: {format: 'json', screen_number: '3'}
       b = JSON.parse response.body
       
-      # see fixtures for this data
-      assert_equal 1, b['data']['user_info']['work_experience'].size
+      # see fixtures for this data (added WE 4200 on May 20)
+      assert_equal 2, b['data']['user_info']['work_experience'].size
       assert_equal 2, b['data']['user_info']['work_experience'][0].keys.size
       assert_equal 2, b['data']['user_info']['achievements'].size
 

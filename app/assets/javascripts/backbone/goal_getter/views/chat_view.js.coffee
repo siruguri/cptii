@@ -3,6 +3,9 @@ GoalGetter.Views.ChatView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
     @chat_fetcher = new GoalGetter.Helpers.ChatRecordFetcher()
+
+    # Common property to use to stop fetching
+    @fetcher = @chat_fetcher
     @chat_fetcher.counselor_id = @model.get 'current_chat_counselor_id'
     
     # The view will start the fetcher; in some future version, we need a way to have the
