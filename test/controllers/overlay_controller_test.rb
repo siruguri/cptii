@@ -19,6 +19,12 @@ class OverlayControllerTest < ActionController::TestCase
       sign_in users(:student_private)
       get :data, xhr: true, params: {format: :json, key: '3'}
       assert_match /can share/, JSON.parse(response.body)['data']['url']
-    end      
+    end
+
+    it 'requires auth' do
+      sign_out :user
+      get :data, xhr: true, params: {format: :json, key: '3'}
+      assert_equal 401, response.status
+    end
   end
 end

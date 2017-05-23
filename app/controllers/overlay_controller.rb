@@ -20,7 +20,7 @@ class OverlayController < ApplicationController
   private
   def authorize_actions!
     _abort = false
-    case params[:action]
+    case params[:action].to_sym
     when :data
       _abort ||= current_user.nil?
       @_status = :unauthorized
