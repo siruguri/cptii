@@ -12,6 +12,23 @@ class ProfilesControllerTest < ActionController::TestCase
   end
   
   describe '#show' do
+    it 'works for friends' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 'portfolio-friends'}
+      b = JSON.parse(response.body)['data']['user_info']['friend_entries']
+      assert_equal 2, b.length
+    end
+    it 'works for likes' do
+      get :show, xhr: true, params: {format: 'json', screen_number: 'portfolio-likes'}
+      b = JSON.parse(response.body)['data']['user_info']['likes']
+      assert_equal 2, b.length
+    end
+    
+    it 'works for contacts' do
+      get :show, xhr: true, params: {format: 'json', screen_number: '4'}
+      b = JSON.parse(response.body)['data']['user_info']['friends']
+      assert_equal 2, b.length
+    end
+    
     it 'works for counselor screen' do
       get :show, xhr: true, params: {format: 'json', screen_number: '2'}
 

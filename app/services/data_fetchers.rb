@@ -39,7 +39,6 @@ module DataFetchers
                     is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
                    }})
     when 'friends'
-
       ret1 = u.friend_entries(of_type: ['work', 'achievement']).
              order(created_at: :desc).to_a.map do |p_e|
         
@@ -60,6 +59,18 @@ module DataFetchers
 
       ({user_info: {friend_entries: ret} })
     when 'likes'
+      
+      {user_info:
+         {likes:
+            ProfileEntry.joins(:entry_likes).includes(:entry_likes).
+           where('profile_id = ?', u.profile.id).
+           order('entry_likes.created_at desc').all.map do |rec|
+            text_key = rec.entry_key == 'work' ? 'title' : 'text'
+            rec.entry_likes.all.map do |e_l|
+              {user_name: e_l.liked_by.full_name, profile_entry_text: rec.entry_details[text_key],
+               img_url: e_l.liked_by.profile.profile_pic&.url}
+            end
+          end.flatten}}
     end
   end
 

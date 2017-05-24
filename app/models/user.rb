@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   attr_accessor :first_name, :last_name
 
   delegate :full_name, to: :profile
+  delegate :profile_entries, to: :profile
   
   def new_alerts_count
     alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).

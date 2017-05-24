@@ -151,6 +151,6 @@ GoalGetter.Helpers.ModelInitializer =
       when 'guide-single' then 'GuideSingleView'
       when 'logged-out' then 'LoggedOutView'
       when 'portfolio-friends' then 'PortfolioTabView'
-      when 'portfolio-likes' then 'PortfolioTabView'
+      when 'portfolio-likes' then 'PortfolioTabLikesView'
       when 'guides-saved' then 'GuidesTabView'
       when 'public-portfolio' then 'PortfolioView'

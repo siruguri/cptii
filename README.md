@@ -35,6 +35,12 @@ Note: requires Ruby knowledge, Heroku experience
 
 For demo purposes, you can run `rake db:seed:make_students` to create some students. There should already be a school in the database for this to work.
 
+# Reports
+
+Reports are sent to the email specified in the environment variable `ADMIN_EMAIL_RECIPIENT`. The following reports are available:
+
+* Get the latest login time for all students: `rake users:report_logins`
+
 # Admin Interface Manual
 
 ## Create a new user

@@ -39,7 +39,7 @@ profile_student_private:
   user: student_private
   profile_type: student
   published: <%= false %>
-  contact_details: <%= {}.to_json %>
+  contact_details: <%= {"first_name" => "student", "last_name" => 'private'}.to_json %>
 
 profile_student_1_f1:
   user: student_1_f1
@@ -60,7 +60,7 @@ profile_uploaded_2:
   
 profile_uploaded_3:
   user: uploaded_3
-  contact_details: <%= {}.to_json %>
+  contact_details: <%= {"first_name" => "uploaded", "last_name" => '3'}.to_json %>
 
 profile_nothing:
   user: nothing_user

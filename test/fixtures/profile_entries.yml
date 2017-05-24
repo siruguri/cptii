@@ -1,4 +1,5 @@
 profile_entry_student_1_1:
+  id: 4202
   profile: profile_student_1
   entry_key: work
   entry_details: <%= ({title: 'intern 1', workplace: 'job 1 1'}).to_json %>
@@ -31,10 +32,10 @@ liked_pe:
   id: 4200
   profile: profile_student_1
   entry_key: work
-  entry_details: <%= ({title: 'personal achievement', workplace: 'job f2 1'}).to_json %>
+  entry_details: <%= ({title: 'personal achievement liked by 1', workplace: 'job f2 1'}).to_json %>
 liked_pe_1:
   id: 4201
   profile: profile_noschool_student
-  entry_key: work
-  entry_details: <%= ({title: 'personal achievement', workplace: 'job f2 1'}).to_json %>
+  entry_key: achievement
+  entry_details: <%= ({text: 'personal achievement of pe liked by 1'}).to_json %>
   

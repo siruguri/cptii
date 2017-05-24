@@ -6,3 +6,7 @@ el_2:
   like_target_id: 4201
   like_target_type: ProfileEntry
   liked_by: uploaded_3
+el_of1_by_up3:
+  like_target_id: 4202
+  like_target_type: ProfileEntry
+  liked_by: uploaded_3

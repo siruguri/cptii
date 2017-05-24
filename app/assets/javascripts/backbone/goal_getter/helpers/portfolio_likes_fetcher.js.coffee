@@ -1,6 +1,7 @@
-GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher.extend
+GoalGetter.Helpers.PortfolioLikesFetcher = GoalGetter.Helpers.HeartbeatFetcher.extend
+  # DEFINITELY needs to be dryer :( TODO
   url: ->
-    '/profile.json?screen_number=portfolio-friends'
+    '/profile.json?screen_number=portfolio-likes'
 
   initialize: ->
     @_lrt = -1
@@ -12,10 +13,11 @@ GoalGetter.Helpers.PortfolioFriendsFetcher = GoalGetter.Helpers.HeartbeatFetcher
 
   modify_data: (coll, resp, opts) ->
     # entry_refresher is a backbone collection, remember?
-    if resp.data.user_info.friend_entries.length > 0
-      coll.set resp.data.user_info.friend_entries
+    if resp.data.user_info.likes.length > 0
+      coll.set resp.data.user_info.likes
     else
       coll.set []
+      
     @last_request_time(Date.now())
     
   lrt_data: ->
