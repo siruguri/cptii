@@ -44,7 +44,7 @@ module DataFetchers
         
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
-         entry_name: p_e.profile.contact_details['first_name'], liked_status: p_e.entry_likes.present?,
+         entry_name: p_e.profile.contact_details['first_name'], liked_status: p_e.entry_likes.where(liked_by_id: u.id).present?,
          img_url: p_e.profile.profile_pic&.url}
       end
 

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :schools, through: :counselor_assignments
   has_many :counselor_assignments, inverse_of: :counselor, foreign_key: :counselor_id
   has_many :chat_records, foreign_key: :sender_id
+  has_many :entry_likes, inverse_of: :liked_by, foreign_key: :liked_by_id
   
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name
@@ -60,8 +61,8 @@ class User < ActiveRecord::Base
   def friend_entries(opts)
     ProfileEntry.left_outer_joins(:entry_likes).
       joins(profile: :user).where(
-      'profile_entries.entry_key in (?) and users.id in (?) and (entry_likes.liked_by_id = ? or entry_likes.liked_by_id is null)',
-      opts[:of_type], friends.pluck(:id), id)
+      'profile_entries.entry_key in (?) and users.id in (?)',
+      opts[:of_type], friends.pluck(:id))
   end
   
   def friends

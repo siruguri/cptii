@@ -19,11 +19,11 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       current_status = r.data('liked-status')
       
       update_like_class = ((d, s, x) ->
-        btn = @$el.find('.floating-action')
+        btn = r.find('.floating-action')
         btn.toggleClass 'liked'
         # Set a filled in or outlined heart.
         if btn.hasClass('liked') then btn.text(String.fromCharCode(9829)) else btn.text(String.fromCharCode(9825))
-      ).bind(@)
+      )
 
       $.ajax('/profile_entries/' + entryid + '.json',
         method: 'put'
@@ -72,9 +72,12 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
       
       view_self.$el.append e
 
+      btn = e.find('.like')
       if m.get('liked_status')
-        e.find('.like').addClass 'liked'
-        
+        btn.addClass 'liked'
+        btn.text(String.fromCharCode(9829))
+      else
+        btn.text(String.fromCharCode(9825))
       e.find('img').attr('src', m.get('img_url'))
 
     @$el
