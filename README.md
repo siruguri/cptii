@@ -53,4 +53,3 @@ Reports are sent to the email specified in the environment variable `ADMIN_EMAIL
 ## Assign a student/counselor to a school
 
 * Start at /admin/assignment?type=counselor-to-school or admin/assignment?type=student-to-school
-* 

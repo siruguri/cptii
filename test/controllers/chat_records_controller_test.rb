@@ -62,25 +62,42 @@ class ChatRecordsControllerTest < ActionController::TestCase
     end
   end
   
-  test '#create from sendgrid' do
-    assert_enqueued_with(job: CounselorMailJob) do
-      post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
-    end
-    sign_out :user
-    cr = ChatRecord.last
-    to = "first last <#{cr.token}+sms@counselors.com>"
+  describe '#create from sendgrid' do
+    it 'works for responses to emails' do
+      assert_enqueued_with(job: CounselorMailJob) do
+        post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
+      end
+      sign_out :user
+      cr = ChatRecord.last
+      to = "first last <#{cr.token}+sms@counselors.com>"
 
-    assert_difference('ChatRecord.count', 1) do
-      post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
+      # Pretend the student wrote back
+      assert_difference('ChatRecord.count', 1) do
+        post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
+      end
+      assert_equal 'response!', ChatRecord.last.message
     end
-    assert_equal 'response!', ChatRecord.last.message
 
-    to = "first last <123+sms@counselors.com>"
-    refute_difference('ChatRecord.count') do
-      post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: 'response!', api_key: 'testkey'}
-    end
+    it 'ignores poorly formed tokens' do
+      to = "first last <123+sms@counselors.com>"
+      refute_difference('ChatRecord.count') do
+        post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: 'response!', api_key: 'testkey'}
+      end
     
-    assert_equal 422, response.status
+      assert_equal 422, response.status
+    end
+
+    it 'creates guides' do
+      to = 'guides@whereverreally.com'
+      subject = 'great guide'
+      content = 'great content'
+      assert_difference('ContentResource.count', 1) do
+        post :create, params: {'envelope' => {'to' => [to].to_json}, subject: subject, to: to, text: content, api_key: 'testkey'}
+      end
+      guide = ContentResource.last
+      assert_equal 200, response.status
+      assert_equal subject, guide.title
+    end      
   end
 
   private

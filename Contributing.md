@@ -13,7 +13,7 @@ These are notes to help folks contribute to this code base.
   * and so on.
 * A main `control_view` creates a header and a footer view. The header view delegates screen creation to `app_body_view`
   * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method
-  * This dynamic creation also runs a data fetch prior to view rendering
+  * This dynamic creation also runs a data fetch prior to view rendering. The URL for the data fetch is determined in `models/app_body_model.js` in the method `make_url`. Following the code from there will help determine the internal business logic for how data is laid out.
 
 ## Under the hood
 

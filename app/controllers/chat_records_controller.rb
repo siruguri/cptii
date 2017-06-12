@@ -41,19 +41,28 @@ class ChatRecordsController < ApplicationController
     status =
     if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key.to_s
       valid_sendgrid = false
-      if params[:to].present? && /\<[A-Za-z0-9]+\+sms/.match(params[:to])
-        matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]
-        token = matches[1]
-        origin = ChatRecord.find_by_token token
-        if origin
-          cr = ChatRecord.new(
-            receiver: origin.sender,
-            sender: origin.receiver,
-            message: (params[:text] || params[:html]).strip,
-            written_time: Time.now
-          )
+      if params[:to].present?
+        mesg = (params[:text] || params[:html]).strip
+        # If this was an email to create guides...
+        if /^guides\@/.match(params[:to]) and mesg.length > 0
+          cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg
           cr.save
           valid_sendgrid = true
+        elsif /\<[A-Za-z0-9]+\+sms/.match(params[:to])
+          # It's a response to a chat message
+          matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]
+          token = matches[1]
+          origin = ChatRecord.find_by_token token
+          if origin
+            cr = ChatRecord.new(
+              receiver: origin.sender,
+              sender: origin.receiver,
+              message: mesg,
+              written_time: Time.now
+            )
+            cr.save
+            valid_sendgrid = true
+          end
         end
       end
 
