@@ -43,15 +43,18 @@ class ChatRecordsController < ApplicationController
     if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key.to_s
       if ENV['RECORD_LOGS']
         DebugLog.create log_level: 'debug', log_source: 'chat_records_controller',
-                        log_message: params.to_s
+                        log_message: params.inspect
       end
       
       valid_sendgrid = false
+      error_log = 'no to attribute'
       if params[:to].present?
-        mesg = (params[:text] || params[:html]).strip
+        mesg = (params[:text] || params[:html])&.strip
         # If this was an email to create guides...
-        if /^guides\@/.match(params[:to]) and mesg.length > 0 and params[:from].present?
+        error_log = 'check for to/from/mesg length failed'
+        if /^guides\@/.match(params[:to]) and (mesg&.length).to_i > 0 and params[:from].present?
           u = User.find_by_email parsed_from(params[:from])
+          error_log = 'sender is not counselor'
           if u&.counselor?
             u.schools.each do |school|
               cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg,
@@ -79,7 +82,7 @@ class ChatRecordsController < ApplicationController
       end
 
       # Response to sendgrid
-      valid_sendgrid ? [{}, :ok] : [{}, :unprocessable_entity]
+      valid_sendgrid ? [{}, :ok] : [{error: error_log}, :unprocessable_entity]
     else
       if !current_user
           [{}, :unauthorized]

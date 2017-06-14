@@ -40,6 +40,9 @@ class AdminsControllerTest < ActionController::TestCase
           end
         end
       end
+      
+      # look at fixture file
+      assert_match /gym coach/, User.find_by_email('counselor_1_up@counselors.com').profile.description_string
     end
     
     assert_match /<p>uploaded_4.friends\.com..([a-z]+\s){1,3}[a-z]+.\/p>/, flash[:upload_details]

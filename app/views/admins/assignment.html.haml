@@ -3,7 +3,7 @@
     = flash[:upload_details].html_safe
     
 = form_tag('/admin/csv_assignment', method: :post, multipart: true) do
-  = label_tag :details_csv, 'Select a CSV file with email/name/school name/profile type'
+  = label_tag :details_csv, 'Select a tab-sep file with these required fields: email/name/school name/profile type. Two more fields are optional: phone and role, which are used for the <i>counselor</i> type'.html_safe
   = file_field_tag :details_csv
   = submit_tag 'Upload'
   

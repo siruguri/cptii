@@ -41,6 +41,10 @@ class AdminsController < ApplicationController
       school_name = fields[3]
       # Just to be safe = default is student
       profile_type = (fields[4] == 'counselor' ? 'counselor' : 'student')
+
+      # there can also be optional phone and role info
+      phone = fields[5]
+      role = fields[6]
       
       u = User.find_or_initialize_by email: key
       if u.new_record?
@@ -57,7 +61,12 @@ class AdminsController < ApplicationController
 
       p = u.profile
       p.profile_type = profile_type
-      p.contact_details['first_name'] = first      
+      if phone || role
+        p.contact_details['phone'] = phone
+        p.contact_details['role'] = role
+      end
+      
+      p.contact_details['first_name'] = first
       p.contact_details['last_name'] = last
 
       s = School.find_or_initialize_by(name: school_name)
