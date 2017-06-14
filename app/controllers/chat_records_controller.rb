@@ -1,6 +1,7 @@
 class ChatRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token, if: :skip_token_on_auth
-
+  include ChatRecordsHelper
+  
   def index
     # The "counselor_id" could also be a non-counselor user - at this point.
     counselor_id = params[:counselor_id].to_i
@@ -40,12 +41,17 @@ class ChatRecordsController < ApplicationController
     resp,
     status =
     if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key.to_s
+      if ENV['RECORD_LOGS']
+        DebugLog.create log_level: 'debug', log_source: 'chat_records_controller',
+                        log_message: params.to_s
+      end
+      
       valid_sendgrid = false
       if params[:to].present?
         mesg = (params[:text] || params[:html]).strip
         # If this was an email to create guides...
         if /^guides\@/.match(params[:to]) and mesg.length > 0 and params[:from].present?
-          u = User.find_by_email params[:from]
+          u = User.find_by_email parsed_from(params[:from])
           if u&.counselor?
             u.schools.each do |school|
               cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg,

@@ -67,14 +67,18 @@ class ChatRecordsControllerTest < ActionController::TestCase
       assert_enqueued_with(job: CounselorMailJob) do
         post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
       end
+
       sign_out :user
       cr = ChatRecord.last
       to = "first last <#{cr.token}+sms@counselors.com>"
 
       # Pretend the student wrote back
-      assert_difference('ChatRecord.count', 1) do
-        post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
+      assert_difference('DebugLog.count', 1) do
+        assert_difference('ChatRecord.count', 1) do
+          post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
+        end
       end
+      assert_equal 'chat_records_controller', DebugLog.last.log_source      
       assert_equal 'response!', ChatRecord.last.message
     end
 
