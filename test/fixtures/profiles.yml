@@ -8,7 +8,7 @@ profile_student_1:
   user: student_1
   profile_type: student
   published: <%= true %>
-  contact_details: <%= {}.to_json %>
+  contact_details: <%= {'school_id' => 2121}.to_json %>
 
 profile_noschool_student:
   user: noschool_student

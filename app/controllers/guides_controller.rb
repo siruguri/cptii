@@ -6,12 +6,24 @@ class GuidesController < ApplicationController
   end
 
   def index
+    if current_user
+      if current_user.student?
+        school_ids = [current_user.school.id]
+      else
+        school_ids = current_user.schools.pluck :id
+      end
+      
+      reln = ContentResource.where('content_resources.resource_type = ? and (school_id is null or school_id in (?))',
+                                   'guides', school_ids)
+    else
+      reln = ContentResource.where('content_resources.resource_type = ? and school_id is null',
+                                   'guides')
+    end
+    
     list = (params[:saved] ?
              (
-               ContentResource.joins(:resource_bookmarks).where(resource_type: 'guides',
-                                                                resource_bookmarks: {user_id:  current_user.id}) 
-             ) :
-              (ContentResource.where(resource_type: 'guides'))
+               reln.joins(:resource_bookmarks).where(resource_bookmarks: {user_id:  current_user.id}) 
+             ) : reln
            ).order(created_at: :desc).pluck(:title, :id).map { |rec_pair| ({title: rec_pair[0], id: rec_pair[1]})}
     
     render json: {data: ({guides: list})}

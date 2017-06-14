@@ -92,9 +92,12 @@ class ChatRecordsControllerTest < ActionController::TestCase
       subject = 'great guide'
       content = 'great content'
       assert_difference('ContentResource.count', 1) do
-        post :create, params: {'envelope' => {'to' => [to].to_json}, subject: subject, to: to, text: content, api_key: 'testkey'}
+        post :create, params: {'envelope' => {'to' => [to].to_json}, subject: subject,
+                               from: 'couns_1@valid.com', to: to, text: content, api_key: 'testkey'}
       end
       guide = ContentResource.last
+
+      assert_equal schools(:school_1).id, guide.school_id
       assert_equal 200, response.status
       assert_equal subject, guide.title
     end      

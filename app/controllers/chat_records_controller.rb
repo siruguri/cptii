@@ -44,10 +44,16 @@ class ChatRecordsController < ApplicationController
       if params[:to].present?
         mesg = (params[:text] || params[:html]).strip
         # If this was an email to create guides...
-        if /^guides\@/.match(params[:to]) and mesg.length > 0
-          cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg
-          cr.save
-          valid_sendgrid = true
+        if /^guides\@/.match(params[:to]) and mesg.length > 0 and params[:from].present?
+          u = User.find_by_email params[:from]
+          if u&.counselor?
+            u.schools.each do |school|
+              cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg,
+                                       school: school
+              cr.save
+            end
+            valid_sendgrid = true
+          end
         elsif /\<[A-Za-z0-9]+\+sms/.match(params[:to])
           # It's a response to a chat message
           matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]

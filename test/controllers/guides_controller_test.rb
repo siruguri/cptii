@@ -7,10 +7,17 @@ class GuidesControllerTest < ActionController::TestCase
       assert_equal 400, response.status
     end
 
-    it 'works with login' do
+    it 'works with request for saved guides' do
       sign_in users(:student_1)
       get :index, xhr: true, params: {saved: true}
       assert_equal 1, JSON.parse(response.body)['data']['guides'].size
+    end
+
+    it 'hides guides from students in other schools' do
+      sign_in users(:uploaded_1)
+      get :index, xhr: true
+      refute JSON.parse(response.body)['data']['guides'].map { |i| i['title'] }
+              .include?('school 1 guide not seen by school 2 student')
     end
     
     it 'works for guides screen without login' do
@@ -19,7 +26,7 @@ class GuidesControllerTest < ActionController::TestCase
       b = JSON.parse(response.body)
       
       assert b['data'].keys.include? 'guides'
-      assert_equal ContentResource.where(resource_type: 'guides').count, b['data']['guides'].size
+      assert_equal ContentResource.where('resource_type = ? and school_id is null', 'guides').count, b['data']['guides'].size
       assert_equal ['id', 'title'], b['data']['guides'][0].keys.sort
     end
   end

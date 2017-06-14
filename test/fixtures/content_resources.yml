@@ -1,18 +1,30 @@
+DEFAULTS: &DEFAULTS
+  school: <%= nil %>
+
 cr_1:
   id: 912
   resource_type: guides
   title: guide 1
   description: this is a guide 1
+  <<: *DEFAULTS
 cr_2:
   resource_type: guides
   title: guide 2
   description: this is a guide 2
+  <<: *DEFAULTS
 cr_notguide:
   resource_type: guides
   title: go here
   description: not a guide
+  <<: *DEFAULTS
 cr_unsaved:
   resource_type: guides
   title: not saved
   description: not saved yet
   created_at: <%= DateTime.now - 3.days %>
+  <<: *DEFAULTS
+cr_1_school_1:
+  resource_type: guides
+  title: school 1 guide not seen by school 2 student
+  description: not saved yet
+  school_id: 2121

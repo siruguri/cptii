@@ -1,6 +1,7 @@
 class ContentResource < ActiveRecord::Base
   attr_accessor :should_broadcast
   has_many :resource_bookmarks, inverse_of: :resource, foreign_key: :resource_id
+  belongs_to :school
   
   before_create :default_resource_type
   after_create :make_alert
