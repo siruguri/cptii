@@ -1,20 +1,25 @@
 - if flash[:upload_details]
   .local-notice
     = flash[:upload_details].html_safe
-    
-= form_tag('/admin/csv_assignment', method: :post, multipart: true) do
-  = label_tag :details_csv, 'Select a tab-sep file with these required fields: email/name/school name/profile type. Two more fields are optional: phone and role, which are used for the <i>counselor</i> type'.html_safe
-  = file_field_tag :details_csv
-  = submit_tag 'Upload'
-  
-= form_tag('/admin/complete_assignment') do
-  = hidden_field_tag :assignment_type, @type
-  .form-group
-    = label_tag :assignee_id, 'Select student'
-    = select_tag :assignee_id, options_from_collection_for_select(@assignee[:users].all, :id, :full_name)
-  .form-group
-    Select School
-    .radio-button-collection
-      = collection_radio_buttons :student, :school_id, School.all, :id, :name
-  .form-group
-    = submit_tag 'Submit'
+- if @assignee.nil?
+  Use either
+  = link_to 'student-to-school', '/admin/assignment?type=student-to-school'
+  or
+  = link_to 'counselor-to-school', '/admin/assignment?type=counselor-to-school'
+- else  
+  = form_tag('/admin/csv_assignment', method: :post, multipart: true) do
+    = label_tag :details_csv, 'Select a tab-sep file with these required fields: email/name/school name/profile type. Two more fields are optional: phone and role, which are used for the <i>counselor</i> type'.html_safe
+    = file_field_tag :details_csv
+    = submit_tag 'Upload'
+
+  = form_tag('/admin/complete_assignment') do
+    = hidden_field_tag :assignment_type, @type
+    .form-group
+      = label_tag :assignee_id, 'Select student'
+      = select_tag :assignee_id, options_from_collection_for_select(@assignee[:users].all, :id, :name_with_school)
+    .form-group
+      Select School
+      .radio-button-collection
+        = collection_radio_buttons :student, :school_id, School.all, :id, :name
+    .form-group
+      = submit_tag 'Submit'

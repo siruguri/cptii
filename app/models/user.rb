@@ -15,7 +15,22 @@ class User < ActiveRecord::Base
 
   delegate :full_name, to: :profile
   delegate :profile_entries, to: :profile
-  
+
+  def name_with_school
+    if (s = self.school)
+      if s.class == Array
+        str = s.map { |i| i.name }.join(', ')
+        str = " (#{str})"
+      else
+        str = " (#{school.name})"
+      end
+    else
+      str = ''
+    end
+    
+    full_name + str
+  end
+    
   def new_alerts_count
     alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).
                 limit(1).first&.entry_details&.send(:[], 'lrt')
@@ -26,7 +41,7 @@ class User < ActiveRecord::Base
   delegate :school, to: :profile
   
   def counselors
-    self.profile.school ? self.profile.school.counselors : User.none
+    (self.student? && self.profile.school) ? self.profile.school.counselors : User.none
   end
   
   def valid_counselor_id?(id)

@@ -1,10 +1,14 @@
-%script#body_counselor_template{type: 'text/template'}
+%script#2tab_body_counselor_template{type: 'text/template'}
   #logged-in-screen
     .switcher-tab.row
       .col.s6#goto-peers.goto.selected.pointer
         peers
       .col.s6#goto-mentors.goto.pointer
         mentors
+    .counselor-list.row
+
+%script#body_counselor_template{type: 'text/template'}
+  #logged-in-screen
     .counselor-list.row
 
 %script#body_counselor_item_template{type: 'text/template'}
