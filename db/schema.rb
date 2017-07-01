@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614152346) do
+ActiveRecord::Schema.define(version: 20170707233146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 20170614152346) do
     t.integer  "second_friend_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "milestone_listings", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "due_in"
+    t.jsonb    "assigned_students_list", default: {}
+    t.jsonb    "reminder_styles",        default: {}
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "organizations", force: :cascade do |t|

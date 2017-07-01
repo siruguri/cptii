@@ -20,7 +20,7 @@ GoalGetter.Views.SearchResultsView = GoalGetter.Views.ScreenBase.extend
     view_self = @
     card_func = _.template($('#org_list_card_template').html())
     card_root = @$el.find '.result-cards'
-    @model.search_results.forEach (rec) ->
+    @model.get('search_results').forEach (rec) ->
       card_root.append($(
         card_func(
           agency_name: rec.agency_name
@@ -44,7 +44,7 @@ GoalGetter.Views.SearchResultsView = GoalGetter.Views.ScreenBase.extend
     
     myicon = L.icon({iconUrl: '/images/marker-icon.png'})
     @map = L.map('map-canvas', {center: new L.latLng(37.8053444,-122.2744), zoom: 13})
-    pt_array = @model.search_results.filter((rec) ->
+    pt_array = @model.get('search_results').filter((rec) ->
       rec.lat != -1 and rec.lat != null and rec.lat != ''
     ).map( (rec) ->
       marker = L.marker([rec.lat, rec.lon], {icon: myicon})

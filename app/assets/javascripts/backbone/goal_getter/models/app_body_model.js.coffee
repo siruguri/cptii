@@ -13,7 +13,14 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     # (Complex) getters need to be bound to this object
     _.bindAll @, 'header_title'
     null
+
+  page_is_admin: ->
+    $('#page_data').data('screen-role') == 'admin'
     
+  set_screen_by_role: ->
+    if @page_is_admin()
+      @current_screen = 'jobboard'
+      
   # entry point from views/control_view
   init_fetch: ->
     @logged_in = ($('#login_token').data('value') == 42)
@@ -49,6 +56,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/organizations?q=' + @get('search_query')
         else
           '/programs?q=' + @get('search_query')
+      else if ref == 'jobboard'
+        '/job_listings'
       else if ref == '1'
         '/guides/'
       else if ref == 'guide-single'
@@ -82,10 +91,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       if d.hasOwnProperty('data') and Object.keys(d.data).length > 0
         model_self.screen_data_ready[screen_number] = true
 
-      if screen_number == 'search-results'
-        model_self.search_results = d.data
-      else if screen_number == '1'
-        model_self.guides = d.data['guides']
+      if screen_number == 'search-results' or screen_number == '1'
+        model_self.set d.data
       else if screen_number == 'guide-single'
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'

@@ -9,6 +9,14 @@ class TopLevelsTest < Capybara::Rails::TestCase
     # In support/ file
   end
 
+  describe 'admin role' do
+    it 'starts with job board' do
+      # this will change later
+      visit '/?role=admin'
+      assert_match /selected/i, page.all('.footer .nav-change')[3][:class]
+    end
+  end
+  
   describe 'root navigation without login' do
     it 'starts with Services' do
       visit "/"

@@ -12,6 +12,9 @@ en:
     portfolio: 'Portfolio'
     guides: 'Guides'
     contact: 'Contact'
+    enrollment: 'Enrollment'
+    milestones: 'Milestones'
+    jobboard: 'Job Board'
   header:
     done: 'Done'
   body:

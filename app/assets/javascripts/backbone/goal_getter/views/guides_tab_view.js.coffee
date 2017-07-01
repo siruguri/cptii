@@ -1,4 +1,6 @@
 GoalGetter.Views.GuidesTabView = GoalGetter.Views.ScreenBase.extend
+  # Shows saved guides; needs a better view name
+
   className: 'guides-list row'
   id: 'saved-guides'
   

@@ -4,7 +4,17 @@ GoalGetter.Helpers.ModelInitializer =
       '3':
         title: 'Share Portfolio'
         body: 'Share your portfolio: http://www.goalgetterapp.com/portfolio'
+        
     model_obj.logged_out_texts =
+      'milestones':
+        title: 'Create and view milestones shared between students and counselors'
+        body: 'GoalGetter allows counselors to create milestones that their students can follow to keep up-to-date on what they need to do to finish the semester successfully.'
+        bkgrd_color: '#00b9e6'        
+    
+      'jobboard':
+        title: 'See job listings posted by your counselors'
+        body: 'GoalGetter customizes job listings by your school\'s location and allows your counselors and teachers to feature listings they have found in the community'
+        bkgrd_color: '#00b9e6'        
       '2':
         title: 'Get in touch with your school\'s counselor'
         body: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
@@ -29,6 +39,8 @@ GoalGetter.Helpers.ModelInitializer =
       '2': 0
       '3': 0
       '4': 0
+      'jobboard': 0
+      'milestones': 0
       'chat': 1
       'add-work-experience' : 1
       'add-an-achievement' : 1
@@ -48,6 +60,12 @@ GoalGetter.Helpers.ModelInitializer =
       'add-service': '0'
       
     model_obj.header_config =
+      'jobboard':
+        properties:
+          search: true
+      'milestones':
+        properties:
+          add: true
       '0' :
         properties:
           search: true
@@ -86,6 +104,8 @@ GoalGetter.Helpers.ModelInitializer =
       '2': true
       '3': true
       '4': true
+      'jobboard': true
+      'milestones': true
       'add-work-experience': true
       'add-an-achievement' : true
       'add-service': true
@@ -124,6 +144,8 @@ GoalGetter.Helpers.ModelInitializer =
       '2': 'Counselor'
       '3': 'Portfolio',
       '4': 'Contact',
+      'jobboard': 'Job Board',
+      'milestones': 'Milestones',
       'chat' : '$current_chat_counselor'
       'add-service': 'Add Service'
       'add-work-experience' : 'Add job experience'
@@ -143,6 +165,8 @@ GoalGetter.Helpers.ModelInitializer =
       when '2' then 'CounselorView'
       when '3' then 'PortfolioView'
       when '4' then 'ContactsView'
+      when 'jobboard' then 'JobBoardView'
+      when 'milestones' then 'MilestonesView'
       when 'chat' then 'ChatView'
       when 'add-work-experience' then 'AddWorkView'
       when 'add-service' then 'AddService'

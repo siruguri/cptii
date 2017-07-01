@@ -1,6 +1,6 @@
 # Alameda County Office of Education
 
-Career Pathways app
+Goal Getter App
 
 # Setting up the app
 
@@ -15,6 +15,7 @@ Note: requires Ruby knowledge, Heroku experience
     heroku run rake db:seed:make_portfolio_categories  -a appname
     heroku run rake db:seed:make_taxonomy_nodes  -a appname
     heroku run rake db:seed:make_programs_and_organizations  -a appname # This currently loads Alameda County (CA) data
+    heroku run rake db:seed:make_categorizations  -a appname # This currently loads Alameda County (CA) data
     
   ```
 
@@ -41,7 +42,11 @@ Reports are sent to the email specified in the environment variable `ADMIN_EMAIL
 
 * Get the latest login time for all students: `rake users:report_logins`
 
-# Admin Interface Manual
+# Using as a Counselor
+
+If you want to view the app as an counselor, then go to `https://www.goalgetterapp.org/?role=admin`
+
+# Admin Interfaces
 
 ## Create a new user
 
@@ -49,6 +54,11 @@ Reports are sent to the email specified in the environment variable `ADMIN_EMAIL
 * Create a new user, setting just the email and password
 * Go to the Profiles tab
 * Note that there's a new profile now - edit to set name, type ('counselor' or 'student') and picture.
+
+## Upload Multiple Users
+
+Start at `https://www.goalgetterapp.org/admin/assignment` - the screen has an upload file button where you can upload a
+tab-separated values file, with one user in each row. The column ordering is explained on the page above.
 
 ## Assign a student/counselor to a school
 

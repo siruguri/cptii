@@ -36,11 +36,19 @@ GoalGetter.Views.FooterView = Backbone.View.extend
       @$('.bubble').text(ct).show()
       
   select_tab: ->
-    tab_node = @$el.find('.nav-change').get @model.current_screen
+    view_self = @
+    tab_node = _.select(@$el.find('.nav-change'), (m, i) ->
+      $(m).data('target').toString() == view_self.model.current_screen
+    )[0]
+    
     $(tab_node).addClass 'selected'
     
   render: ->
-    @$el.html(_.template($('#footer_template').html())({}))
+    screen_role = $('#page_data').data('screen-role')
+    if screen_role == 'admin'
+      @$el.html(_.template($('#footer_admin_template').html())({}))
+    else      
+      @$el.html(_.template($('#footer_template').html())({}))
 
     @select_tab()
     @show_guides_bubble()

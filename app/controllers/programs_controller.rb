@@ -5,6 +5,7 @@ class ProgramsController < ApplicationController
            else
              Program.all
            end
-    render json: ({data: list.map { |rec| rec.display_data }})
+    render json: ({data: {search_results: list.map { |rec| rec.display_data }}}),
+           status: 200
   end
 end

@@ -2,10 +2,11 @@
 = render "body_svgs"
 = render 'nav_svgs'
 #login_token{style: 'display: none;', "data-value" => @logged_in}
+#page_data{"data-screen-role" => @screen_role}
 .main-app
 = render 'header_template'
 = render 'body_overlay'
 = render 'body_logged_out'
 = render 'body_template'
 = render 'footer_template'
-  
+= render 'footer_admin_template'  

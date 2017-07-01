@@ -1,9 +1,9 @@
 class OrganizationsController < ApplicationController
   def index
     # q searches by category name
-    if params[:q] && params[:q].strip.size > 0
-      cats = TaxonomyNode.where('lower(node_name) like ?', "%#{params[:q].strip.downcase}%").pluck(:id)
-    end
+    cats = (params[:q] && params[:q].strip.size > 0)? 
+             TaxonomyNode.where('lower(node_name) like ?', "%#{params[:q].strip.downcase}%").pluck(:id)
+           : nil
 
     list = if cats && cats.count > 0
              # Get orgs that have programs that are in the selected nodes.
@@ -12,6 +12,6 @@ class OrganizationsController < ApplicationController
            else
              Organization.all
            end
-    render json: ({data: list.map { |rec| rec.display_data }})
+    render json: ({data: {search_results: list.map { |rec| rec.display_data }}})
   end
 end

@@ -39,7 +39,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       el.show()
       @$el.append el
     else
-      if @tab_views[key].hasOwnProperty('view_obj') and @tab_views[key].view_obj.hasOwnProperty('fetcher')    
+      if @tab_views[key].hasOwnProperty('view_obj') and @tab_views[key].view_obj.hasOwnProperty('fetcher')
         @tab_views[key].view_obj.fetcher.resume()
       @tab_views[key].root_el.show()
   events:

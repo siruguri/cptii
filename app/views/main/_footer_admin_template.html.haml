@@ -1,0 +1,29 @@
+%script#footer_admin_template{type: 'text/template'}
+  .col.s3
+    .pointer.nav-change{'data-target' => 'guides-admin'}
+      .responsive-img.nav-img
+        %svg
+          %use{x: '0', y: '0', "xlink:href" => '#nav-guides-admin'}
+      .nav-title
+        = t('icons.guides')
+  .col.s3
+    .pointer.nav-change{'data-target' => 'enrol'}
+      .responsive-img.nav-img
+        %svg
+          %use{x: '0', y: '0', "xlink:href" => '#nav-enrol'}
+      .nav-title
+        = t('icons.enrollment')
+  .col.s3
+    .pointer.nav-change{'data-target' => 'milestones'}
+      .responsive-img.nav-img
+        %svg
+          %use{x: '0', y: '0', "xlink:href" => '#nav-milestones'}
+      .nav-title
+        = t('icons.milestones')
+  .col.s3
+    .pointer.nav-change{'data-target' => 'jobboard'}
+      .responsive-img.nav-img
+        %svg
+          %use{x: '0', y: '0', "xlink:href" => '#nav-jobboard'}
+      .nav-title
+        = t('icons.jobboard')

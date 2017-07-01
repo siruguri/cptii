@@ -58,7 +58,7 @@ GoalGetter.Views.GuidesView = GoalGetter.Views.ScreenBase.extend
     view_self = @
     
     colors = ['purple', 'orange', 'red', 'blue', 'yellow', 'green']
-    @model.guides.forEach (rec, idx) ->
+    @model.get('guides').forEach (rec, idx) ->
       t_func = _.template $('#body_guides_guidelist_template').html()
       cell = $(t_func(
         title: rec['title']

@@ -7,7 +7,7 @@ class ProgramsControllerTest < ActionController::TestCase
   
   test 'no query' do
     get :index, xhr: true
-    assert_equal Program.count, JSON.parse(response.body)['data'].length
+    assert_equal Program.count, JSON.parse(response.body)['data']['search_results'].length
   end
 
   test 'with query' do
@@ -15,9 +15,9 @@ class ProgramsControllerTest < ActionController::TestCase
 
     # Spaces are ignored
     get :index, xhr: true, params: {q: ' tutor '}
-    assert_equal 2, JSON.parse(response.body)['data'].length
+    assert_equal 2, JSON.parse(response.body)['data']['search_results'].length
     
     get :index, xhr: true, params: {q: 'tutor'}
-    assert_equal 2, JSON.parse(response.body)['data'].length
+    assert_equal 2, JSON.parse(response.body)['data']['search_results'].length
   end    
 end
