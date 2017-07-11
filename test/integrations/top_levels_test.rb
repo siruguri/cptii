@@ -6,7 +6,6 @@ class TopLevelsTest < Capybara::Rails::TestCase
   def setup
     Capybara.current_driver = :selenium
     logout :user
-    # In support/ file
   end
 
   describe 'admin role' do
@@ -20,6 +19,9 @@ class TopLevelsTest < Capybara::Rails::TestCase
   describe 'root navigation without login' do
     it 'starts with Services' do
       visit "/"
+      # There is an unexpected network call here... that was introduced at some point. The app
+      # should have rendered the selection below without needing to wait for the network.
+      sleep 1
       assert_match /selected/i, page.all('.footer .nav-change')[0][:class]
     end
 

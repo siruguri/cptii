@@ -13,8 +13,8 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
     else
       first_time = false
       clearInterval context.load_event
-      
-    if (!context.model.requires_login[screen_number] or context.model.logged_in) and !context.model.screen_data_ready[screen_number]
+
+    if context.model.data_needed_and_authorized(screen_number)
       # Wait for data to show up
       context.load_event = setInterval context.wait_and_render, 200, screen_number, context
       if first_time

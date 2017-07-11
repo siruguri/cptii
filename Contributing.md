@@ -2,21 +2,35 @@
 
 These are notes to help folks contribute to this code base.
 
-# SPA (front end code)
+# SPA (front end code) Basics
 
 * Written using Backbone JS
 * In `models/app_body_model`, a variety of properties are initialized that essentially manage the SPA. This is delegated off to a Helper class in `goal_getter/helpers/model_initializer.js`, and contains among other things:
   * a navigation structure, that models a tree navigation format, via a `levels` hash and an `up_level` "pointer" hash,
   * a `texts` hash that shows each level's "title"
-  * hashes that control whether the screen requires login
+  * `requires_login`: hash that controls whether the screen requires login
   * Hashes that remember state, like if a screen's data has been obtained,
   * `overlay_texts`: controls what is shown in a popup that the screen may have.
   * and so on.
 * A main `control_view` creates a header and a footer view. The header view delegates screen creation to `app_body_view`
-  * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method
+  * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method. See more in the *Under The Hood* section. 
   * This dynamic creation also runs a data fetch prior to view rendering. The URL for the data fetch is determined in `models/app_body_model.js` in the method `make_url`. Following the code from there will help determine the internal business logic for how data is laid out.
 
-## Under the hood
+# Under The Hood
+
+## Checking Login
+
+The basic page data is stored in the div `page_data`. When the model initializes, it checks this div for various pieces
+of config data, as it were. If the backend confirmed login, then `data-login-token` is set to `user', `admin` or `none`. If set to _none_ views requiring logins are not rendered. 
+
+## Fetching data
+
+The data fetching is defined in a base class that all views inherit from, in `views/base/screen_base.js`. When it knows it has data, it triggers `body:render` which is heard by `AppBodyView`, which passes this knowledge to `HeaderView`. This view then triggers its `render` method, which causes the body view to actually be rendered.
+
+`HeaderView` also decides what to do when the user is not logged in - instead of rendering the actual view, it pretends
+that it needs to render the `logged-out` screen.
+
+## Navigation
 
 * Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also calls `change_screens` directly - the main reason is to supply special parameters, like `from` and `to` that help manage the custom history within the SPA.
 

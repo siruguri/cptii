@@ -40,6 +40,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
   pass_navigation: (obj) ->
     # Pass thru event arguments up to control app
     @trigger 'navigation:change', obj
+    
   pass_body_render: (obj) ->
     # Pass thru event arguments up to control app
     @trigger 'body:render', obj

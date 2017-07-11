@@ -1,5 +1,16 @@
-.job-listing {
-  /* remove this later */
-  min-height: 30px;
-  border-bottom: solid 1px $basic-gray;
+.jobboard-window {
+  .job-listing {
+    min-height: 24px;
+    border-bottom: solid 1px $basic-gray;
+    margin-top: 5px;
+
+    .title {
+      font-size: $normal-height;
+    }
+
+    .company {
+      font-size: $medium-height;
+      font-weight: bold;
+    }
+  }
 }

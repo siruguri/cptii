@@ -1,5 +1,5 @@
-class JobListings < ApplicationController
+class JobListingsController < ApplicationController
   def index
-    return {job_listings: [{title: 'Delivery Driver', company: 'Grubhub'}]}
+    render json: ({data: {job_listings: [{title: 'Delivery Driver', company: 'Grubhub'}]}}), status: 200
   end
 end

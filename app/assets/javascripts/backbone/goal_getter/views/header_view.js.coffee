@@ -96,13 +96,6 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       change_obj.refresh_screen.forEach (key) ->
         view_self.body_view.refresh_screen key
 
-    if @model.requires_login[@model.current_screen] and !@model.logged_in
-      # Divert the screen to the logged out screen
-      # Pretend to use the title from whatever screen you don't have access to
-      @model.pretend_key = @model.current_screen
-      @model.texts['logged-out'] = @model.texts[@model.current_screen]
-      @model.current_screen = 'logged-out'
-      
     @render_with_body()
     
   render_with_body: ->
@@ -112,6 +105,15 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     
     top_parts = []
     top_parts.push(@render())
+
+    # If the body needs a login, divert it here.
+    login_requirement = @model.requires_login[@model.current_screen]
+    if login_requirement != 'none' and login_requirement != @model.logged_in
+      # Pretend to use the title from whatever screen you don't have access to
+      @model.pretend_key = @model.current_screen
+      @model.texts['logged-out'] = @model.texts[@model.current_screen]
+      @model.current_screen = 'logged-out'
+      
     top_parts.push(@body_view.render())
 
     top_parts
@@ -139,12 +141,12 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
 
-    if @model.has_property('save') and @model.logged_in
+    if @model.has_property('save') and @model.logged_in != 'none'
       @$el.find('.header-actions .item#save').css('display', 'inline-block')
       gd = @model.get('guide_data')
       if typeof gd != 'undefined' and gd.is_saved == true
         @$el.find('#save use').addClass('saved')
-    if @model.has_property('add') and @model.logged_in
+    if @model.has_property('add') and @model.logged_in != 'none'
       @$el.find('.header-actions .item#add').css('display', 'inline-block')
     if @model.has_property('share')
       @$el.find('.header-actions .item#share').css('display', 'inline-block')

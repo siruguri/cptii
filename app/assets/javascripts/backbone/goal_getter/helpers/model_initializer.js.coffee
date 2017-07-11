@@ -99,25 +99,25 @@ GoalGetter.Helpers.ModelInitializer =
         properties: {}
 
     model_obj.requires_login =
-      '0': false
-      '1': false
-      '2': true
-      '3': true
-      '4': true
-      'jobboard': true
-      'milestones': true
-      'add-work-experience': true
-      'add-an-achievement' : true
-      'add-service': true
-      'chat': true
-      'search-results': false
-      'guide-single' : false
-      'logged-out': false
-      'overlay' : true
-      'portfolio-friends': true
-      'portfolio-likes': true
-      'guides-saved': true
-      'public-portfolio': false
+      '0': 'none'
+      '1': 'none'
+      '2': 'user'
+      '3': 'user'
+      '4': 'user'
+      'jobboard': 'none'
+      'milestones': 'admin'
+      'add-work-experience': 'user'
+      'add-an-achievement' : 'user'
+      'add-service': 'user'
+      'chat': 'user'
+      'search-results': 'none'
+      'guide-single' : 'none'
+      'logged-out': 'none'
+      'overlay' : 'user'
+      'portfolio-friends': 'user'
+      'portfolio-likes': 'user'
+      'guides-saved': 'user'
+      'public-portfolio': 'user'
       
     model_obj.screen_data_ready =
       '0': true

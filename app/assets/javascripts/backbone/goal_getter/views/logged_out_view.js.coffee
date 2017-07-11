@@ -17,11 +17,10 @@ GoalGetter.Views.LoggedOutView = GoalGetter.Views.ScreenBase.extend
       
     @$el.html t_func(obj)
 
-    signin_div = $('#logout_signin a')
+    signin_div = @$el.find('#logout_signin a')
     if @model.page_is_admin()
-      signin_div.attr 'href', '/admins/sign_in'
-    else
-      signin_div.attr 'href', '/users/sign_in'
+      a = signin_div.attr 'href'
+      signin_div.attr 'href', a + '?as_admin=true'
       
     @$el.css('background-color', @model.logged_out_texts[key].bkgrd_color)
     @$el.find('.logged-out-image img').attr('src', @model.logged_out_texts[key].img_url)

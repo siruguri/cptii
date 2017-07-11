@@ -1,6 +1,6 @@
 GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   initialize: ->
-    @logged_in = false
+    @logged_in = 'none'
     @is_category = true
     @current_screen = '0'
     @history = []
@@ -14,6 +14,10 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     _.bindAll @, 'header_title'
     null
 
+  data_needed_and_authorized: (key) ->
+    login_requirement = @requires_login[key]
+    !@screen_data_ready[key] and (login_requirement == 'none' or @logged_in == login_requirement)
+    
   page_is_admin: ->
     $('#page_data').data('screen-role') == 'admin'
     
@@ -23,7 +27,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       
   # entry point from views/control_view
   init_fetch: ->
-    @logged_in = ($('#login_token').data('value') == 42)
+    data_div = $('#page_data')
+    @logged_in = data_div.data('login-type')
     model_self = @
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->
@@ -73,9 +78,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     u
 
   get_screen_data: (curr_screen_ref) ->
-    return if curr_screen_ref == '0'
-    if (!@requires_login[curr_screen_ref] or @logged_in) and !@screen_data_ready[curr_screen_ref]
-      @fetch_screen curr_screen_ref
+    return if curr_screen_ref == '0' or !@data_needed_and_authorized(curr_screen_ref)
+    @fetch_screen curr_screen_ref
 
   # Shim to take any arbitrary form on the page and pass its data to the server
   # Returns a promise
@@ -101,7 +105,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('user_info', d.data.user_info)
         model_self.set('public_portfolio_name', d.data.user_info.user_name)
       else
-        model_self.set('user_info', d.data.user_info)
+        model_self.set d.data
+        model_self.set('user_info', d.data.user_info) if d.data.hasOwnProperty('user_info')
     )
 
   # /Sync
