@@ -49,6 +49,16 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     @garbage key, soft: true
     @model.get_screen_data(key)
     @screens[key].wait_and_render(key)
+
+  action_target: (action_name) ->
+    # Each body view has its own rules for what happens when buttons are clicked in the header
+    #
+    ret = false
+    if @screens[@model.current_screen] != 'undefined'
+      if typeof @screens[@model.current_screen].action_target == 'function'
+        ret = @screens[@model.current_screen].action_target action_name
+
+    ret
     
   render: ->
     view_self = @

@@ -18,8 +18,8 @@ class GoalGetter.Helpers.FormProcessor
     @promise = new Promise (done, fail) ->
       if all_filled.length == _.keys(data).length
         $.ajax
-          url: '/profile.json',
-          method: 'put',
+          url: '/ajax_requests.json',
+          method: 'post',
           data:
             payload:
               code: code

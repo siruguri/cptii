@@ -19,51 +19,61 @@ module ProfileUpdaters
       end
     end
 
-    Rails.logger.debug ">>> status: #{status}, is_friend: #{is_friend}"
     {status: success, is_friend: is_friend}
   end  
   
   def add_work(u, params)
-    if params.dig(:payload, :data).try(:keys).try(:size).try(:==, 2)
-      data = params[:payload][:data]
-      p = ProfileEntry.new profile: u.profile, entry_key: 'work',
-                           entry_details: {title: data[:title], workplace: data[:workplace]}
-      p.save
-      resp = {id: p.id}
-    else
-      resp = {}
-    end
-    resp
+    resp = 
+      if valid_data?(params, :title, :workplace)
+        data = params[:payload][:data]
+        p = ProfileEntry.new profile: u.profile, entry_key: 'work',
+                             entry_details: {title: data[:title], workplace: data[:workplace]}
+        p.save
+        {id: p.id}
+      else
+        {}
+      end
   end
 
   def add_achievement(u, params)
-    if params.dig(:payload, :data).try(:keys).try(:size).try(:==, 2)
-      data = params[:payload][:data]
-      p = ProfileEntry.new profile: u.profile, entry_key: 'achievement',
-                           entry_details: {type: data[:achievement_type], text: data[:text]}
-      p.save
-      resp = {id: p.id}
-    else
-      resp = {}
-    end
-    resp
+    resp =
+      if valid_data?(params, :achievement_type, :text)
+        data = params[:payload][:data]
+        p = ProfileEntry.new profile: u.profile, entry_key: 'achievement',
+                             entry_details: {type: data[:achievement_type], text: data[:text]}
+        p.save
+        {id: p.id}
+      else
+        {}
+      end
   end
 
   def add_service(u, params)
-    params.dig(:payload, :data).try(:keys)
-      try(:size).
-      try(:==, 0) ? { }
-    : (begin
-      data = params[:payload][:data]
-      resp = {}
-      if data[:title] && data[:location] && data[:description]
+    resp = 
+      if valid_data?(params, :title, :location, :description)
+        data = params[:payload][:data]
         s = Program.new title: data[:title], address: data[:location], description: data[:description],
                         is_official: false
         s.save
         ProgramSuggestion.create(user: u, program: s)
-        resp = {id: s.id}
+        {id: s.id}
+      else
+        {}
       end
-      resp
-      end)
+  end
+
+  def add_milestone(u, params)
+    resp = 
+      if valid_data?(params, :title, :description, :enddate)
+        MilestoneListing.create_from_api_call params[:payload][:data].permit(:title, :description, :enddate).to_h
+      else
+        {}
+      end
+  end
+
+  private
+  def valid_data?(params, *required_keys)
+    (d = params.dig(:payload, :data)) &&
+      (required_keys - d.keys.map {|k| k.to_sym}).length == 0
   end
 end

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :counselor_assignments, inverse_of: :counselor, foreign_key: :counselor_id
   has_many :chat_records, foreign_key: :sender_id
   has_many :entry_likes, inverse_of: :liked_by, foreign_key: :liked_by_id
+  has_many :created_milestones, inverse_of: :owner, class_name: 'MilestoneListing', foreign_key: :owner_id
   
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name

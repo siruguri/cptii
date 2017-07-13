@@ -1,0 +1,6 @@
+milestone_1:
+  title: 'milestone 1 for school 1'
+  description: ms 1 school 1 description
+  due_in: <%= DateTime.now + 2.days %>
+  owner: counselor_1
+  assigned_to_id: -1

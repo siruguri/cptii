@@ -13,6 +13,9 @@ def drop_chats!
 end
 
 def init_schools!
+  # school 1: student 1
+  # nocounselor_school: uncounseled_student
+  
   u = users :student_1
   p = u.profile
   p.contact_details['school_id'] = schools(:school_1).id
