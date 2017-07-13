@@ -42,6 +42,10 @@ Reports are sent to the email specified in the environment variable `ADMIN_EMAIL
 
 * Get the latest login time for all students: `rake users:report_logins`
 
+# General App Usage Manual
+
+* Bookmark a specific screen by adding `screen=<screen_name>` to the URL as a query parameters, for example, `https://www.goalgetterapp.org/?screen=add-service` The list of screen names will be provided at a later date.
+
 # Using as a Counselor
 
 If you want to view the app as an counselor, then go to `https://www.goalgetterapp.org/?role=admin`

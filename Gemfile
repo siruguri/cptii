@@ -35,6 +35,8 @@ gem 'jquery-ui-rails'
 gem 'materialize-sass'
 gem 'underscore-rails'
 
+# UX date picker element
+gem 'pikaday-gem'
 gem 'geocoder'
 
 gem 'devise'

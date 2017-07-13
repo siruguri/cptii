@@ -34,9 +34,24 @@ that it needs to render the `logged-out` screen.
 
 * Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also calls `change_screens` directly - the main reason is to supply special parameters, like `from` and `to` that help manage the custom history within the SPA.
 
+The following methods navigate to a new screen:
+
+1. Get the `HeaderView` to call `change_screens` with an object as the first argument, whose `to` property is set to the name of the destination screen.
+1. Call `pass_navigation()` on an `AppBodyView` instance, with an "options" object (description TBD)
+
 ## Styling
 
 The styles are largely dependent on the [Materialize framework](http://materializecss.com/). Make sure to read through `variables.scss` and `mixins.scss` to get a sense of the conventions used specific to the app.
+
+## Creating entry forms
+
+The *Add Service* and *Add Milestone* templates are good examples for the logic behind the structure of an input form. The action happens in `render_and_close()` in `AppBodyView`.
+
+Essentially, if there is a unique element with the class `.input-form`, then a server code is extracted from this element from its `data-server-code` attributes, all of its `input` tag elements are collected as an array, and these two are passed to `AppBodyModel.process_form_data()`.
+
+This runs an async process via `Helpers::FormProcessor.run()`, which returns a Promise. The above `run()` method uses the `name` attribute and `val()` value of each `input` node, and sends a JSON payload which contains the server code and the array of inputs to the end point, `/ajax_requests`.
+
+*Rendering Screen After Update*: After the form successfully submits, `AppBodyView::render_and_close()` is called. It determines if the parent screen needs to be refreshed and if so, calls `render()` on it. 
 
 # Backend
 

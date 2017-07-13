@@ -42,10 +42,9 @@ class ProfilesController < ApplicationController
     # This call has to be via XMLHTTPRequest.
     # The payload comes in as a specific ordering of data that is determined by the
     # [:payload][:code] parameter.
-    
-    u = current_user || (current_admin and User.find_by_id(params[:user]))
-    resp = {}
 
+    resp = {}
+    u = current_user || (current_admin and User.find_by_id(params[:user]))
     if u
       case params.dig(:payload, :code)
       when 'toggle-publish'
@@ -64,16 +63,12 @@ class ProfilesController < ApplicationController
       when /friend$/
       # add or remove friends
         resp = process_friendship u, params
-      when 'add-service'
-        add_service u, params
-      when 'add-work'
-        add_work u, params
-      when 'add-an-achievement'
-        add_achievement u, params
       end
+      status = 200
+    else
+      status = 422
     end
-    
-    render json: ({data: resp})
+    render json: ({data: resp}), status: status
   end
 
   def show

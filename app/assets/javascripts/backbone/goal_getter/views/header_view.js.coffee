@@ -37,10 +37,11 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       
     'click #add': ->
       @change_screens
-        to: 'add-service'
+        to: @body_view.action_target('add')
         
     'click #search': ->
       @trigger 'query', {to: 'search'}
+      
     'click #published': ->
       view_self = @
       $.ajax('/profile.json',

@@ -3,6 +3,12 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
   initialize: ->
     _.bindAll @, 'render'
 
+  action_target: (action) ->
+    if action == 'add'
+      'add-service'
+    else
+      false
+      
   events:
     'click .taxonomy-cell': (e) ->
       if !(q = $(e.target).data('name'))

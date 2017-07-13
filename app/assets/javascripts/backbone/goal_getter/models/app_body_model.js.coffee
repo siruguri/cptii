@@ -63,6 +63,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/programs?q=' + @get('search_query')
       else if ref == 'jobboard'
         '/job_listings'
+      else if ref == 'milestones'
+        '/milestones'
       else if ref == '1'
         '/guides/'
       else if ref == 'guide-single'
@@ -95,9 +97,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       if d.hasOwnProperty('data') and Object.keys(d.data).length > 0
         model_self.screen_data_ready[screen_number] = true
 
-      if screen_number == 'search-results' or screen_number == '1'
-        model_self.set d.data
-      else if screen_number == 'guide-single'
+      if screen_number == 'guide-single'
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
@@ -106,7 +106,6 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('public_portfolio_name', d.data.user_info.user_name)
       else
         model_self.set d.data
-        model_self.set('user_info', d.data.user_info) if d.data.hasOwnProperty('user_info')
     )
 
   # /Sync
