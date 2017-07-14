@@ -1,5 +1,19 @@
 .logged-out {
   height: 100%;
+  position: relative;
+  .logged-out-footer {
+    width: 100%;
+    min-height: 100px;
+    .message {
+      margin-top: 75px;
+      font-size: 0.8rem;
+      a {
+	color: white;
+	text-decoration: underline;
+      }
+    }
+  }
+  
   .logged-out-screen {
     color: white;
 
