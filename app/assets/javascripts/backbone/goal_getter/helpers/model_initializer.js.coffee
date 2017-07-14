@@ -13,21 +13,21 @@ GoalGetter.Helpers.ModelInitializer =
     
       'jobboard':
         title: 'See job listings posted by your counselors'
-        body: 'GoalGetter customizes job listings by your school\'s location and allows your counselors and teachers to feature listings they have found in the community'
+        body: 'GoalGetter customizes job listings by your school\'s location and allows your counselors and teachers to feature listings they have found in the community.'
         bkgrd_color: '#00b9e6'        
       '2':
         title: 'Get in touch with your school\'s counselor'
-        body: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+        body: 'Find out how many credits you need to graduate, what classes you need to sign up for - no need for an appointment!'
         img_url: '/images/logged_out_counselor.png'
         bkgrd_color: '#00b9e6'
       '3':
         title: 'Build your portfolio and share with potential employers'
-        body: 'Ultricies vehicula ut id elit, cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam id dolor id nibh .'
+        body: 'Use the guides to build your portfolio, and send your portfolio to employers as a resume.'
         img_url: '/images/logged_out_portfolio.png'
         bkgrd_color: '#00b9e6'
       '4':
         title: 'Add and store your professional contacts'
-        body: 'Dapibus ac facilisis in, cras justo odio, egestas eget quam. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+        body: 'Build a list of employer references and other community members in one place to stay organized when applying for housing or a new job.'
         img_url: '/images/logged_out_contacts.png'
         bkgrd_color: '#00b9e6'
         
