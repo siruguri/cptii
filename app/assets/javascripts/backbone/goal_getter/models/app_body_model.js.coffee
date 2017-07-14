@@ -39,7 +39,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     )
 
   # Directory navigation helpers
-  has_property: (key) ->
+  has_header_behavior: (key) ->
     @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].properties[key] == true
     
   up: ->

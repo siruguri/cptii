@@ -8,6 +8,8 @@ These are notes to help folks contribute to this code base.
 * In `models/app_body_model`, a variety of properties are initialized that essentially manage the SPA. This is delegated off to a Helper class in `goal_getter/helpers/model_initializer.js`, and contains among other things:
   * a navigation structure, that models a tree navigation format, via a `levels` hash and an `up_level` "pointer" hash,
   * a `texts` hash that shows each level's "title"
+  * a `header_config` hash that configures which icons show in the header:
+    * `done_refreshes`: if the Done action on a form screen would cause the parent screen to refresh 
   * `requires_login`: hash that controls whether the screen requires login
   * Hashes that remember state, like if a screen's data has been obtained,
   * `overlay_texts`: controls what is shown in a popup that the screen may have.

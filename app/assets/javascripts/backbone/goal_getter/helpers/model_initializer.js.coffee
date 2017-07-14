@@ -85,19 +85,19 @@ GoalGetter.Helpers.ModelInitializer =
       'add-service':
         properties:
           done: true
-          needs_refresh: false
+          done_refreshes: true
       'add-milestone':
         properties:
           done: true
-          needs_refresh: false
+          done_refreshes: true
       'add-work-experience' :
         properties:
           done: true
-          needs_refresh: true
+          done_refreshes: true
       'add-an-achievement' :
         properties:
           done: true
-          needs_refresh: true
+          done_refreshes: true
       'search-results':
         properties:
           search: true

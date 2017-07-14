@@ -142,19 +142,19 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
 
-    if @model.has_property('save') and @model.logged_in != 'none'
+    if @model.has_header_behavior('save') and @model.logged_in != 'none'
       @$el.find('.header-actions .item#save').css('display', 'inline-block')
       gd = @model.get('guide_data')
       if typeof gd != 'undefined' and gd.is_saved == true
         @$el.find('#save use').addClass('saved')
-    if @model.has_property('add') and @model.logged_in != 'none'
+    if @model.has_header_behavior('add') and @model.logged_in != 'none'
       @$el.find('.header-actions .item#add').css('display', 'inline-block')
-    if @model.has_property('share')
+    if @model.has_header_behavior('share')
       @$el.find('.header-actions .item#share').css('display', 'inline-block')
-    if @model.has_property('search')
+    if @model.has_header_behavior('search')
       @$el.find('.header-actions .item#search').css('display', 'inline-block')
       
-    if @model.has_property('done')
+    if @model.has_header_behavior('done')
       @$el.find('#submit-body-form').css('display', 'inline-block')
       
     @$el

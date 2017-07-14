@@ -23,7 +23,7 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
 
     # TODO There might be more complex logic for what needs to be refreshed; than simply what's the up level screen
     obj = {to: 'up'}
-    if @model.has_property('needs_refresh')
+    if @model.has_header_behavior('done_refreshes')
       obj.refresh_screen = [@model.up_level[@model.current_screen]]
     @pass_navigation obj
     
