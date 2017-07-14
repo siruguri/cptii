@@ -1,11 +1,12 @@
 class MilestoneListing < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', inverse_of: :created_milestones
   
-  def self.create_from_api_call(params)
+  def self.create_from_api_call(params, user: nil)
     m = MilestoneListing.new
     m.title = params['title']
     m.description = params['description']
     m.due_in = DateTime.strptime(params['enddate'], '%a %b %d %Y')
+    m.owner = user if user.present? 
 
     m.valid? ? (m.save; m.api_response()) : {}
   end
@@ -20,6 +21,6 @@ class MilestoneListing < ActiveRecord::Base
   end
 
   def api_response
-    self.slice('id', 'title', 'description').merge({due_at: due_in.strftime('%Y-%m-%d')})
+    self.slice('id', 'title', 'description').merge({due_at: due_in.strftime('%Y%m%d')})
   end
 end

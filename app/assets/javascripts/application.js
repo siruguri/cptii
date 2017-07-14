@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require pikaday
+//= require moment
 //= require underscore
 //= require jquery
 //= require jquery_ujs

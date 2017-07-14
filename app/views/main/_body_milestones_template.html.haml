@@ -17,9 +17,9 @@
 %script#body_milestones_template{type: 'text/template'}
   .milestone-list
     
-%script#milestone_listing_template{type: 'text/template'}
-  .milestone-listing
+%script#milestone_item_template{type: 'text/template'}
+  .milestone-listing.s12.col
     .title
       <%- title %>
     .due-in
-      <%- due_in %>
+      <%- due_at %>
