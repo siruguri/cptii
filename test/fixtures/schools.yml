@@ -8,4 +8,5 @@ nocounselor_school:
 uploaded_school:
   id: 4242
   name: upload 4242
-  
+school_no_students:
+  name: 'this school has no students'

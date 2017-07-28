@@ -5,9 +5,10 @@ module Users
     end
     
     def create
-      p = params[:user]
-      if !(p.select { |k, v| !v.nil? && v.strip != '' }.keys.sort == reqd_keys.sort &&
-           p[:password_confirmation] == p[:password])
+      p_u = params[:user]
+
+      if (reqd_keys - (p_u.select { |k, v| !v.nil? && v.strip != '' }).keys).length != 0 ||
+         p_u[:password_confirmation] != p_u[:password]
         flash[:error] = "Supply both email and password, and ensure passwords match."
         redirect_to new_user_registration_path
       else
@@ -15,6 +16,9 @@ module Users
         u.save
         p = u.build_profile
         p.contact_details = {first_name: params[:user][:first_name], last_name: params[:user][:last_name]}
+        if p_u[:profile_type]
+          p.profile_type = p_u[:profile_type]
+        end
         p.save
         
         sign_in_and_redirect u

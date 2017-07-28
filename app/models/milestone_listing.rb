@@ -8,6 +8,7 @@ class MilestoneListing < ActiveRecord::Base
     m.due_in = DateTime.strptime(params['enddate'], '%a %b %d %Y')
     m.owner = user if user.present? 
 
+    m.assigned_to_id = params['assign_to_all'].present? ? -1 : (params['student_id'] || -1)
     m.valid? ? (m.save; m.api_response()) : {}
   end
 
@@ -21,6 +22,6 @@ class MilestoneListing < ActiveRecord::Base
   end
 
   def api_response
-    self.slice('id', 'title', 'description').merge({due_at: due_in.strftime('%Y%m%d')})
+    self.slice('id', 'title', 'description', 'assigned_to_id').merge({due_at: due_in.strftime('%Y%m%d')})
   end
 end

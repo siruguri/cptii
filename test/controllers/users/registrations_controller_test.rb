@@ -5,7 +5,7 @@ module Users
       before do
         @request.env["devise.mapping"] = Devise.mappings[:user]
         @good_hash = {first_name: 'first', last_name: 'last', password_confirmation: 'sadfsadf1',
-                                       email: 'email@email.com', password: 'sadfsadf1'}
+                                       email: 'email@email.com', password: 'sadfsadf1', profile_type: 'student'}
       end
       
       it 'handles errors' do

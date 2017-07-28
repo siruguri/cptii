@@ -30,6 +30,10 @@ counselor_2:
 counselor_3:
   email: couns_3@valid.com
   <<: *DEFAULTS
+  
+counselor_empty_school:
+  email: counselor_with_no_students@valid.com
+  <<: *DEFAULTS
 
 student_private:
   email: student_private@private.com

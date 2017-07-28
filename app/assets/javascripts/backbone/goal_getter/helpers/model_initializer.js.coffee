@@ -105,26 +105,26 @@ GoalGetter.Helpers.ModelInitializer =
         properties: {}
 
     model_obj.requires_login =
-      '0': 'none'
-      '1': 'none'
-      '2': 'user'
-      '3': 'user'
-      '4': 'user'
-      'jobboard': 'none'
-      'milestones': 'admin'
-      'add-milestone': 'admin'
-      'add-work-experience': 'user'
-      'add-an-achievement' : 'user'
-      'add-service': 'user'
-      'chat': 'user'
-      'search-results': 'none'
-      'guide-single' : 'none'
-      'logged-out': 'none'
-      'overlay' : 'user'
-      'portfolio-friends': 'user'
-      'portfolio-likes': 'user'
-      'guides-saved': 'user'
-      'public-portfolio': 'user'
+      '0': ['none']
+      '1': ['none']
+      '2': ['user']
+      '3': ['user']
+      '4': ['user']
+      'jobboard': ['none']
+      'milestones': ['user', 'admin']
+      'add-milestone': ['admin']
+      'add-work-experience': ['user']
+      'add-an-achievement' : ['user']
+      'add-service': ['user']
+      'chat': ['user']
+      'search-results': ['none']
+      'guide-single' : ['none']
+      'logged-out': ['none']
+      'overlay' : ['user']
+      'portfolio-friends': ['user']
+      'portfolio-likes': ['user']
+      'guides-saved': ['user']
+      'public-portfolio': ['user']
       
     model_obj.screen_data_ready =
       '0': true

@@ -37,12 +37,15 @@
 
 %script#body_portfolio_template{type: 'text/template'}
   .switcher-tab.row
-    .col.s4#goto-public.goto.selected.pointer
+    .col.s3#goto-public.goto.selected.pointer
       public
-    .col.s4#goto-portfolio-friends.goto.pointer
+    .col.s3#goto-portfolio-friends.goto.pointer
       friends
-    .col.s4#goto-portfolio-likes.goto.pointer
+    .col.s3#goto-portfolio-likes.goto.pointer
       likes
+    .col.s3#goto-milestones.goto.pointer
+      milestones
+      
   .portfolio-sub-card#public.selected
     = render partial: 'main_portfolio_partial', locals: {img_dz_id: 'portfolio-img'}
     .portfolio-card.row#workex

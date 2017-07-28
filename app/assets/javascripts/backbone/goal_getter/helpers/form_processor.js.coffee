@@ -6,13 +6,18 @@ class GoalGetter.Helpers.FormProcessor
     # This part might have to be built out into subclasses for each form.
     data = _.reduce(
       @node_array, (memo, elt) ->
-        memo[$(elt).attr('name')] = $(elt).val()
+        $e = $(elt)
+        if typeof $e.data('val') != 'undefined'
+          v = $e.data 'val'
+        else
+          v = $e.val()
+        memo[$e.attr('name')] = v
         memo
       , {}
     )
 
     all_filled = _.filter(_.values(data), (item) ->
-      item.trim().length > 0
+      typeof item != 'undefined' and (typeof item != 'string' || item.trim().length > 0)
     )
     
     @promise = new Promise (done, fail) ->

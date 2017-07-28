@@ -6,6 +6,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       'public': {}
       'portfolio-friends': null
       'portfolio-likes': null
+      'milestones': null
         
     @shown_id = 'public'
 

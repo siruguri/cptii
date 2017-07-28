@@ -5,7 +5,7 @@ class MilestoneListingTest < ActiveSupport::TestCase
     assert_difference('MilestoneListing.count', 1) do
       m = MilestoneListing.create_from_api_call({'title' => 'title 1', 'description' => 'desc 2', 'enddate' => 'Thu Jul 13 2017'})
     end
-    assert_equal 4, m.keys.length
+    assert_equal 5, m.keys.length
   end
 
   test '##by_user_permission' do

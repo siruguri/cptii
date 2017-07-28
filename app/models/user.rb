@@ -40,6 +40,12 @@ class User < ActiveRecord::Base
     {new_alerts_count: ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count}
   end
   delegate :school, to: :profile
+
+  def students
+    self.counselor? ? User.joins(:profile).where('(profiles.contact_details->>\'school_id\')::int in (?) and profiles.profile_type = ?',
+                                                 self.counselor_assignments.pluck(:school_id), 'student')
+                      : User.none
+  end
   
   def counselors
     (self.student? && self.profile.school) ? self.profile.school.counselors : User.none

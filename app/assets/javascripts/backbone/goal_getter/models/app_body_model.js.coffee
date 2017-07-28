@@ -22,7 +22,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
   data_needed_and_authorized: (key) ->
     login_requirement = @requires_login[key]
-    !@screen_data_ready[key] and (login_requirement == 'none' or @logged_in == login_requirement)
+    !@screen_data_ready[key] and (_.contains(login_requirement, 'none') or _.contains(login_requirement, @logged_in))
     
   set_screen_by_role: ->
     data_div = $('#page_data')
@@ -47,7 +47,10 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
   # Directory navigation helpers
   has_header_behavior: (key) ->
     @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].properties[key] == true
-    
+
+  garbage_src_screen: ->
+    ['add-milestone', 'search-results', 'guide-single', 'chat', 'add-work-experience', 'add-an-achievement', 'portfolio-friends'].indexOf(@current_screen) > -1
+      
   up: ->
     # Move up from the current screen
     @up_level[@current_screen]

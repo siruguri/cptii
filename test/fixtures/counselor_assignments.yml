@@ -4,4 +4,6 @@ assgn_c1_s1:
 assgn_c2_s1:
   school_id: 2121
   counselor: counselor_2
-  
+assgn_cempty_no_student_school:
+  school: school_no_students
+  counselor: counselor_empty_school

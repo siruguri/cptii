@@ -7,7 +7,15 @@ class ApplicationController < ActionController::Base
     if resource.is_a? Admin
       '/admin_interface'
     else
-      session[:return_to] || root_path
+      if session[:return_to]
+        session[:return_to]
+      else
+        if resource.student?
+          root_path
+        else
+          root_path(role: :admin)
+        end
+      end
     end
   end
   
