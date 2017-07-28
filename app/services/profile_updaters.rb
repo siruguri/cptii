@@ -65,7 +65,7 @@ module ProfileUpdaters
   def add_milestone(u, params)
     resp = 
       if valid_data?(params, :title, :description, :enddate)
-        MilestoneListing.create_from_api_call params[:payload][:data].permit(:title, :description, :enddate).to_h, user: u
+        MilestoneListing.create_from_api_call params[:payload][:data].permit(:title, :description, :enddate, :student_id).to_h, user: u
       else
         {}
       end

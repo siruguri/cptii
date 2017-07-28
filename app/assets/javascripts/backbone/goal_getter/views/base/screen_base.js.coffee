@@ -9,6 +9,9 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
 
     if typeof context == 'undefined'
       first_time = true
+
+      # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
+      @model.get_screen_data screen_number if screen_number != '0'      
       context = @
     else
       first_time = false

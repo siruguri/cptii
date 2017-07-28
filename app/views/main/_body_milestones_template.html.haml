@@ -13,13 +13,20 @@
         %input#add-milestone-enddate{type: 'text', name: 'enddate'}
         %label{for: 'add-milestone-enddate'}
           End Date
+      .input-field#milestone-student-search
+        %label{for: 'add-student-name'}
+          Add Student Name
         
 %script#body_milestones_template{type: 'text/template'}
   .milestone-list
     
 %script#milestone_item_template{type: 'text/template'}
-  .milestone-listing.s12.col
-    .title
-      <%- title %>
-    .due-in
-      <%- due_at %>
+  .milestone-listing
+    .calbox.s1
+      .date
+      .month
+    .info.s11.col
+      .title
+        <%- title %>
+      .due-in
+        <%- due_at %>

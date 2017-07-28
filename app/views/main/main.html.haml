@@ -2,10 +2,13 @@
 = render "body_svgs"
 = render 'nav_svgs'
 #page_data{"data-screen-role" => @screen_role, 'data-login-type' => @login_type}
+%form#logout_form{method: :post}
+  %input{type: 'hidden', name: "_method", value: 'delete'}
 .main-app
 = render 'header_template'
 = render 'body_overlay'
 = render 'body_logged_out'
 = render 'body_template'
+= render 'selectable_search_template'
 = render 'footer_template'
 = render 'footer_admin_template'  

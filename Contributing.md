@@ -8,8 +8,9 @@ These are notes to help folks contribute to this code base.
 * In `models/app_body_model`, a variety of properties are initialized that essentially manage the SPA. This is delegated off to a Helper class in `goal_getter/helpers/model_initializer.js`, and contains among other things:
   * a navigation structure, that models a tree navigation format, via a `levels` hash and an `up_level` "pointer" hash,
   * a `texts` hash that shows each level's "title"
-  * a `header_config` hash that configures which icons show in the header:
-    * `done_refreshes`: if the Done action on a form screen would cause the parent screen to refresh 
+  * a `header_config` hash that configures many things:
+    * Which icons show in the header via the following keys:
+        * `done_refreshes`: if the Done action on a form screen would cause the parent screen to refresh 
   * `requires_login`: hash that controls whether the screen requires login
   * Hashes that remember state, like if a screen's data has been obtained,
   * `overlay_texts`: controls what is shown in a popup that the screen may have.
@@ -34,12 +35,15 @@ that it needs to render the `logged-out` screen.
 
 ## Navigation
 
-* Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also calls `change_screens` directly - the main reason is to supply special parameters, like `from` and `to` that help manage the custom history within the SPA.
+* Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls
+  `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also
+  calls `change_screens` directly - the main reason is to supply special parameters, like `from` and `to` that help
+  manage the custom history within the SPA.
 
 The following methods navigate to a new screen:
 
 1. Get the `HeaderView` to call `change_screens` with an object as the first argument, whose `to` property is set to the name of the destination screen.
-1. Call `pass_navigation()` on an `AppBodyView` instance, with an "options" object (description TBD)
+1. Call `pass_navigation()` on an `AppBodyView` instance, with an "options" object (description TBD - it takes the following keys among other details: `to`: the key of the screen to switch to)
 
 ## Styling
 
@@ -51,7 +55,13 @@ The *Add Service* and *Add Milestone* templates are good examples for the logic 
 
 Essentially, if there is a unique element with the class `.input-form`, then a server code is extracted from this element from its `data-server-code` attributes, all of its `input` tag elements are collected as an array, and these two are passed to `AppBodyModel.process_form_data()`.
 
-This runs an async process via `Helpers::FormProcessor.run()`, which returns a Promise. The above `run()` method uses the `name` attribute and `val()` value of each `input` node, and sends a JSON payload which contains the server code and the array of inputs to the end point, `/ajax_requests`.
+This runs an async process via `Helpers::FormProcessor.run()`, which returns a Promise. The above `run()` method uses
+the `name` attribute and `val()` value of each `input` node. The `val()` value is overridden by a `data-val` attribute
+if it exists - this allows the value that's shown to the user to be different than the one sent to the server. The
+method then sends a JSON payload which contains the server code and the array of inputs to the end point,
+`/ajax_requests`.
+
+**Currently, the form processor above enforces that all fields are always required.**
 
 *Rendering Screen After Update*: After the form successfully submits, `AppBodyView::render_and_close()` is called. It determines if the parent screen needs to be refreshed and if so, calls `render()` on it. 
 

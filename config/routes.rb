@@ -4,7 +4,8 @@ GoalGetter::Application.routes.draw do
   devise_for :admins
 
   post '/ajax_requests' => 'ajax_requests#handle_payload'
-
+  get '/search' => 'search_results#search'
+  
   resources :job_listings, only: [:index]
   resources :milestones, only: [:index]
   resources :profile_entries, only: [:update]
