@@ -22,10 +22,12 @@
     
 %script#milestone_item_template{type: 'text/template'}
   .milestone-listing
-    .calbox.s1
+    .calbox.s1.col
       .date
+        <%- date %>
       .month
-    .info.s11.col
+        <%- month %>
+    .info.s10.col
       .title
         <%- title %>
       .due-in
