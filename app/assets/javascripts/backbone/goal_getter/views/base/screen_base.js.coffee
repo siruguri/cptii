@@ -1,4 +1,13 @@
 GoalGetter.Views.ScreenBase = Backbone.View.extend
+  construct_screen: (ref, insert_into) ->
+    klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name ref
+    insert_into[ref] = {}
+    insert_into[ref].view_obj = new GoalGetter.Views[klass]
+      model: @model
+    e = @$el.append insert_into[ref].view_obj.wait_and_render(ref)
+    e.show()
+    e
+    
   refresh_data: ->
     # Default is to do nothing
     # Views might override this.

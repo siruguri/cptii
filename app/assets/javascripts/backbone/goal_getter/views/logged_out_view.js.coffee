@@ -11,9 +11,18 @@ GoalGetter.Views.LoggedOutView = GoalGetter.Views.ScreenBase.extend
   render: ->
     t_func = _.template($('#loggedout_template').html())
     key = @model.pretend_key
+    if typeof @model.logged_out_texts[key] == 'undefined'
+      @model.logged_out_texts[key] = {}
+      @model.logged_out_texts[key].bkgrd_color = '#444'
+      @model.logged_out_texts[key].img_url = ''
+      t = 'Sign In Required'
+      b = 'Please login to to see this screen.'
+    else
+      t = @model.logged_out_texts[key].title
+      b = @model.logged_out_texts[key].body
     obj =
-      message_title: @model.logged_out_texts[key].title
-      message_body: @model.logged_out_texts[key].body
+      message_title: t
+      message_body: b
       
     @$el.html t_func(obj)
 

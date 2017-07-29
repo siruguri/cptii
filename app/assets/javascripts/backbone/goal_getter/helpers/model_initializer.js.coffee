@@ -164,7 +164,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guides-saved': 'Guides'
       'portfolio-friends': 'Portfolio'
       'portfolio-likes': 'Portfolio'
-      'logged-out': ''
+      'logged-out': 'Sign In'
       'public-portfolio': '$public_portfolio_name'
 
   resolve_to_class_name: (index) ->
