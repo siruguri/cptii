@@ -1,4 +1,4 @@
-GoalGetter.Views.AppBodyView = Backbone.View.extend
+GoalGetter.Views.AppBodyView = GoalGetter.Views.ScreenBase.extend
   className: 'app-body'
   initialize: ->
     _.bindAll @, 'render'
@@ -10,25 +10,23 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     @listenTo @, 'switch_screen', @switch_screen
     @listenTo @, 'header:submit-body-form', @render_and_close
 
+  construct_and_trigger: (ref) ->
+    if typeof @screens[ref] == 'undefined'
+      @construct_screen ref, @screens
+      @listenTo @screens[ref].view_obj, 'navigation:change', @pass_navigation
+      @listenTo @screens[ref].view_obj, 'body:render', @pass_body_render
+    @screens[ref].view_obj.$el.show()
+    
   garbage: (ref) ->
     @model.screen_data_ready[ref] = false
-    @screens[ref].$el.empty()
-    if @screens[ref].hasOwnProperty('fetcher') # stop fetching
-      @screens[ref].fetcher.stop()
+    @screens[ref].view_obj.$el.empty()
+    if @screens[ref].view_obj.hasOwnProperty('fetcher') # stop fetching
+      @screens[ref].view_obj.fetcher.stop()
     delete @screens[ref]
 
-  construct_screen: (ref) ->
-    klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name ref
-    @screens[ref] = new GoalGetter.Views[klass]
-      model: @model
-    @listenTo @screens[ref], 'navigation:change', @pass_navigation
-    @listenTo @screens[ref], 'body:render', @pass_body_render
-      
-    @$el.append @screens[ref].wait_and_render(ref)
-    
   refresh: (ref) ->
     @garbage ref
-    @construct_screen ref
+    @construct_and_trigger ref
     
   close_and_up: (data) ->
     # data will be an empty array if the form wasn't filled in: see models/base/form_processor
@@ -59,19 +57,16 @@ GoalGetter.Views.AppBodyView = Backbone.View.extend
     
   action_target: (action_name) ->
     # Each body view has its own rules for what happens when buttons are clicked in the header
-    #
     ret = false
     if @screens[@model.current_screen] != 'undefined'
-      if typeof @screens[@model.current_screen].action_target == 'function'
-        ret = @screens[@model.current_screen].action_target action_name
+      if typeof @screens[@model.current_screen].view_obj.action_target == 'function'
+        ret = @screens[@model.current_screen].view_obj.action_target action_name
 
     ret
     
   render: ->
     view_self = @
     curr_screen_ref = @model.current_screen
-    if typeof @screens[curr_screen_ref] == 'undefined'
-      @construct_screen curr_screen_ref
-
-    @screens[curr_screen_ref].$el.show()
+    @construct_and_trigger curr_screen_ref
+  
     @$el

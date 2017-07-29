@@ -30,15 +30,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   
   delayed_render: (key) ->
     if key != 'public' and @tab_views[key] == null
-      klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name key
-      @tab_views[key] = {}
-      @tab_views[key].view_obj = new GoalGetter.Views[klass]
-        model: @model
-
-      el = @tab_views[key].view_obj.wait_and_render(key)
+      el = @construct_screen key, @tab_views
       @tab_views[key].root_el = el
-      el.show()
-      @$el.append el
     else
       if @tab_views[key].hasOwnProperty('view_obj') and @tab_views[key].view_obj.hasOwnProperty('fetcher')
         @tab_views[key].view_obj.fetcher.resume()

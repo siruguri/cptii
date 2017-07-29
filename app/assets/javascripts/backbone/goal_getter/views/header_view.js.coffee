@@ -78,7 +78,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       return null
 
     view_self = @
-    @body_view.screens[@model.current_screen].$el.hide()
+    @body_view.screens[@model.current_screen].view_obj.$el.hide()
     
     if @model.garbage_src_screen()
       @body_view.garbage @model.current_screen
@@ -108,18 +108,15 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     # the SPA page is rendered.
     
     top_parts = []
-    top_parts.push(@render())
-
     # If the body needs a login, divert it here.
     login_requirement = @model.requires_login[@model.current_screen]
     if !(_.contains(login_requirement, 'none') or _.contains(login_requirement, @model.logged_in))
       # Pretend to use the title from whatever screen you don't have access to
       @model.pretend_key = @model.current_screen
-      @model.texts['logged-out'] = @model.texts[@model.current_screen]
       @model.current_screen = 'logged-out'
-      
-    top_parts.push(@body_view.render())
 
+    top_parts.push(@render())
+    top_parts.push(@body_view.render())
     top_parts
 
   set_publish_status: ->
