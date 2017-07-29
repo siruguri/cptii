@@ -1,3 +1,22 @@
 #milestone-student-search {
   padding-top: 0.8rem;
 }
+.milestone-listing {
+  margin-top: 37px;
+  
+  color: $basic-gray;
+
+  .calbox {
+    text-align: center;
+    padding-top: 5px;
+  }
+  .info {
+    .title {
+      font-size: $portfolio-name-text;
+      font-weight: bold;
+      margin-bottom: 5px;      
+    }
+    padding: 5px;
+    background-color: white;
+  }
+}
