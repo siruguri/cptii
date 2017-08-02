@@ -4,10 +4,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @is_category = true
     @current_screen = '0'
     @history = []
+    @set 'inbox', []
     
-    @set('user_info',
-      counselor_name: null
-    )
     GoalGetter.Helpers.ModelInitializer.initialize_model @
 
     # (Complex) getters need to be bound to this object
@@ -104,13 +102,10 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
-      else if screen_number == 'public-portfolio'
-        model_self.set('user_info', d.data.user_info)
-        model_self.set('public_portfolio_name', d.data.user_info.user_name)
       else
         model_self.set d.data
     )
-
+    
   # /Sync
   
   # Getters
@@ -129,9 +124,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
   # Setters
   destroy_user_data: ->
-    @set('user_info',
-      counselor_name: null
-    )
+    @set 'counselor_name', null
     @trigger 'model:updated'
 
   set_current_screen: (target) ->

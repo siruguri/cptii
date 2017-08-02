@@ -8,9 +8,11 @@ class TaxonomyController < ApplicationController
     user_info = {}
     if current_user
       # global data for logged-in case: broadcast alerts
-      user_info = current_user.new_alerts_count
+      user_inbox = current_user.inbox(unread: true)[:unread_inbox].group_by do |hash|
+        hash[:alert_type]
+      end
     end
     
-    render json: ({data: ({taxonomy_list: d1, portfolio_categories: d2, user_info: user_info})})
+    render json: ({data: {taxonomy_list: d1, portfolio_categories: d2, inbox: user_inbox}})
   end
 end

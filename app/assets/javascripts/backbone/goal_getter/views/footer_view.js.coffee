@@ -31,8 +31,7 @@ GoalGetter.Views.FooterView = Backbone.View.extend
       @trigger 'footer:change_nav', trigger_target
 
   show_guides_bubble: ->
-    ct = parseInt(@model.get('user_info')['new_alerts_count'])
-    unless isNaN(ct) or ct == 0
+    if @model.get('inbox') != null and (ct = _.keys(@model.get('inbox')).length) > 0
       @$('.bubble').text(ct).show()
       
   select_tab: ->

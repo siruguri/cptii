@@ -31,13 +31,14 @@ module DataFetchers
                            }
       }
       
-      ({user_info: {profile_pic_url: p.profile_pic&.url,
-                    work_experience: work_ex_list,
-                    achievements: achievements,
-                    id: u.id, user_name: u.profile.full_name,
-                    published: p.published?,
-                    is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
-                   }})
+      ({profile_pic_url: p.profile_pic&.url,
+        work_experience: work_ex_list,
+        achievements: achievements,
+        id: u.id, public_portfolio_name: u.profile.full_name,
+        profile_published: p.published?,
+        is_friend: (opts[:is_friend].nil? ? 'self' : (opts[:is_friend] ? 'friend' : 'not-friend'))
+       })
+      
     when 'friends'
       ret1 = u.friend_entries(of_type: ['work', 'achievement']).
              order(created_at: :desc).to_a.map do |p_e|
