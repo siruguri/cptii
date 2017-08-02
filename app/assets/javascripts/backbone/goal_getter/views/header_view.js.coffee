@@ -11,7 +11,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
   render_and_pass: ->
     # Let control know there's a data change, for the footer's sake. Right now, this trigger is
-    # entirely ignored.
+    # entirely ignored by control.
 
     @trigger 'body:render'
     @render()
@@ -57,7 +57,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
           payload:
             code: 'toggle-publish'
         success: (d, s, x) ->
-          view_self.model.get('user_info').published = d.data.published
+          view_self.model.set 'profile_published', d.data.profile_published
           view_self.render()
       )
           
@@ -120,7 +120,8 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     top_parts
 
   set_publish_status: ->
-    if @model.get('user_info').published == true
+    # we will get the publish status only after the body has rendered.
+    if @model.get('profile_published') == true
       @$el.find('#published .button-rectangular').removeClass('private').addClass('public').text('unpublish')
     else
       @$el.find('#published .button-rectangular').removeClass('public').addClass('private').text('publish')

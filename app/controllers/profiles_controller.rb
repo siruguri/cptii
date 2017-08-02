@@ -51,7 +51,7 @@ class ProfilesController < ApplicationController
         p = u.profile
         p.published = !(p.published)
         p.save
-        resp = {published: p.published}
+        resp = {profile_published: p.published}
       when 'update-alerts-lrt'
         if params.dig(:payload, :data).is_a? String # Expect this in epoch milliseconds
           p = ProfileEntry.find_or_initialize_by(profile_id: u.profile.id, entry_key: 'alerts-lrt')
@@ -111,9 +111,10 @@ class ProfilesController < ApplicationController
         end
       )
     
-      # global data for logged-in case: broadcast alerts
-      d[:data][:user_info] ||= {}
-      d[:data][:user_info].merge!(u.new_alerts_count)
+      # global data for logged-in case: inbox
+      d[:data][:inbox] = u.inbox(unread: true)[:unread_inbox].group_by do |hash|
+        hash[:alert_type]
+      end
     end
     
     render json: d

@@ -1,5 +1,7 @@
 class ContentResource < ActiveRecord::Base
   attr_accessor :should_broadcast
+
+  has_many :account_inbox_messages, inverse_of: :message_attachment, foreign_key: :message_attachment_id
   has_many :resource_bookmarks, inverse_of: :resource, foreign_key: :resource_id
   belongs_to :school
   
@@ -15,7 +17,8 @@ class ContentResource < ActiveRecord::Base
   
   def make_alert
     if should_broadcast == '1' # checked checkbox in Rails_admin => 1:String
-      ResourceAlert.create content_resource_id: self.id
+      a = self.account_inbox_messages.build
+      a.save
     end
   end
 end

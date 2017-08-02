@@ -1,6 +1,8 @@
 class MilestoneListing < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', inverse_of: :created_milestones
   belongs_to :assigned_to, class_name: 'User', inverse_of: :personal_milestones
+
+  after_save :set_alert
   
   def self.create_from_api_call(params, user: nil)
     m = MilestoneListing.new
@@ -26,5 +28,13 @@ class MilestoneListing < ActiveRecord::Base
     self.slice('id', 'title', 'description', 'assigned_to_id').merge(
       {due_at: due_in.strftime('%Y%m%d'), date: due_in.strftime('%b'), month: due_in.strftime('%d')}
     )
+  end
+
+  private
+  def set_alert
+    # If the milestone is for a student, rather than a school, alert the student.
+    if self.assigned_to_id != -1
+      CreateAlertJob.perform_later self, self.assigned_to
+    end
   end
 end

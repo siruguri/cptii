@@ -10,8 +10,16 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         
     @shown_id = 'public'
 
+  manage_bubbles: () ->
+    # there will be lots of bubbles here, I think.
+
+    if @model.get('inbox').hasOwnProperty('MilestoneListing') and (ml = @model.get('inbox')['MilestoneListing']).length > 0
+      b = $('#goto-milestones .bubble')
+      b.text ml.length
+      b.show()
+      
   set_friend_action: () ->
-    status = @model.get('user_info')['is_friend']
+    status = @model.get('is_friend')
     return if status == 'self'
     
     button_text = switch status
@@ -73,11 +81,12 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       )
 
     'click #change-friend-status': (e) ->
+      # is this orphaned code?
       f = $('form#make-friend-form')
       data =
         payload:
           code: $('#change-friend-status').data('action')
-        friend_id: @model.get('user_info')['id']
+        friend_id: @model.get('friend_id')
       view_self = @
       
       $.ajax(
@@ -86,7 +95,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
         data: data
         success: (d, s, x) ->
           if d.data.status
-            view_self.model.get('user_info')['is_friend'] = d.data.is_friend
+            view_self.model.set 'is_friend', d.data.is_friend
             view_self.set_friend_action()
       )
             
@@ -104,11 +113,12 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   render: ->
     t_func = _.template $('#body_portfolio_template').html()
 
-    @$el.html t_func({username: @model.get('user_info')['user_name']})
+    @$el.html t_func({username: @model.get('user_name')})
     @set_friend_action()
+    @manage_bubbles()
     
     @previous_tab = @$el.find('.goto.selected')
-    @$el.find('#portfolio-img').attr('src', @model.get('user_info')['profile_pic_url'])
+    @$el.find('#portfolio-img').attr 'src', @model.get('profile_pic_url')
     view_self = @
 
     # Create drop zone
@@ -143,7 +153,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     # Add work experience
     wex_card = @$el.find('.portfolio-card#workex')
     
-    @model.get('user_info')['work_experience'].forEach (item) ->
+    @model.get('work_experience').forEach (item) ->
       t_func = _.template $('#body_portfolio_work_experience').html()
       wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))
 
@@ -155,7 +165,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       ach_list = view_self.$el.find('.portfolio-card.row').last()
       t_func_1 = _.template $('#body_portfolio_achievement').html()
       
-      avlbl_ach = view_self.model.get('user_info')['achievements'].filter( (e) ->
+      avlbl_ach = view_self.model.get('achievements').filter( (e) ->
         e.type == cat_name
       )
       if avlbl_ach.length > 0

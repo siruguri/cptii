@@ -42,11 +42,11 @@ class ProfilesControllerTest < ActionController::TestCase
       b = JSON.parse response.body
       
       # see fixtures for this data (added WE 4200 on May 20)
-      assert_equal 2, b['data']['user_info']['work_experience'].size
-      assert_equal 2, b['data']['user_info']['work_experience'][0].keys.size
-      assert_equal 2, b['data']['user_info']['achievements'].size
+      assert_equal 2, b['data']['work_experience'].size
+      assert_equal 2, b['data']['work_experience'][0].keys.size
+      assert_equal 2, b['data']['achievements'].size
 
-      assert b['data']['user_info']['published']
+      assert b['data']['published']
     end
 
     it 'works for chat screen with couns 1' do
@@ -62,8 +62,8 @@ class ProfilesControllerTest < ActionController::TestCase
     end
 
     it 'shows alerts if there are some' do
-      ResourceAlert.create content_resource: content_resources(:cr_1)
-      r_older = ResourceAlert.create content_resource: content_resources(:cr_2)
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1)
+      r_older = AccountInboxMessage.create message_attachment: content_resources(:cr_2)
       r_older.created_at = Time.now - 20.hours
       r_older.save
       
@@ -74,14 +74,13 @@ class ProfilesControllerTest < ActionController::TestCase
       # new alerts show up for screen keys that don't exist
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
       # r_older won't be shown
-      assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
+      assert_equal 1, JSON.parse(response.body)['data']['inbox'].keys.size
     end
     
     it 'shows alerts with dawn of time logic' do
-      ResourceAlert.create content_resource: content_resources(:cr_1)
-
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1)
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
+      assert_equal 1, JSON.parse(response.body)['data']['inbox'].keys.size
     end
   end
 

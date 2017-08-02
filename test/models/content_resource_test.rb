@@ -5,7 +5,7 @@ class ContentResourceTest < ActiveSupport::TestCase
     r = ContentResource.new title: 'title', description: 'desc', resource_type: 'guides'
     r.should_broadcast = '1'
 
-    assert_difference('ResourceAlert.count', 1) do
+    assert_difference('AccountInboxMessage.count', 1) do
       r.save
     end
   end
