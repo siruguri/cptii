@@ -11,7 +11,7 @@ milestone_s1_old:
   owner: counselor_1
   assigned_to: student_1
 milestone_s1_new:
-  title: 'milestone 1 for student 1, school 1'
+  title: 'new milestone 1 for student 1, school 1'
   description: ms 1 student_1 description
   due_in: <%= DateTime.now + 2.days %>
   owner: counselor_1

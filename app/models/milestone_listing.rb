@@ -14,7 +14,15 @@ class MilestoneListing < ActiveRecord::Base
     m.owner = user if user.present? 
 
     m.assigned_to_id = params['assign_to_all'].present? ? -1 : (params['student_id'] || -1)
-    m.valid? ? (m.save; m.api_response()) : {}
+    if m.valid?
+      m.save
+      if m.assigned_to_id != -1
+        ReminderEmails.milestone_reminder(m).deliver_later(wait_until: m.due_in - 1.day)
+      end
+      m.api_response()
+    else
+      {}
+    end
   end
 
   def self.by_user_permission(u)
