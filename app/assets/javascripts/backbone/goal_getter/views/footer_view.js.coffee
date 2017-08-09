@@ -1,38 +1,28 @@
-GoalGetter.Views.FooterView = Backbone.View.extend
+GoalGetter.Views.FooterView = GoalGetter.Views.ScreenBase.extend
   className: 'footer row'
   initialize: ->
     _.bindAll(@, 'render')
-
-  update_alert: ->
-    d =
-      payload:
-        code: 'update-alerts-lrt'
-        data: Date.now()
-    view_self = @
-    $.ajax('/profile.json',
-      data: d
-      method: 'put'
-      success: (d, s, x) ->
-        view_self.$('.bubble').hide()
-    )
-    null
       
   events:
     'click .nav-change': (evt) ->
-      # I want to use the string value, even though the footer tabs are referenced as numerals.
-      trigger_target = $(evt.target).closest('.nav-change').attr 'data-target'
       @$el.find('.nav-change').removeClass 'selected'
-      $(evt.target).closest('.nav-change').addClass 'selected'
+      clicked_tab = $(evt.target).closest('.nav-change')
+      clicked_tab.addClass 'selected'
 
-      if trigger_target == '1'
-        @update_alert()
-      
+      # I want to use the string value, even though the footer tabs are referenced as numerals.
+      bubble_type = clicked_tab.data 'bubble-type'
+      if typeof bubble_type != 'undefined'
+        @update_alert bubble_type
+        clicked_tab.find('.bubble').hide()
+        
       # Let the rest of the app know the nav tab changed.
-      @trigger 'footer:change_nav', trigger_target
+      @trigger 'footer:change_nav', clicked_tab.attr('data-target')
 
   show_guides_bubble: ->
-    if @model.get('inbox') != null and (ct = _.keys(@model.get('inbox')).length) > 0
-      @$('.bubble').text(ct).show()
+    if @model.get('inbox') != null
+      folder = @model.get('inbox')['ContentResource']
+      if Array.isArray(folder) and (ct = folder.length) > 0
+        @$('.bubble').text(ct).show()
       
   select_tab: ->
     view_self = @
@@ -46,7 +36,7 @@ GoalGetter.Views.FooterView = Backbone.View.extend
     screen_role = $('#page_data').data('screen-role')
     if screen_role == 'admin'
       @$el.html(_.template($('#footer_admin_template').html())({}))
-    else      
+    else
       @$el.html(_.template($('#footer_template').html())({}))
 
     @select_tab()

@@ -1,7 +1,9 @@
 GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
   initialize: ->
     # all initializations should take place in the inheritor class
-
+    @interval = ''
+    _.bindAll @, 'run'
+    
   stop: ->
     @pause()
     clearInterval @interval
@@ -28,16 +30,9 @@ GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
         success: @modify_data
       )
     
-    obj_self = @
     if @interval == ''
       @interval = setInterval(
-        ->
-          unless obj_self.stop_interval
-            obj_self.fetch(
-              data: $.param(obj_self.lrt_data())
-              success: obj_self.modify_data
-            )
-          
+        @run.bind(@),
         4000
       )
   

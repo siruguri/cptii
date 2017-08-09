@@ -37,12 +37,7 @@ class User < ActiveRecord::Base
     
   def inbox(unread: true)
     # Implement READ filter later TODO
-    alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').
-                order(created_at: :desc).
-                first&.entry_details&.send(:[], 'lrt')
-    # if you haven't requested previously, you have requested at the dawn of time
-    alert_lrt ||= 0
-    {unread_inbox: AccountInboxMessage.where('extract(epoch from created_at) > ?', alert_lrt).all.map(&:alerts_data)}
+    {unread_inbox: AccountInboxMessage.where(is_read: false).all.map(&:alerts_data)}
   end
   delegate :school, to: :profile
 

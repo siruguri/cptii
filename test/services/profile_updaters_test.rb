@@ -18,4 +18,16 @@ class ProfileUpdatersTest < ActiveSupport::TestCase
     r = @p.add_milestone(users(:student_1), {payload: {data: {title: 'work 1'}}})
     assert_equal ({}), r
   end
+
+  test 'validity' do
+    params = ActionController::Parameters.new({payload:
+                                                 {data:
+                                                    {title: 'work 1',
+                                                     workplace: 'workplace',
+                                                     startdate: 'Sat Aug 12 2017',
+                                                     enddate: 'Sun Aug 13 2017'
+                                                    }}})
+    r = @p.add_work(users(:student_1), params)
+    assert_equal [:id], r.keys
+  end
 end

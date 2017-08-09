@@ -25,8 +25,7 @@ GoalGetter.Views.PortfolioTabLikesView = GoalGetter.Views.ScreenBase.extend
     view_self = @
     # this is not set the first time when the tab is initially loaded
     if @entry_refresher.models.length == 0
-      @entry_refresher.set @model.get('user_info')['likes']
-    return if @entry_refresher.models.length == 0
+      return
 
     @entry_refresher.each (m, i) ->
       str = m.get('user_name') + " liked your entry " + m.get('profile_entry_text')

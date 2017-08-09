@@ -7,7 +7,19 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
     e = @$el.append insert_into[ref].view_obj.wait_and_render(ref)
     e.show()
     e
-    
+
+  update_alert: (type) ->
+    d =
+      payload:
+        code: 'set-to-read'
+        data: {type: type}
+    view_self = @
+    $.ajax('/profile.json',
+      data: d
+      method: 'put'
+    )
+    null
+        
   refresh_data: ->
     # Default is to do nothing
     # Views might override this.

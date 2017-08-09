@@ -12,8 +12,15 @@ class AjaxRequestsControllerTest < ActionController::TestCase
   describe 'profile update requests' do
     it 'adds work' do
       assert_difference('ProfileEntry.count') do
-        put :handle_payload, xhr: true, params: {format: 'json',
-                                         payload: {code: 'add-work', data: {title: 'title', workplace: 'workplace'}}}
+        put :handle_payload, xhr: true, params:(
+              {format: 'json',
+               payload:
+                 {code: 'add-work',
+                  data:
+                    {title: 'title', workplace: 'workplace',
+                     startdate: 'Sat Aug 12 2017',
+                     enddate: 'Sun Aug 13 2017'
+                    }}})
       end
 
       assert_difference('ProgramSuggestion.count') do

@@ -43,10 +43,10 @@ class ProfilesControllerTest < ActionController::TestCase
       
       # see fixtures for this data (added WE 4200 on May 20)
       assert_equal 2, b['data']['work_experience'].size
-      assert_equal 2, b['data']['work_experience'][0].keys.size
+      assert_equal 4, b['data']['work_experience'][0].keys.size
       assert_equal 2, b['data']['achievements'].size
 
-      assert b['data']['published']
+      assert b['data']['profile_published']
     end
 
     it 'works for chat screen with couns 1' do
@@ -63,18 +63,12 @@ class ProfilesControllerTest < ActionController::TestCase
 
     it 'shows alerts if there are some' do
       AccountInboxMessage.create message_attachment: content_resources(:cr_1)
-      r_older = AccountInboxMessage.create message_attachment: content_resources(:cr_2)
-      r_older.created_at = Time.now - 20.hours
-      r_older.save
+      r_read = AccountInboxMessage.create message_attachment: content_resources(:cr_2), is_read: true
       
-      p = ProfileEntry.create entry_key: 'alerts-lrt', profile: users(:student_1).profile
-      p.entry_details['lrt'] = (Time.now - 2.hours).to_i
-      p.save
-
       # new alerts show up for screen keys that don't exist
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      # r_older won't be shown
-      assert_equal 1, JSON.parse(response.body)['data']['inbox'].keys.size
+      # r_read won't be shown
+      assert_equal 1, JSON.parse(response.body)['data']['inbox']['ContentResource'].size
     end
     
     it 'shows alerts with dawn of time logic' do
@@ -107,9 +101,10 @@ class ProfilesControllerTest < ActionController::TestCase
     end
     
     it 'adds entries for some but only permitted codes' do
-      assert_difference('ProfileEntry.count') do
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1), is_read: false, user: users(:student_1)
+      assert_difference('AccountInboxMessage.where(is_read: false).count', -1) do
         put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'update-alerts-lrt', data: '1486084669000'}}
+                                         payload: {code: 'set-to-read', data: {type: 'ContentResource'}}}
       end
     end
   end

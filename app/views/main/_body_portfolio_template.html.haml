@@ -11,6 +11,14 @@
         %input#add-work-workplace{type: 'text', name: 'workplace'}
         %label{for: 'add-work-workplace'}
           Workplace
+      .input-field      
+        %input#add-work-startdate{type: 'text', name: 'startdate'}
+        %label{for: 'add-work-startdate'}
+          Start Date
+      .input-field      
+        %input#add-work-enddate{type: 'text', name: 'enddate'}
+        %label{for: 'add-work-enddate'}
+          End Date
 
 %script#body_add-achievement_template{type: 'text/template'}
   .portfolio-card.row.input-form{"data-server-code" => 'add-an-achievement'}
@@ -28,7 +36,7 @@
     .work-workplace
       <%- workplace %>
     .work-worktime
-      11/01/16 - 12/30/16
+      <%- startdate %> - <%- enddate %>
         
 %script#body_portfolio_achievement{type: 'text/template'}
   .card-entry.col.s-ninety.pointer

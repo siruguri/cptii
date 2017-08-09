@@ -50,8 +50,10 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @previous_tab.removeClass('selected')
       @previous_tab = $(e.target)
       @previous_tab.addClass('selected')
-      if @shown_id == 'portfolio-friends' #stop fetching
-        @tab_views[@shown_id].view_obj.fetcher.pause()
+
+      vo = @tab_views[@shown_id].view_obj
+      if typeof vo != 'undefined' and vo.hasOwnProperty('fetcher') #stop fetching
+        @tab_views[@shown_id].view_obj.fetcher.stop()
         
       target_view_key = $(e.target).attr('id').replace('goto-', '')
       @tab_views[@shown_id].root_el.hide()
@@ -155,7 +157,13 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     
     @model.get('work_experience').forEach (item) ->
       t_func = _.template $('#body_portfolio_work_experience').html()
-      wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))
+      el = $(t_func(
+        title: item.work_title
+        workplace: item.work_workplace,
+        startdate: item.work_startdate
+        enddate: item.work_enddate
+      ))
+      wex_card.last().append el      
 
     # Add the remaining categories beneath work experience
     t_func = _.template $('#portfolio_category').html()

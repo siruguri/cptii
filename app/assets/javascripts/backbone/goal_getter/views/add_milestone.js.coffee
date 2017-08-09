@@ -8,7 +8,7 @@ GoalGetter.Views.AddMilestone = GoalGetter.Views.ScreenBase.extend
     @$el.html t_func()
 
     # This view has a pikaday element that needs to be activated
-    picker = new Pikaday({ field: @$el.find('#add-milestone-enddate')[0] });
+    picker = new Pikaday({ field: @$el.find('#add-milestone-enddate')[0] })
 
     # search
     m = new GoalGetter.Models.SearchResultsModel()

@@ -1,4 +1,6 @@
 class MilestoneListing < ActiveRecord::Base
+  include Formatters
+  
   belongs_to :owner, class_name: 'User', inverse_of: :created_milestones
   belongs_to :assigned_to, class_name: 'User', inverse_of: :personal_milestones
 
@@ -8,7 +10,7 @@ class MilestoneListing < ActiveRecord::Base
     m = MilestoneListing.new
     m.title = params['title']
     m.description = params['description']
-    m.due_in = DateTime.strptime(params['enddate'], '%a %b %d %Y')
+    m.due_in = m.pikaday_convert params['enddate']
     m.owner = user if user.present? 
 
     m.assigned_to_id = params['assign_to_all'].present? ? -1 : (params['student_id'] || -1)

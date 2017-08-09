@@ -78,12 +78,15 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         '/guides/' + @get('body_guide_id')
       else if ref == 'overlay'
         '/overlay_data.json?key=' + @current_screen
-      else if ref == 'chat'
-        '/profile.json?screen_number=chat&counselor_id=' + @get('current_chat_counselor_id')
-      else if ref == 'public-portfolio'
-        '/profile.json?screen_number=public-portfolio&public_name=' + @get('public_portfolio_name')
       else
         '/profile.json?screen_number=' + ref
+
+    # additional parameters
+    if ref == 'public-portfolio'
+      u += '&public_name=' + @get('public_portfolio_name')
+    else if ref == 'chat'
+      u += '&counselor_id=' + @get('current_chat_counselor_id')
+        
     u
 
   get_screen_data: (curr_screen_ref) ->
@@ -110,6 +113,9 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('overlay_data', d.data)
       else
         model_self.set d.data
+
+      if screen_number == 'public-portfolio'
+        model_self.set('friend_id', model_self.get('id'))
     )
     
   # /Sync

@@ -52,13 +52,10 @@ class ProfilesController < ApplicationController
         p.published = !(p.published)
         p.save
         resp = {profile_published: p.published}
-      when 'update-alerts-lrt'
-        if params.dig(:payload, :data).is_a? String # Expect this in epoch milliseconds
-          p = ProfileEntry.find_or_initialize_by(profile_id: u.profile.id, entry_key: 'alerts-lrt')
-          p.entry_details['lrt'] = params[:payload][:data].to_i/1000
-          p.save
-
-          resp = {lrt: p.entry_details['lrt']}          
+      when 'set-to-read'
+        if (type = params.dig(:payload, :data, :type)).present? # Expect this.
+          AccountInboxMessage.set_to_read type, u
+          resp = {type: type}
         end
       when /friend$/
       # add or remove friends

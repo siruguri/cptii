@@ -22,7 +22,10 @@ module DataFetchers
       entries = p.profile_entries.to_a
       work_ex_list = entries.select { |e| e.entry_key == 'work'}.
                      map { |entry| {work_title: entry.entry_details['title'],
-                                    work_workplace: entry.entry_details['workplace']}}
+                                    work_workplace: entry.entry_details['workplace'],
+                                    work_startdate: entry.entry_details['startdate'],
+                                    work_enddate: entry.entry_details['enddate']
+                           }}
 
       achievements = entries.select { |e| e.entry_key == 'achievement'}.
                      group_by { |e| e.entry_details['type']}.

@@ -24,11 +24,12 @@ module ProfileUpdaters
   
   def add_work(u, params)
     resp = 
-      if valid_data?(params, :title, :workplace)
+      if valid_data?(params, :title, :workplace, :startdate, :enddate)
         data = params[:payload][:data]
-        p = ProfileEntry.new profile: u.profile, entry_key: 'work',
-                             entry_details: {title: data[:title], workplace: data[:workplace]}
-        p.save
+        data[:entry_key] = 'work'
+        p = ProfileEntry.create_from_api_call(
+          data.permit(:title, :workplace, :startdate, :enddate, :entry_key), user: u
+        )
         {id: p.id}
       else
         {}
