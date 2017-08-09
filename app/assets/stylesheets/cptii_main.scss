@@ -42,6 +42,10 @@ body {
   top: 0;
   right: 0;
   padding-top: 2px;
+  display: none;
+  &.visible {
+    display: inline-block !important;
+  }
 }
 
 .para {

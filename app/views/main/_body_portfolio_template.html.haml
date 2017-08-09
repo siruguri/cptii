@@ -46,13 +46,16 @@
 %script#body_portfolio_template{type: 'text/template'}
   .switcher-tab.row
     .col.s3#goto-public.goto.selected.pointer
+      .bubble{'data-folder-name' => 'public'}
       public
     .col.s3#goto-portfolio-friends.goto.pointer
+      .bubble{'data-folder-name' => 'FriendRequest'}
       friends
     .col.s3#goto-portfolio-likes.goto.pointer
+      .bubble{'data-folder-name' => 'FriendLike'}
       likes
     .col.s3#goto-milestones.goto.pointer
-      .bubble
+      .bubble{'data-folder-name' => 'MilestoneListing'}
       milestones
       
   .portfolio-sub-card#public.selected

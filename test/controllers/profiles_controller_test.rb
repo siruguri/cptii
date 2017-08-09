@@ -67,14 +67,14 @@ class ProfilesControllerTest < ActionController::TestCase
       
       # new alerts show up for screen keys that don't exist
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      # r_read won't be shown
-      assert_equal 1, JSON.parse(response.body)['data']['inbox']['ContentResource'].size
+      # r_read won't be shown; one more added in fixtures Aug 8
+      assert_equal 2, JSON.parse(response.body)['data']['inbox']['ContentResource'].size
     end
     
     it 'shows alerts with dawn of time logic' do
-      AccountInboxMessage.create message_attachment: content_resources(:cr_1)
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1), is_read: false
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      assert_equal 1, JSON.parse(response.body)['data']['inbox'].keys.size
+      assert_equal 2, JSON.parse(response.body)['data']['inbox'].keys.size
     end
   end
 
@@ -102,7 +102,9 @@ class ProfilesControllerTest < ActionController::TestCase
     
     it 'adds entries for some but only permitted codes' do
       AccountInboxMessage.create message_attachment: content_resources(:cr_1), is_read: false, user: users(:student_1)
-      assert_difference('AccountInboxMessage.where(is_read: false).count', -1) do
+
+      # one unread added in fixtures Aug 8
+      assert_difference('AccountInboxMessage.where(is_read: false).count', -2) do
         put :update, xhr: true, params: {format: 'json',
                                          payload: {code: 'set-to-read', data: {type: 'ContentResource'}}}
       end

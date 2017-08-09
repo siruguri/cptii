@@ -23,7 +23,6 @@ class BasicLoginTest < Capybara::Rails::TestCase
   
   describe 'basic login' do
     it 'shows alerts' do
-      AccountInboxMessage.create message_attachment: content_resources(:cr_1)
       visit "/"
       sleep 1
       assert page.has_css?('.bubble', visible: true)

@@ -11,12 +11,13 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     @shown_id = 'public'
 
   manage_bubbles: () ->
-    # there will be lots of bubbles here, I think.
-
-    if @model.get('inbox').hasOwnProperty('MilestoneListing') and (ml = @model.get('inbox')['MilestoneListing']).length > 0
-      b = $('#goto-milestones .bubble')
-      b.text ml.length
-      b.show()
+    view_self = @
+    @$el.find('.goto').each (i, e) ->
+      folder = $(e).find('.bubble').data('folder-name')
+      if view_self.model.get('inbox').hasOwnProperty(folder) and (ml = view_self.model.get('inbox')[folder]).length > 0
+        b = $(e).find('.bubble')
+        b.text ml.length
+        b.addClass('visible')
       
   set_friend_action: () ->
     status = @model.get('is_friend')
@@ -51,6 +52,12 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @previous_tab = $(e.target)
       @previous_tab.addClass('selected')
 
+      d = @previous_tab.find('.bubble')
+      if d.hasClass('visible')
+        folder = d.data('folder-name')
+        d.removeClass 'visible'
+        @update_alert folder
+        
       vo = @tab_views[@shown_id].view_obj
       if typeof vo != 'undefined' and vo.hasOwnProperty('fetcher') #stop fetching
         @tab_views[@shown_id].view_obj.fetcher.stop()

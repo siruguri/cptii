@@ -10,19 +10,23 @@ GoalGetter.Views.FooterView = GoalGetter.Views.ScreenBase.extend
       clicked_tab.addClass 'selected'
 
       # I want to use the string value, even though the footer tabs are referenced as numerals.
-      bubble_type = clicked_tab.data 'bubble-type'
-      if typeof bubble_type != 'undefined'
-        @update_alert bubble_type
-        clicked_tab.find('.bubble').hide()
+      bubble = clicked_tab.find('.bubble')
+      folder = bubble.data 'folder-name'
+      if typeof folder != 'undefined'
+        @update_alert folder
+        bubble.removeClass 'visible'
         
       # Let the rest of the app know the nav tab changed.
       @trigger 'footer:change_nav', clicked_tab.attr('data-target')
 
-  show_guides_bubble: ->
+  show_all_bubbles: ->
     if @model.get('inbox') != null
-      folder = @model.get('inbox')['ContentResource']
-      if Array.isArray(folder) and (ct = folder.length) > 0
-        @$('.bubble').text(ct).show()
+      view_self = @
+      @$el.find('.nav-change .bubble').each (i, e) ->
+        folder = $(e).data 'folder-name'
+        inbox_list = view_self.model.get('inbox')[folder]
+        if Array.isArray(inbox_list) and (ct = inbox_list.length) > 0
+          $(e).text(ct).addClass('visible')
       
   select_tab: ->
     view_self = @
@@ -40,6 +44,6 @@ GoalGetter.Views.FooterView = GoalGetter.Views.ScreenBase.extend
       @$el.html(_.template($('#footer_template').html())({}))
 
     @select_tab()
-    @show_guides_bubble()
+    @show_all_bubbles()
     
     @$el
