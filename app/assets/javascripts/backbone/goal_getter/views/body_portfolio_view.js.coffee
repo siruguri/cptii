@@ -6,9 +6,19 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       'public': {}
       'portfolio-friends': null
       'portfolio-likes': null
+      'milestones': null
         
     @shown_id = 'public'
 
+  manage_bubbles: () ->
+    view_self = @
+    @$el.find('.goto').each (i, e) ->
+      folder = $(e).find('.bubble').data('folder-name')
+      if view_self.model.get('inbox').hasOwnProperty(folder) and (ml = view_self.model.get('inbox')[folder]).length > 0
+        b = $(e).find('.bubble')
+        b.text ml.length
+        b.addClass('visible')
+      
   set_friend_action: () ->
     status = @model.get 'is_friend'
     return if status == 'self'
@@ -29,15 +39,8 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
   
   delayed_render: (key) ->
     if key != 'public' and @tab_views[key] == null
-      klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name key
-      @tab_views[key] = {}
-      @tab_views[key].view_obj = new GoalGetter.Views[klass]
-        model: @model
-
-      el = @tab_views[key].view_obj.wait_and_render(key)
+      el = @construct_screen key, @tab_views
       @tab_views[key].root_el = el
-      el.show()
-      @$el.append el
     else
       if @tab_views[key].hasOwnProperty('view_obj') and @tab_views[key].view_obj.hasOwnProperty('fetcher')
         @tab_views[key].view_obj.fetcher.resume()
@@ -55,8 +58,16 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       @previous_tab.removeClass('selected')
       @previous_tab = $(e.target)
       @previous_tab.addClass('selected')
-      if @shown_id == 'portfolio-friends' #stop fetching
-        @tab_views[@shown_id].view_obj.fetcher.pause()
+
+      d = @previous_tab.find('.bubble')
+      if d.hasClass('visible')
+        folder = d.data('folder-name')
+        d.removeClass 'visible'
+        @update_alert folder
+        
+      vo = @tab_views[@shown_id].view_obj
+      if typeof vo != 'undefined' and vo.hasOwnProperty('fetcher') #stop fetching
+        @tab_views[@shown_id].view_obj.fetcher.stop()
         
       target_view_key = $(e.target).attr('id').replace('goto-', '')
       @tab_views[@shown_id].root_el.hide()
@@ -86,6 +97,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       )
 
     'click #change-friend-status': (e) ->
+      # is this orphaned code?
       f = $('form#make-friend-form')
       data =
         payload:
@@ -119,6 +131,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
 
     @$el.html t_func({username: @model.get('user_name')})
     @set_friend_action()
+    @manage_bubbles()
     
     @previous_tab = @$el.find('.goto.selected')
     @$el.find('#portfolio-img').attr 'src', @model.get('profile_pic_url')
@@ -158,7 +171,13 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     
     @model.get('work_experience').forEach (item) ->
       t_func = _.template $('#body_portfolio_work_experience').html()
-      wex_card.last().append $(t_func({title: item.work_title, workplace: item.work_workplace}))
+      el = $(t_func(
+        title: item.work_title
+        workplace: item.work_workplace,
+        startdate: item.work_startdate
+        enddate: item.work_enddate
+      ))
+      wex_card.last().append el      
 
     # Add the remaining categories beneath work experience
     t_func = _.template $('#portfolio_category').html()

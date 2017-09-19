@@ -1,7 +1,34 @@
+%script#body_add-milestone_template{type: 'text/template'}
+  .milestone-card.row.input-form{"data-server-code" => 'add-milestone'}
+    .card-entry.tight.col.s-ninety
+      .input-field
+        %input#add-milestone-title{autofocus: true, type: 'text', name: 'title'}
+        %label{for: 'add-milestone-title'}
+          Milestone Title
+      .input-field      
+        %input#add-milestone-description{type: 'text', name: 'description'}
+        %label{for: 'add-milestone-description'}
+          Milestone Description
+      .input-field      
+        %input#add-milestone-enddate{type: 'text', name: 'enddate'}
+        %label{for: 'add-milestone-enddate'}
+          End Date
+      .input-field#milestone-student-search
+        %label{for: 'add-student-name'}
+          Add Student Name
+        
 %script#body_milestones_template{type: 'text/template'}
-%script#milestone_listing_template{type: 'text/template'}
+  .milestone-list
+    
+%script#milestone_item_template{type: 'text/template'}
   .milestone-listing
-    .title
-      <%- title %>
-    .due-in
-      <%- due_in %>
+    .calbox.s1.col
+      .date
+        <%- date %>
+      .month
+        <%- month %>
+    .info.s10.col
+      .title
+        <%- title %>
+      .due-in
+        <%- due_at %>

@@ -8,7 +8,7 @@ profile_student_1:
   user: student_1
   profile_type: student
   published: <%= true %>
-  contact_details: <%= {'school_id' => 2121}.to_json %>
+  contact_details: <%= {'first_name' => 'student TESTLOWER 1', last_name: 'in school 2121', 'school_id' => 2121}.to_json %>
 
 profile_noschool_student:
   user: noschool_student
@@ -35,6 +35,11 @@ profile_couns_2:
   profile_type: counselor
   contact_details: <%= {"first_name" => "counselor", "last_name" => 'the second in school 1', phone: '5576309', role: 'teacher'}.to_json %>
 
+profile_couns_empty_school:
+  user: counselor_empty_school
+  profile_type: counselor
+  contact_details: <%= {"first_name" => "counselor", "last_name" => 'in school with no students', phone: '5576309', role: 'teacher'}.to_json %>
+  
 profile_student_private:
   user: student_private
   profile_type: student

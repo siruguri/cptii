@@ -11,7 +11,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
   render_and_pass: ->
     # Let control know there's a data change, for the footer's sake. Right now, this trigger is
-    # entirely ignored.
+    # entirely ignored by control.
 
     @trigger 'body:render'
     @render()
@@ -35,12 +35,20 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       )
       null
       
+    'click #logout': ->
+      if (m = @model.logged_in) != 'none'
+        f = $('form#logout_form')
+        f.attr 'action', '/' + m + 's/sign_out'
+        f.append($('<input>').attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', ($('meta[name="csrf-token"]').attr('content'))))
+        f.submit()
+        
     'click #add': ->
       @change_screens
-        to: 'add-service'
+        to: @body_view.action_target('add')
         
     'click #search': ->
       @trigger 'query', {to: 'search'}
+      
     'click #published': ->
       view_self = @
       $.ajax('/profile.json',
@@ -49,7 +57,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
           payload:
             code: 'toggle-publish'
         success: (d, s, x) ->
-          view_self.model.get('user_info').published = d.data.published
+          view_self.model.set 'profile_published', d.data.profile_published
           view_self.render()
       )
           
@@ -70,16 +78,15 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       return null
 
     view_self = @
-    @model.previous_screen = @model.current_screen
-    @body_view.screens[@model.previous_screen].$el.hide()
+    current_screen = @body_view.screens[@model.current_screen].view_obj
+    current_screen.$el.hide()
+    if current_screen.hasOwnProperty('fetcher') # stop fetching
+      current_screen.fetcher.stop()
     
-    if @model.previous_screen == 'search-results' || @model.previous_screen == 'guide-single' \
-       || @model.previous_screen == 'chat' || @model.previous_screen == 'add-work-experience' \
-       || @model.previous_screen == 'add-an-achievement' || @model.previous_screen == 'portfolio-friends'
-      @body_view.garbage @model.previous_screen
+    if @model.garbage_src_screen()
+      @body_view.garbage @model.current_screen
       
     dest = change_obj.to
-
     if change_obj.hasOwnProperty('from')
       @model.history.push change_obj.from
       
@@ -94,7 +101,7 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
 
     if change_obj.hasOwnProperty('refresh_screen')
       change_obj.refresh_screen.forEach (key) ->
-        view_self.body_view.refresh_screen key
+        view_self.body_view.refresh key
 
     @render_with_body()
     
@@ -104,22 +111,20 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
     # the SPA page is rendered.
     
     top_parts = []
-    top_parts.push(@render())
-
     # If the body needs a login, divert it here.
     login_requirement = @model.requires_login[@model.current_screen]
-    if login_requirement != 'none' and login_requirement != @model.logged_in
+    if !(_.contains(login_requirement, 'none') or _.contains(login_requirement, @model.logged_in))
       # Pretend to use the title from whatever screen you don't have access to
       @model.pretend_key = @model.current_screen
-      @model.texts['logged-out'] = @model.texts[@model.current_screen]
       @model.current_screen = 'logged-out'
-      
-    top_parts.push(@body_view.render())
 
+    top_parts.push(@render())
+    top_parts.push(@body_view.render())
     top_parts
 
   set_publish_status: ->
-    if @model.get('user_info').published == true
+    # we will get the publish status only after the body has rendered.
+    if @model.get('profile_published') == true
       @$el.find('#published .button-rectangular').removeClass('private').addClass('public').text('unpublish')
     else
       @$el.find('#published .button-rectangular').removeClass('public').addClass('private').text('publish')
@@ -141,19 +146,21 @@ GoalGetter.Views.HeaderView = Backbone.View.extend
       @$el.find('#published').css('display', 'inline-block')
       @set_publish_status()
 
-    if @model.has_property('save') and @model.logged_in != 'none'
-      @$el.find('.header-actions .item#save').css('display', 'inline-block')
+    if @model.logged_in != 'none'
+      @$el.find('.header-actions .item#logout').css 'display', 'inline-block'
+    if @model.has_header_behavior('save') and @model.logged_in != 'none'
+      @$el.find('.header-actions .item#save').css 'display', 'inline-block'
       gd = @model.get('guide_data')
       if typeof gd != 'undefined' and gd.is_saved == true
         @$el.find('#save use').addClass('saved')
-    if @model.has_property('add') and @model.logged_in != 'none'
-      @$el.find('.header-actions .item#add').css('display', 'inline-block')
-    if @model.has_property('share')
-      @$el.find('.header-actions .item#share').css('display', 'inline-block')
-    if @model.has_property('search')
-      @$el.find('.header-actions .item#search').css('display', 'inline-block')
+    if @model.has_header_behavior('add') and @model.logged_in != 'none'
+      @$el.find('.header-actions .item#add').css 'display', 'inline-block'
+    if @model.has_header_behavior('share')
+      @$el.find('.header-actions .item#share').css 'display', 'inline-block'
+    if @model.has_header_behavior('search')
+      @$el.find('.header-actions .item#search').css 'display', 'inline-block'
       
-    if @model.has_property('done')
-      @$el.find('#submit-body-form').css('display', 'inline-block')
+    if @model.has_header_behavior('done')
+      @$el.find('#submit-body-form').css 'display', 'inline-block'
       
     @$el

@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170707233146) do
+ActiveRecord::Schema.define(version: 20170803025501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_inbox_messages", force: :cascade do |t|
+    t.integer  "message_attachment_id"
+    t.string   "message_attachment_type"
+    t.integer  "user_id"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "is_read",                 default: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "email"
@@ -95,6 +104,8 @@ ActiveRecord::Schema.define(version: 20170707233146) do
     t.jsonb    "reminder_styles",        default: {}
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "assigned_to_id"
+    t.integer  "owner_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -152,12 +163,6 @@ ActiveRecord::Schema.define(version: 20170707233146) do
     t.float    "lat"
     t.float    "lon"
     t.boolean  "is_official"
-  end
-
-  create_table "resource_alerts", force: :cascade do |t|
-    t.integer  "content_resource_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
   end
 
   create_table "resource_bookmarks", force: :cascade do |t|

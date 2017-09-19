@@ -1,0 +1,10 @@
+mesg_1_s1:
+  user: student_1
+  message_attachment: milestone_s1_old (MilestoneListing)
+mesg_2_s1:
+  user: student_1
+  message_attachment: milestone_s1_new (MilestoneListing)
+mesg_3_s1_cr1:
+  user: student_1
+  message_attachment: cr_1 (ContentResource)
+  is_read: false

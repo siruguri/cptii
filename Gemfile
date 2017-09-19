@@ -35,6 +35,10 @@ gem 'jquery-ui-rails'
 gem 'materialize-sass'
 gem 'underscore-rails'
 
+# UX JS awesomeness
+gem 'pikaday-gem'
+gem 'momentjs-rails'
+
 gem 'geocoder'
 
 gem 'devise'

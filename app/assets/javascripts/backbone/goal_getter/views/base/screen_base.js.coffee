@@ -1,4 +1,25 @@
 GoalGetter.Views.ScreenBase = Backbone.View.extend
+  construct_screen: (ref, insert_into) ->
+    klass = GoalGetter.Helpers.ModelInitializer.resolve_to_class_name ref
+    insert_into[ref] = {}
+    insert_into[ref].view_obj = new GoalGetter.Views[klass]
+      model: @model
+    e = @$el.append insert_into[ref].view_obj.wait_and_render(ref)
+    e.show()
+    e
+
+  update_alert: (type) ->
+    d =
+      payload:
+        code: 'set-to-read'
+        data: {type: type}
+    view_self = @
+    $.ajax('/profile.json',
+      data: d
+      method: 'put'
+    )
+    null
+        
   refresh_data: ->
     # Default is to do nothing
     # Views might override this.
@@ -9,6 +30,9 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
 
     if typeof context == 'undefined'
       first_time = true
+
+      # First screen can be fetched unauthenticated. Else, skip data fetch for screen.
+      @model.get_screen_data screen_number if screen_number != '0'      
       context = @
     else
       first_time = false

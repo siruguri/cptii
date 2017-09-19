@@ -49,6 +49,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guide-single': 1
       'logged-out': 0
       'public-portfolio': 1
+      'add-milestone': 1
       
     model_obj.up_level =
       'chat': '2'
@@ -58,6 +59,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guide-single': '1'
       'public-portfolio': '3'
       'add-service': '0'
+      'add-milestone': 'milestones'
       
     model_obj.header_config =
       'jobboard':
@@ -83,15 +85,19 @@ GoalGetter.Helpers.ModelInitializer =
       'add-service':
         properties:
           done: true
-          needs_refresh: false
+          done_refreshes: true
+      'add-milestone':
+        properties:
+          done: true
+          done_refreshes: true
       'add-work-experience' :
         properties:
           done: true
-          needs_refresh: true
+          done_refreshes: true
       'add-an-achievement' :
         properties:
           done: true
-          needs_refresh: true
+          done_refreshes: true
       'search-results':
         properties:
           search: true
@@ -99,25 +105,26 @@ GoalGetter.Helpers.ModelInitializer =
         properties: {}
 
     model_obj.requires_login =
-      '0': 'none'
-      '1': 'none'
-      '2': 'user'
-      '3': 'user'
-      '4': 'user'
-      'jobboard': 'none'
-      'milestones': 'admin'
-      'add-work-experience': 'user'
-      'add-an-achievement' : 'user'
-      'add-service': 'user'
-      'chat': 'user'
-      'search-results': 'none'
-      'guide-single' : 'none'
-      'logged-out': 'none'
-      'overlay' : 'user'
-      'portfolio-friends': 'user'
-      'portfolio-likes': 'user'
-      'guides-saved': 'user'
-      'public-portfolio': 'user'
+      '0': ['none']
+      '1': ['none']
+      '2': ['user']
+      '3': ['user']
+      '4': ['user']
+      'jobboard': ['none']
+      'milestones': ['user', 'admin']
+      'add-milestone': ['admin']
+      'add-work-experience': ['user']
+      'add-an-achievement' : ['user']
+      'add-service': ['user']
+      'chat': ['user']
+      'search-results': ['none']
+      'guide-single' : ['none']
+      'logged-out': ['none']
+      'overlay' : ['user']
+      'portfolio-friends': ['user']
+      'portfolio-likes': ['user']
+      'guides-saved': ['user']
+      'public-portfolio': ['user']
       
     model_obj.screen_data_ready =
       '0': true
@@ -137,6 +144,7 @@ GoalGetter.Helpers.ModelInitializer =
       'portfolio-friends': false
       'portfolio-likes': false
       'public-portfolio': false
+      'add-milestone': true
       
     model_obj.texts =
       '0': 'Services',
@@ -148,6 +156,7 @@ GoalGetter.Helpers.ModelInitializer =
       'milestones': 'Milestones',
       'chat' : '$current_chat_counselor'
       'add-service': 'Add Service'
+      'add-milestone': 'Add Milestone'
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
       'guide-single' : '$body_guide_title'
@@ -155,7 +164,7 @@ GoalGetter.Helpers.ModelInitializer =
       'guides-saved': 'Guides'
       'portfolio-friends': 'Portfolio'
       'portfolio-likes': 'Portfolio'
-      'logged-out': ''
+      'logged-out': 'Sign In'
       'public-portfolio': '$public_portfolio_name'
 
   resolve_to_class_name: (index) ->
@@ -170,6 +179,7 @@ GoalGetter.Helpers.ModelInitializer =
       when 'chat' then 'ChatView'
       when 'add-work-experience' then 'AddWorkView'
       when 'add-service' then 'AddService'
+      when 'add-milestone' then 'AddMilestone'
       when 'add-an-achievement' then 'AddAnAchievement'
       when 'search-results' then 'SearchResultsView'
       when 'guide-single' then 'GuideSingleView'

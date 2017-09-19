@@ -76,6 +76,9 @@ class ChatRecordsController < ApplicationController
               written_time: Time.now
             )
             cr.save
+            cr.token = cr.token.downcase
+            cr.save
+            
             valid_sendgrid = true
           end
         end
@@ -100,8 +103,10 @@ class ChatRecordsController < ApplicationController
             message: params[:message_to_counselor],
             written_time: Time.now
           )
-        
           cr.save
+          cr.token = cr.token.downcase
+          cr.save
+          
           [{chat_id: cr.id}, :ok]
         end
       end

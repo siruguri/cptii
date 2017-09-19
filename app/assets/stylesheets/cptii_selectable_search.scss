@@ -1,0 +1,9 @@
+.selectable-search {
+  z-index: 2;
+  .results {
+    .result {
+      cursor: pointer;
+    }
+  }
+}
+

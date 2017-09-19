@@ -42,38 +42,30 @@ class ProfilesController < ApplicationController
     # This call has to be via XMLHTTPRequest.
     # The payload comes in as a specific ordering of data that is determined by the
     # [:payload][:code] parameter.
-    
-    u = current_user || (current_admin and User.find_by_id(params[:user]))
-    resp = {}
 
+    resp = {}
+    u = current_user || (current_admin and User.find_by_id(params[:user]))
     if u
       case params.dig(:payload, :code)
       when 'toggle-publish'
         p = u.profile
         p.published = !(p.published)
         p.save
-        resp = {published: p.published}
-      when 'update-alerts-lrt'
-        if params.dig(:payload, :data).is_a? String # Expect this in epoch milliseconds
-          p = ProfileEntry.find_or_initialize_by(profile_id: u.profile.id, entry_key: 'alerts-lrt')
-          p.entry_details['lrt'] = params[:payload][:data].to_i/1000
-          p.save
-
-          resp = {lrt: p.entry_details['lrt']}          
+        resp = {profile_published: p.published}
+      when 'set-to-read'
+        if (type = params.dig(:payload, :data, :type)).present? # Expect this.
+          AccountInboxMessage.set_to_read type, u
+          resp = {type: type}
         end
       when /friend$/
       # add or remove friends
         resp = process_friendship u, params
-      when 'add-service'
-        add_service u, params
-      when 'add-work'
-        add_work u, params
-      when 'add-an-achievement'
-        add_achievement u, params
       end
+      status = 200
+    else
+      status = 422
     end
-    
-    render json: ({data: resp})
+    render json: ({data: resp}), status: status
   end
 
   def show
@@ -118,6 +110,10 @@ class ProfilesController < ApplicationController
     
       # global data for logged-in case: broadcast alerts
       d[:data].merge! u.new_alerts_count
+      # global data for logged-in case: inbox
+      d[:data][:inbox] = u.inbox(unread: true)[:unread_inbox].group_by do |hash|
+        hash[:alert_type]
+      end
     end
     
     render json: d

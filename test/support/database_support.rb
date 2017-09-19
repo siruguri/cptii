@@ -13,6 +13,9 @@ def drop_chats!
 end
 
 def init_schools!
+  # school 1: student 1
+  # nocounselor_school: uncounseled_student
+  
   u = users :student_1
   p = u.profile
   p.contact_details['school_id'] = schools(:school_1).id
@@ -21,7 +24,12 @@ def init_schools!
   u = users :uncounseled_student
   p = u.profile
   p.contact_details['school_id'] = schools(:nocounselor_school).id
-  p.save  
+  p.save
+
+  u = users :counselor_empty_school
+  p = u.profile
+  p.contact_details['school_id'] = schools(:school_no_students).id
+  p.save
 end
 
 def init_chats!

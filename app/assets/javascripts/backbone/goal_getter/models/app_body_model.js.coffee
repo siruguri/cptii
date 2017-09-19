@@ -4,10 +4,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     @is_category = true
     @current_screen = '0'
     @history = []
+    @set 'inbox', []
     
-    @set('user_info',
-      counselor_name: null
-    )
     GoalGetter.Helpers.ModelInitializer.initialize_model @
 
     # (Complex) getters need to be bound to this object
@@ -22,7 +20,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
   data_needed_and_authorized: (key) ->
     login_requirement = @requires_login[key]
-    !@screen_data_ready[key] and (login_requirement == 'none' or @logged_in == login_requirement)
+    !@screen_data_ready[key] and (_.contains(login_requirement, 'none') or _.contains(login_requirement, @logged_in))
     
   set_screen_by_role: ->
     data_div = $('#page_data')
@@ -45,9 +43,12 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     )
 
   # Directory navigation helpers
-  has_property: (key) ->
+  has_header_behavior: (key) ->
     @header_config.hasOwnProperty(@current_screen) && @header_config[@current_screen].properties[key] == true
-    
+
+  garbage_src_screen: ->
+    ['add-milestone', 'search-results', 'guide-single', 'chat', 'add-work-experience', 'add-an-achievement', 'portfolio-friends'].indexOf(@current_screen) > -1
+      
   up: ->
     # Move up from the current screen
     @up_level[@current_screen]
@@ -69,18 +70,23 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
           '/programs?q=' + @get('search_query')
       else if ref == 'jobboard'
         '/job_listings'
+      else if ref == 'milestones'
+        '/milestones'
       else if ref == '1'
         '/guides/'
       else if ref == 'guide-single'
         '/guides/' + @get('body_guide_id')
       else if ref == 'overlay'
         '/overlay_data.json?key=' + @current_screen
-      else if ref == 'chat'
-        '/profile.json?screen_number=chat&counselor_id=' + @get('current_chat_counselor_id')
-      else if ref == 'public-portfolio'
-        '/profile.json?screen_number=public-portfolio&public_name=' + @get('public_portfolio_name')
       else
         '/profile.json?screen_number=' + ref
+
+    # additional parameters
+    if ref == 'public-portfolio'
+      u += '&public_name=' + @get('public_portfolio_name')
+    else if ref == 'chat'
+      u += '&counselor_id=' + @get('current_chat_counselor_id')
+        
     u
 
   data_change: (target_code, value) ->
@@ -103,17 +109,17 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       if d.hasOwnProperty('data') and Object.keys(d.data).length > 0
         model_self.screen_data_ready[screen_number] = true
 
-      if screen_number == 'search-results' or screen_number == '1'
-        model_self.set d.data
-      else if screen_number == 'guide-single'
+      if screen_number == 'guide-single'
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
       else
         model_self.set d.data
-        model_self.set('user_info', d.data.user_info) if d.data.hasOwnProperty('user_info')
-    )
 
+      if screen_number == 'public-portfolio'
+        model_self.set('friend_id', model_self.get('id'))
+    )
+    
   # /Sync
   
   # Getters
@@ -132,9 +138,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
 
   # Setters
   destroy_user_data: ->
-    @set('user_info',
-      counselor_name: null
-    )
+    @set 'counselor_name', null
     @trigger 'model:updated'
 
   set_current_screen: (target) ->

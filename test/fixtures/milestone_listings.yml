@@ -1,0 +1,18 @@
+milestone_1:
+  title: 'milestone 1 for school 1'
+  description: ms 1 school 1 description
+  due_in: <%= DateTime.now + 2.days %>
+  owner: counselor_1
+  assigned_to_id: -1
+milestone_s1_old:
+  title: 'milestone 1 for student 1, school 1 old'
+  description: ms 1 student_1 description old
+  due_in: <%= DateTime.now - 2.days %>
+  owner: counselor_1
+  assigned_to: student_1
+milestone_s1_new:
+  title: 'new milestone 1 for student 1, school 1'
+  description: ms 1 student_1 description
+  due_in: <%= DateTime.now + 2.days %>
+  owner: counselor_1
+  assigned_to: student_1

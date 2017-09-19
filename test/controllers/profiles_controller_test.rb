@@ -42,11 +42,11 @@ class ProfilesControllerTest < ActionController::TestCase
       b = JSON.parse response.body
       
       # see fixtures for this data (added WE 4200 on May 20)
-      assert_equal 2, b['data']['user_info']['work_experience'].size
-      assert_equal 2, b['data']['user_info']['work_experience'][0].keys.size
-      assert_equal 2, b['data']['user_info']['achievements'].size
+      assert_equal 2, b['data']['work_experience'].size
+      assert_equal 4, b['data']['work_experience'][0].keys.size
+      assert_equal 2, b['data']['achievements'].size
 
-      assert b['data']['user_info']['published']
+      assert b['data']['profile_published']
     end
 
     it 'works for chat screen with couns 1' do
@@ -62,26 +62,19 @@ class ProfilesControllerTest < ActionController::TestCase
     end
 
     it 'shows alerts if there are some' do
-      ResourceAlert.create content_resource: content_resources(:cr_1)
-      r_older = ResourceAlert.create content_resource: content_resources(:cr_2)
-      r_older.created_at = Time.now - 20.hours
-      r_older.save
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1)
+      r_read = AccountInboxMessage.create message_attachment: content_resources(:cr_2), is_read: true
       
-      p = ProfileEntry.create entry_key: 'alerts-lrt', profile: users(:student_1).profile
-      p.entry_details['lrt'] = (Time.now - 2.hours).to_i
-      p.save
-
       # new alerts show up for screen keys that don't exist
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      # r_older won't be shown
-      assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
+      # r_read won't be shown; one more added in fixtures Aug 8
+      assert_equal 2, JSON.parse(response.body)['data']['inbox']['ContentResource'].size
     end
     
     it 'shows alerts with dawn of time logic' do
-      ResourceAlert.create content_resource: content_resources(:cr_1)
-
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1), is_read: false
       get :show, xhr: true, params: {format: 'json', screen_number: 'nosuchkey'}
-      assert_equal 1, JSON.parse(response.body)['data']['user_info']['new_alerts_count']
+      assert_equal 2, JSON.parse(response.body)['data']['inbox'].keys.size
     end
   end
 
@@ -108,41 +101,12 @@ class ProfilesControllerTest < ActionController::TestCase
     end
     
     it 'adds entries for some but only permitted codes' do
-      assert_difference('ProfileEntry.count') do
-        put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'update-alerts-lrt', data: '1486084669000'}}
-      end
-      
-      assert_difference('ProfileEntry.count') do
-        put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'add-work', data: {title: 'title', workplace: 'workplace'}}}
-      end
+      AccountInboxMessage.create message_attachment: content_resources(:cr_1), is_read: false, user: users(:student_1)
 
-      assert_difference('ProgramSuggestion.count') do
-        assert_difference('Program.count') do
-          put :update, xhr: true, params: {format: 'json',
-                                           payload: {code: 'add-service', data: {title: 'title', description: 'description',
-                                                                                 location: '123 Main St Houston TX'}}}
-        end
-      end
-
-      assert_difference('ProfileEntry.count', 1) do
+      # one unread added in fixtures Aug 8
+      assert_difference('AccountInboxMessage.where(is_read: false).count', -2) do
         put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'add-an-achievement', data: {achievement_type: 'type 1',
-                                                                                      text: 'i achieved it!'}}}
-      end
-      
-      refute_difference('ProfileEntry.count') do
-        put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'not-a-code', data: ['type 1', 'i achieved it!']}}
-      end
-    end
-
-    it 'gracefully fails without login' do
-      sign_out @student_1
-      refute_difference('ProfileEntry.count') do
-        put :update, xhr: true, params: {format: 'json',
-                                         payload: {code: 'add-an-achievement', data: ['type 1', 'i achieved it!']}}
+                                         payload: {code: 'set-to-read', data: {type: 'ContentResource'}}}
       end
     end
   end

@@ -6,9 +6,13 @@ class User < ActiveRecord::Base
 
   has_one :profile, dependent: :destroy
   has_many :schools, through: :counselor_assignments
-  has_many :counselor_assignments, inverse_of: :counselor, foreign_key: :counselor_id
+  
+  has_many :account_messages, inverse_of: :user
   has_many :chat_records, foreign_key: :sender_id
+  has_many :counselor_assignments, inverse_of: :counselor, foreign_key: :counselor_id
+  has_many :created_milestones, inverse_of: :owner, class_name: 'MilestoneListing', foreign_key: :owner_id  
   has_many :entry_likes, inverse_of: :liked_by, foreign_key: :liked_by_id
+  has_many :personal_milestones, inverse_of: :assigned_to, class_name: 'MilestoneListing', foreign_key: :assigned_to_id
   
   after_create :make_blank_profile
   attr_accessor :first_name, :last_name
@@ -31,14 +35,17 @@ class User < ActiveRecord::Base
     full_name + str
   end
     
-  def new_alerts_count
-    alert_lrt = profile.profile_entries.where(entry_key: 'alerts-lrt').order(created_at: :desc).
-                limit(1).first&.entry_details&.send(:[], 'lrt')
-    # if you haven't requested previously, you have requested at the dawn of time
-    alert_lrt ||= 0
-    {new_alerts_count: ResourceAlert.where('extract(epoch from created_at) > ?', alert_lrt).count}
+  def inbox(unread: true)
+    # Implement READ filter later TODO
+    {unread_inbox: AccountInboxMessage.where(is_read: false).all.map(&:alerts_data)}
   end
   delegate :school, to: :profile
+
+  def students
+    self.counselor? ? User.joins(:profile).where('(profiles.contact_details->>\'school_id\')::int in (?) and profiles.profile_type = ?',
+                                                 self.counselor_assignments.pluck(:school_id), 'student')
+                      : User.none
+  end
   
   def counselors
     (self.student? && self.profile.school) ? self.profile.school.counselors : User.none
