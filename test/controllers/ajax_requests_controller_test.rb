@@ -10,6 +10,19 @@ class AjaxRequestsControllerTest < ActionController::TestCase
   end
   
   describe 'profile update requests' do
+    it 'changes name' do
+      post :handle_payload, xhr: true, params:(
+              {format: 'json',
+               payload:
+                 {code: 'data-change',
+                  data:
+                    {target_action: 'user_name', arguments: "\n\njull   marie\n  smuth\n"}
+                 }
+              })
+      @student_1.reload
+      assert_equal 'jull marie smuth', @student_1.full_name
+    end
+    
     it 'adds work' do
       assert_difference('ProfileEntry.count') do
         put :handle_payload, xhr: true, params:(

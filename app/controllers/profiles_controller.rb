@@ -108,8 +108,6 @@ class ProfilesController < ApplicationController
         end
       )
     
-      # global data for logged-in case: broadcast alerts
-      d[:data].merge! u.new_alerts_count
       # global data for logged-in case: inbox
       d[:data][:inbox] = u.inbox(unread: true)[:unread_inbox].group_by do |hash|
         hash[:alert_type]

@@ -89,8 +89,29 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         
     u
 
-  data_change: (target_code, value) ->
+  data_change: (target_code, value, opts = {}) ->
+    change_div = opts.target_div
+    code = 'data-change'
+    data =
+      target_action: target_code
+      arguments: value
     $.post
+      url: 'ajax_requests.json',
+      method: 'post',
+      data:
+        payload:
+          code: code
+          data: data
+      success: (d, s, x) ->
+        if typeof change_div != 'undefined'
+          change_div.addClass 'change-success'
+          setTimeout(
+            ->
+              change_div.removeClass 'change-success'
+            , 1000
+          )
+        return true
+
   get_screen_data: (curr_screen_ref) ->
     return if curr_screen_ref == '0' or !@data_needed_and_authorized(curr_screen_ref)
     @fetch_screen curr_screen_ref

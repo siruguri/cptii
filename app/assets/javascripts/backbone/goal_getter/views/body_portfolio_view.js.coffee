@@ -51,7 +51,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
     'click .username': (e) ->
       @$('.username').attr 'contentEditable', true
     'blur .username': (e) ->
-      @model.data_change 'user_name', $(e.target).text()
+      @model.data_change 'user_name', $(e.target).text(), target_div: $(e.target)
       
     # Tab switching
     'click .goto': (e) ->

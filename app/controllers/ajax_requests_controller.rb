@@ -11,7 +11,7 @@ class AjaxRequestsController < ApplicationController
 
     code = params.dig(:payload, :code)
     status = 200
-    if !['add-service', 'add-work', 'add-an-achievement', 'add-milestone'].include?(code)
+    if !['data-change', 'add-service', 'add-work', 'add-an-achievement', 'add-milestone'].include?(code)
       status = 422
       data = []
     else
@@ -19,13 +19,23 @@ class AjaxRequestsController < ApplicationController
       resp = {}
       if u.nil?
         status = 404
-        data = []
+        data = {message: 'no user found'}
       end
     end
 
     if status == 200 # The failure checks didn't trigger...
       data =
-        case code 
+        case code
+        when 'data-change'
+          action = params.dig :payload, :data, :target_action
+          model = model_mapping[action].constantize
+
+          # Only supports User updates for now
+          if model == User
+            u.update_from_api action, params.dig(:payload, :data, :arguments)
+          else
+            {}
+          end
         when 'add-service'
           add_service u, params
         when 'add-work'
@@ -52,5 +62,9 @@ class AjaxRequestsController < ApplicationController
       @_status = :unauthorized
       throw :abort
     end
+  end
+
+  def model_mapping
+    {'user_name' => 'User'}
   end
 end
