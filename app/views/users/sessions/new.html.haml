@@ -1,10 +1,12 @@
 .row
   .col-xs-6.col-xs-offset-3
     .h2.text-center
-      User Sign In
+      #{@for_counselor ? "Counselor" : "User"} Sign In
 .row.signin-form
   .col-xs-6.col-xs-offset-3.sign-in-form
     = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      - if params[:as_admin].present?
+        = f.hidden_field :as_admin, value: 'true'
       %div
         = f.label :email
         %br

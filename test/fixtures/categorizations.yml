@@ -21,3 +21,24 @@ cat_2_3:
 cat_1_5:
   taxonomy_node: nd_1
   program: prog_5
+
+# Put every one in the only network, except one
+cat_network_1:
+  taxonomy_node: nd_network
+  program: prog_1
+cat_network_2:
+  taxonomy_node: nd_network
+  program: prog_2
+cat_network_3:
+  taxonomy_node: nd_network
+  program: prog_3
+cat_network_4:
+  taxonomy_node: nd_network
+  program: prog_4
+cat_network_5:
+  taxonomy_node: nd_network
+  program: prog_5
+cat_network_no_latlon:
+  taxonomy_node: nd_network
+  program: prog_no_latlon
+

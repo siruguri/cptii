@@ -7,9 +7,21 @@ class SearchScreensTest < Capybara::Rails::TestCase
     # had to register chrome browser for selenium - FF 49.0.2 barfed :(
     Capybara.current_driver = :selenium
     visit "/"
-
   end
 
+  test 'different network name does not work' do
+    e = ENV['NETWORK_NAME']
+    ENV['NETWORK_NAME'] = 'network_2'
+    visit "/"
+    
+    page.all('.taxonomy-cell')[0].click
+    sleep 1
+
+    # header has the query
+    refute page.has_content? 'fin serv'
+    ENV['NETWORK_NAME'] = e
+  end
+  
   test 'switching between screens works' do
     page.all('.taxonomy-cell')[0].click
     sleep 1

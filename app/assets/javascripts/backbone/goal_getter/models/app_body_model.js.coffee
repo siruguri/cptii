@@ -14,21 +14,27 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
     _.bindAll @, 'header_title'
     null
 
+  add_network: ->
+    # Amend the search query to ask for the network's programs
+    @set 'viewable_search_query', @get('search_query')
+    if @network_name != ''
+      @set('search_query', @get('search_query') + ':' + @network_name)
+
   data_needed_and_authorized: (key) ->
     login_requirement = @requires_login[key]
     !@screen_data_ready[key] and (login_requirement == 'none' or @logged_in == login_requirement)
     
-  page_is_admin: ->
-    $('#page_data').data('screen-role') == 'admin'
-    
   set_screen_by_role: ->
-    if @page_is_admin()
+    data_div = $('#page_data')
+    @page_is_admin = (data_div.data('screen-role') == 'admin')
+    if @page_is_admin
       @current_screen = 'jobboard'
       
   # entry point from views/control_view
   init_fetch: ->
     data_div = $('#page_data')
     @logged_in = data_div.data('login-type')
+    @network_name = data_div.data('network-name')
     model_self = @
     
     $.get('/taxonomy/list_names.json?level=1', (d, s, x) ->

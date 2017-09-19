@@ -18,7 +18,7 @@ GoalGetter.Views.LoggedOutView = GoalGetter.Views.ScreenBase.extend
     @$el.html t_func(obj)
 
     signin_div = @$el.find('#logout_signin a')
-    if @model.page_is_admin()
+    if @model.page_is_admin
       a = signin_div.attr 'href'
       signin_div.attr 'href', a + '?as_admin=true'
       

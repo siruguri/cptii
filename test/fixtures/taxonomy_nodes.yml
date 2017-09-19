@@ -9,4 +9,7 @@ nd_2:
   parent_id: -1
 nd_3:
   node_name: node3
-  parent_id: -1  
+  parent_id: -1
+nd_network:
+  node_name: this is the network node network_1
+  parent_id: -1

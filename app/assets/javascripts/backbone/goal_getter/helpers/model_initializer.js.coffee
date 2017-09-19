@@ -151,7 +151,7 @@ GoalGetter.Helpers.ModelInitializer =
       'add-work-experience' : 'Add job experience'
       'add-an-achievement' : 'Add achievement'
       'guide-single' : '$body_guide_title'
-      'search-results': '$search_query'
+      'search-results': '$viewable_search_query'
       'guides-saved': 'Guides'
       'portfolio-friends': 'Portfolio'
       'portfolio-likes': 'Portfolio'

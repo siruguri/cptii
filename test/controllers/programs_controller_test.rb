@@ -15,9 +15,13 @@ class ProgramsControllerTest < ActionController::TestCase
 
     # Spaces are ignored
     get :index, xhr: true, params: {q: ' tutor '}
-    assert_equal 2, JSON.parse(response.body)['data']['search_results'].length
-    
+    initial_d = JSON.parse(response.body)['data']['search_results'].length
     get :index, xhr: true, params: {q: 'tutor'}
-    assert_equal 2, JSON.parse(response.body)['data']['search_results'].length
+    assert_equal initial_d, JSON.parse(response.body)['data']['search_results'].length
+  end
+
+  test 'with network name' do
+    get :index, xhr: true, params: {q: 'program:' + ENV['NETWORK_NAME']}
+    assert_equal Program.count - 1, JSON.parse(response.body)['data']['search_results'].length
   end    
 end

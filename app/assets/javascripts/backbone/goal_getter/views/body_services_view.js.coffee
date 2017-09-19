@@ -9,6 +9,7 @@ GoalGetter.Views.ServicesView = GoalGetter.Views.ScreenBase.extend
         q = $(e.target).closest('.taxonomy-cell').data('name')
 
       @model.set('search_query', q)
+      @model.add_network()
       @model.is_category = true
       @trigger 'navigation:change', {from: '0', to: 'search-results'}
       

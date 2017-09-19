@@ -10,6 +10,7 @@ GoalGetter.Views.HeaderSearchView = Backbone.View.extend
       txt = @$el.find('input').val()
       if typeof txt != 'undefined' and txt.trim() != ''
         @model.set('search_query', txt)
+        @model.add_network()
         @model.is_category = false
         @trigger 'do_search'
 
@@ -18,6 +19,8 @@ GoalGetter.Views.HeaderSearchView = Backbone.View.extend
     if typeof query == 'undefined'
       query = ''
     placeholder = (if query.trim() == '' then '  Search...' else '')
+
+    query = query.replace(':'+@model.get('network_name'), '')
     header_obj = {placeholder: placeholder, query: query}
       
     @$el.html(_.template($('#header_searchbar_template').html())(header_obj))

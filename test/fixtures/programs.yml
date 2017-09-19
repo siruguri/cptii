@@ -1,6 +1,6 @@
 prog_1:
-  title: prog 1  
-  description: adult tutoring
+  title: prog 1
+  description: adult tutoring program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_1
   lat: <%= 37.8105196 %>
@@ -8,7 +8,7 @@ prog_1:
   
 prog_2:
   title: prog 2
-  description: tutors for children search this
+  description: tutors for children search this program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_2
   lat: <%= 37.8003216 %>
@@ -16,7 +16,7 @@ prog_2:
   
 prog_3:
   title: prog 3
-  description: medical aid
+  description: medical aid program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_1
   lat: <%= 37.7990011 %>
@@ -24,7 +24,7 @@ prog_3:
   
 prog_4:
   title: prog 4
-  description: fin serv
+  description: fin serv program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_1
   lat: <%= 37.8003216 %>
@@ -32,7 +32,7 @@ prog_4:
   
 prog_5:
   title: prog 5
-  description: counsel counsel search this
+  description: counsel counsel search this program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_2
   lat: <%= 37.8003216 %>
@@ -40,7 +40,15 @@ prog_5:
 
 prog_no_latlon:
   title: prog no latlon  
-  description: no latlon
+  description: no latlon program
   program_details: <%= ({'cost' => 'cost'}).to_json %>
   organization: org_no_latlon
   address: 123 Main St. Houston TX
+
+prog_not_in_network:
+  title: not in any network
+  description: this is just to test the new conjunction query program
+  program_details: <%= ({'cost' => 'cost'}).to_json %>
+  organization: org_no_latlon
+  address: 123 Main St. Houston TX
+  
