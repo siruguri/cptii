@@ -117,8 +117,7 @@ class ProfilesController < ApplicationController
       )
     
       # global data for logged-in case: broadcast alerts
-      d[:data][:user_info] ||= {}
-      d[:data][:user_info].merge!(u.new_alerts_count)
+      d[:data].merge! u.new_alerts_count
     end
     
     render json: d

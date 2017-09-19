@@ -94,7 +94,12 @@ of config data, as it were. If the backend confirmed login, then `data-login-tok
 
 ## Fetching data
 
-The data fetching is defined in a base class that all views inherit from, in `views/base/screen_base.js`. When it knows it has data, it triggers `body:render` which is heard by `AppBodyView`, which passes this knowledge to `HeaderView`. This view then triggers its `render` method, which causes the body view to actually be rendered.
+Data is fetched in `models/app_body_model.js`, in the method `fetch_screen`.
+
+The rendering of fetched data is defined in a base class that all views inherit from, in
+`views/base/screen_base.js`. When it knows it has data, it triggers `body:render` which is heard by `AppBodyView`, which
+passes this knowledge to `HeaderView`. This view then triggers its `render` method, which causes the body view to
+actually be rendered.
 
 `HeaderView` also decides what to do when the user is not logged in - instead of rendering the actual view, it pretends
 that it needs to render the `logged-out` screen.

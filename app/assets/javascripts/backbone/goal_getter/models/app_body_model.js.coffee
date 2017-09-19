@@ -83,6 +83,8 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         '/profile.json?screen_number=' + ref
     u
 
+  data_change: (target_code, value) ->
+    $.post
   get_screen_data: (curr_screen_ref) ->
     return if curr_screen_ref == '0' or !@data_needed_and_authorized(curr_screen_ref)
     @fetch_screen curr_screen_ref
@@ -107,9 +109,6 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
         model_self.set('guide_data', d.data)
       else if screen_number == 'overlay'
         model_self.set('overlay_data', d.data)
-      else if screen_number == 'public-portfolio'
-        model_self.set('user_info', d.data.user_info)
-        model_self.set('public_portfolio_name', d.data.user_info.user_name)
       else
         model_self.set d.data
         model_self.set('user_info', d.data.user_info) if d.data.hasOwnProperty('user_info')
