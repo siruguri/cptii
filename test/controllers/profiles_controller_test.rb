@@ -117,7 +117,7 @@ class ProfilesControllerTest < ActionController::TestCase
 
       # student 1 is published
       u = users(:student_1)
-      get :public, params: {identifier: u.identifier!}
+      get :public, params: {identifier: u.public_link}
       assert_equal I18n.t('messages.login_to_view', fullname: u.full_name), flash[:notice]
     end
   end

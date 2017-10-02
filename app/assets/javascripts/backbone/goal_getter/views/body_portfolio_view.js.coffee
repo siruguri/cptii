@@ -82,11 +82,12 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       else
         click_on_node = $(e.target).closest('.card-entry')
       click_on = click_on_node.data('card-type')
-      achievement_type = click_on_node.find('#achievement-type').data('entry-type')
-      @model.adding_achievement = achievement_type
 
-      # "Normalize" the card name
-      click_on = click_on.trim().toLowerCase().replace(/\s/g, '-')
+      if click_on == 'an-achievement'
+        achievement_type = click_on_node.data('achievement-type')
+      @model.card_type = click_on
+      @model.achievement_type = achievement_type
+
       # Want to show a wave
       @wave_wait = setInterval(
         (ctx) ->
@@ -179,12 +180,11 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       ))
       wex_card.last().append el      
 
-    # Add the remaining categories beneath work experience
+    # Add the remaining categories beneath work experience; these next two templates are in _portfolio_category.html.haml
     t_func = _.template $('#portfolio_category').html()
     @model.get('portfolio_categories').forEach (cat_name) ->
-      view_self.$el.find('.signout-row').before t_func({card_name: cat_name})
-      # This is in the #portfolio_category template
-      ach_list = view_self.$el.find('.portfolio-card.row').last()
+      add_bar = $(t_func({card_name: cat_name}))
+      view_self.$el.find('.workex-row').after add_bar
       t_func_1 = _.template $('#body_portfolio_achievement').html()
       
       avlbl_ach = view_self.model.get('achievements').filter( (e) ->
@@ -192,7 +192,7 @@ GoalGetter.Views.PortfolioView = GoalGetter.Views.ScreenBase.extend
       )
       if avlbl_ach.length > 0
         avlbl_ach[0]['texts'].forEach( (txt) ->
-          ach_list.append $(t_func_1({text: txt}))
+          add_bar.append $(t_func_1({text: txt}))
         )
       null
 

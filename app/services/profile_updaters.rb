@@ -24,7 +24,7 @@ module ProfileUpdaters
   
   def add_work(u, params)
     resp = 
-      if valid_data?(params, :title, :workplace, :startdate, :enddate)
+      if valid_data?(params, :card_type, :title, :workplace, :startdate, :enddate)
         data = params[:payload][:data]
         data[:entry_key] = 'work'
         p = ProfileEntry.create_from_api_call(
@@ -38,10 +38,10 @@ module ProfileUpdaters
 
   def add_achievement(u, params)
     resp =
-      if valid_data?(params, :achievement_type, :text)
+      if valid_data?(params, :card_type, :text)
         data = params[:payload][:data]
         p = ProfileEntry.new profile: u.profile, entry_key: 'achievement',
-                             entry_details: {type: data[:achievement_type], text: data[:text]}
+                             entry_details: {type: data[:card_type], text: data[:text]}
         p.save
         {id: p.id}
       else

@@ -25,7 +25,8 @@ class PortfolioTest < Capybara::Rails::TestCase
     it 'works' do
       # First one after work exp is Personal Achievements - see fixture
       sleep 1
-      refute page.has_content? 'Add achievement'
+      assert page.has_content? 'Add portfolio category 2'
+
       page.all('.add-card')[1].click
       page.fill_in 'text', with: 'personal best 1'
       page.all('#submit-body-form')[0].click

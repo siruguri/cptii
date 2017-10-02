@@ -3,6 +3,7 @@ GoalGetter::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
   devise_for :admins
 
+  get '/ajax_requests' => 'ajax_requests#handle_payload'
   post '/ajax_requests' => 'ajax_requests#handle_payload'
   get '/search' => 'search_results#search'
   

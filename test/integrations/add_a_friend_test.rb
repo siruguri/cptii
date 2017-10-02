@@ -7,7 +7,7 @@ class AddAFriendTest < Capybara::Rails::TestCase
     Capybara.current_driver = :selenium
     login_as users(:noschool_student), scope: :user, run_callbacks: false
     jsonb_initializations!
-    visit "/profile/public/#{users(:student_1).identifier!}"
+    visit "/profile/public/#{users(:student_1).public_link}"
 
     # needs this fo sho
     sleep 1

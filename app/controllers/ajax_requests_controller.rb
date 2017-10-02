@@ -3,6 +3,7 @@ class AjaxRequestsController < ApplicationController
   before_action :require_xhr, only: [:handle_payload] # this requires the format to end in .json
   
   include ProfileUpdaters
+  include DataFetchers
   
   def handle_payload
     # This call has to be via XMLHTTPRequest.
@@ -11,7 +12,7 @@ class AjaxRequestsController < ApplicationController
 
     code = params.dig(:payload, :code)
     status = 200
-    if !['data-change', 'add-service', 'add-work', 'add-an-achievement', 'add-milestone'].include?(code)
+    if !['data-change', 'get-public-url', 'add-service', 'add-work', 'add-an-achievement', 'add-milestone'].include?(code)
       status = 422
       data = []
     else
@@ -36,6 +37,11 @@ class AjaxRequestsController < ApplicationController
           else
             {}
           end
+        when 'get-public-url'
+          {url: (u.profile.published? ?
+                   public_profile_url(identifier: u.public_link) :
+                   t('messages.profiles.profile_not_public')
+                )}
         when 'add-service'
           add_service u, params
         when 'add-work'

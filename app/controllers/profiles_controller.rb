@@ -96,7 +96,12 @@ class ProfilesController < ApplicationController
           contacts_data u
           
         when 'portfolio-friends'
-          portfolio_data u, tab: 'friends'
+          portfolio_data(u, tab: 'friends').tap do |hash|
+            if hash.keys.include? :entry_link
+              hash[:entry_link] = public_profile_url(identifier: hash[:entry_link])
+            end
+          end
+          
         when 'portfolio-likes'
           portfolio_data u, tab: 'likes'
         when 'chat'

@@ -22,7 +22,7 @@ class ProfileUpdatersTest < ActiveSupport::TestCase
   test 'validity' do
     params = ActionController::Parameters.new({payload:
                                                  {data:
-                                                    {title: 'work 1',
+                                                    {title: 'work 1', card_type: 'work',
                                                      workplace: 'workplace',
                                                      startdate: 'Sat Aug 12 2017',
                                                      enddate: 'Sun Aug 13 2017'

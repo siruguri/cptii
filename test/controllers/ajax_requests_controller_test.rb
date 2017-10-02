@@ -22,15 +22,24 @@ class AjaxRequestsControllerTest < ActionController::TestCase
       @student_1.reload
       assert_equal 'jull marie smuth', @student_1.full_name
     end
+
+    it 'gets public url' do
+      post :handle_payload, xhr: true, params:(
+              {format: 'json',
+               payload:
+                 {code: 'get-public-url'}
+              })
+      assert_equal 'http://test.host/profile/public/public___user1_valid_com', JSON.parse(response.body)['data']['url']
+    end
     
     it 'adds work' do
-      assert_difference('ProfileEntry.count') do
+      assert_difference('ProfileEntry.count', 1) do
         put :handle_payload, xhr: true, params:(
               {format: 'json',
                payload:
                  {code: 'add-work',
                   data:
-                    {title: 'title', workplace: 'workplace',
+                    {title: 'title', workplace: 'workplace', card_type: 'work',
                      startdate: 'Sat Aug 12 2017',
                      enddate: 'Sun Aug 13 2017'
                     }}})
@@ -46,7 +55,7 @@ class AjaxRequestsControllerTest < ActionController::TestCase
 
       assert_difference('ProfileEntry.count', 1) do
         put :handle_payload, xhr: true, params: {format: 'json',
-                                         payload: {code: 'add-an-achievement', data: {achievement_type: 'type 1',
+                                         payload: {code: 'add-an-achievement', data: {card_type: 'type 1',
                                                                                       text: 'i achieved it!'}}}
       end
 

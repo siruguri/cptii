@@ -1,6 +1,8 @@
 require 'test_helper'
 class DataFetchersTest < ActiveSupport::TestCase
   class Dummy
+    include Rails.application.routes.url_helpers
+    include ApplicationHelper
     include DataFetchers
   end
 

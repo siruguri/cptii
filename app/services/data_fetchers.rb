@@ -45,11 +45,13 @@ module DataFetchers
     when 'friends'
       ret1 = u.friend_entries(of_type: ['work', 'achievement']).
              order(created_at: :desc).to_a.map do |p_e|
+        prof = p_e.profile
         
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
-         entry_name: p_e.profile.contact_details['first_name'], liked_status: p_e.entry_likes.where(liked_by_id: u.id).present?,
-         img_url: p_e.profile.profile_pic&.url}
+         entry_name: prof.contact_details['first_name'], entry_link: prof.user.public_link,
+         liked_status: p_e.entry_likes.where(liked_by_id: u.id).present?,
+         img_url: prof.profile_pic&.url}
       end
 
       ret2 = ProgramSuggestion.joins(:program).includes(:program).where('user_id in (?)', u.friends.pluck(:id)).
@@ -96,4 +98,6 @@ module DataFetchers
     ({user_info: {rec_count: recs.count, recs: recs}})
   end
 
+  def get_public_url(u)
+  end
 end

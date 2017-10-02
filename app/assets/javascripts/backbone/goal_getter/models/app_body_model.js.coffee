@@ -77,7 +77,7 @@ GoalGetter.Models.AppBodyModel = Backbone.Model.extend
       else if ref == 'guide-single'
         '/guides/' + @get('body_guide_id')
       else if ref == 'overlay'
-        '/overlay_data.json?key=' + @current_screen
+        '/ajax_requests.json?payload[code]=get-public-url'
       else
         '/profile.json?screen_number=' + ref
 

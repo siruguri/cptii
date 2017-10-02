@@ -142,7 +142,8 @@ method then sends a JSON payload which contains the server code and the array of
 
 # Backend
 
-* Attemps to be XHR only, though it doesn't use Rails 5 API which it probably should.
+* Attemps to be XHR only, though it doesn't use Rails 5 API which it probably should but development started before Rails 5 was past RC.
+* AJAX: look at how AJAX requests controller works - there are some "codes" that can be sent via XMLHTTP requests that are multiplexed in this controller. For updating data, the code `data-change` then further multiplexes the update into various models.
 
 ## Schema
 

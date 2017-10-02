@@ -5,7 +5,7 @@ GoalGetter.Views.AddWorkView = GoalGetter.Views.ScreenBase.extend
     
   render: ->
     t_func = _.template $('#body_add-work_template').html()
-    @$el.html t_func()
+    @$el.html t_func({card_type: @model.card_type})
     Materialize.updateTextFields()
 
     # This view has a pikaday element that needs to be activated

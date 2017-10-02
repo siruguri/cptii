@@ -8,7 +8,7 @@ class UserTest < ActiveSupport::TestCase
   test '#identifier' do
     s = users(:student_1)
     assert_nil s.slug
-    assert_equal 'user1_valid_com', s.identifier!
+    assert_equal 'public___user1_valid_com', s.public_link
     assert s.slug
   end
     
