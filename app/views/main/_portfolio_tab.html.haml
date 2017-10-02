@@ -11,7 +11,8 @@
         %img.rounded-border{src: ''}
       .description
         %span.entry-name
-          <%- entry_name %>
+          %a{href: '<%- public_link %>'.html_safe}
+            <%- entry_name %>
         <%- description_string %>
 
 %script#body_portfolio-tab-likes-item_template{type: 'text/template'}
@@ -20,5 +21,8 @@
       .namepic
         %img.rounded-border{src: ''}
       .description
+        %span.entry-name
+          %a{href: '<%- public_link %>'.html_safe}
+            <%- name %>
         <%- description_string %>
 

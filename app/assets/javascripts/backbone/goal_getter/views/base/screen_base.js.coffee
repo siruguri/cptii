@@ -4,7 +4,8 @@ GoalGetter.Views.ScreenBase = Backbone.View.extend
     insert_into[ref] = {}
     insert_into[ref].view_obj = new GoalGetter.Views[klass]
       model: @model
-    e = @$el.append insert_into[ref].view_obj.wait_and_render(ref)
+    e = insert_into[ref].view_obj.wait_and_render(ref)
+    @$el.append e    
     e.show()
     e
 

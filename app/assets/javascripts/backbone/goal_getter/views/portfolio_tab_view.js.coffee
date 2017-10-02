@@ -51,7 +51,7 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
     view_self = @
     # this is not set the first time when the tab is initially loaded
     if @entry_refresher.models.length == 0
-      @entry_refresher.set @model.get('user_info')['friend_entries']
+      @entry_refresher.set @model.get('friend_entries')
     return if @entry_refresher.models.length == 0
 
     @entry_refresher.each (m, i) ->
@@ -63,8 +63,11 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
         str = "suggested a service at " + m.get('description')
       else
         str = "Feed entry " + m.get('description')
-      name = m.get('entry_name')
-      card_html = _.template($('#body_portfolio-tab-item_template').html())(description_string: str, entry_name: name)
+
+      card_html = _.template($('#body_portfolio-tab-item_template').html())(
+        description_string: str, entry_name: m.get('entry_name'), public_link: m.get('public_link')
+      )
+      
       e = $(card_html)
       
       e.data 'entry-id', m.get('id')

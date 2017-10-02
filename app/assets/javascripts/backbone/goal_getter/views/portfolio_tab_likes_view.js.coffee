@@ -28,9 +28,13 @@ GoalGetter.Views.PortfolioTabLikesView = GoalGetter.Views.ScreenBase.extend
       return
 
     @entry_refresher.each (m, i) ->
-      str = m.get('user_name') + " liked your entry " + m.get('profile_entry_text')
+      str = " liked your entry " + m.get('profile_entry_text')
 
-      card_html = _.template($('#body_portfolio-tab-likes-item_template').html())(description_string: str)
+      card_html = _.template($('#body_portfolio-tab-likes-item_template').html())(
+        name: m.get('user_name'),
+        public_link: m.get('public_link'),
+        description_string: str
+      )
       e = $(card_html)
       view_self.$el.append e
 

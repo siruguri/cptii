@@ -12,7 +12,7 @@ class DataFetchersTest < ActiveSupport::TestCase
 
   test 'friends entries' do
     # stud 1 has two friends, with one entry each
-    assert_equal 2, @d.portfolio_data(users(:student_1), tab: 'friends')[:user_info][:friend_entries].size
+    assert_equal 2, @d.portfolio_data(users(:student_1), tab: 'friends')[:friend_entries].size
   end
 
   test 'likes entries' do

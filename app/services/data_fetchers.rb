@@ -49,7 +49,7 @@ module DataFetchers
         
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
-         entry_name: prof.contact_details['first_name'], entry_link: prof.user.public_link,
+         entry_name: prof.contact_details['first_name'], public_link: prof.user.public_link,
          liked_status: p_e.entry_likes.where(liked_by_id: u.id).present?,
          img_url: prof.profile_pic&.url}
       end
@@ -63,7 +63,7 @@ module DataFetchers
       # Sort in descending order of created_at timestamp
       ret = (ret1 + ret2).sort_by { |i| -1 * i[:timestamp] }
 
-      ({user_info: {friend_entries: ret} })
+      {friend_entries: ret}
     when 'likes'
       
       {user_info:

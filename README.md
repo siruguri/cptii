@@ -72,7 +72,7 @@ tab-separated values file, with one user in each row. The column ordering is exp
 
 These are notes to help folks contribute to this code base.
 
-# SPA (front end code) Basics
+# SPA (views/front end code) Basics
 
 * Written using Backbone JS
 * In `models/app_body_model`, a variety of properties are initialized that essentially manage the SPA. This is delegated off to a Helper class in `goal_getter/helpers/model_initializer.js`, and contains among other things:
@@ -89,14 +89,16 @@ These are notes to help folks contribute to this code base.
   * `app_body_view` creates the individual body screens on demand, and dynamically finds the corresponding view class for each body screen using a name resolution helper method. See more in the *Under The Hood* section. 
   * This dynamic creation also runs a data fetch prior to view rendering. The URL for the data fetch is determined in `models/app_body_model.js` in the method `make_url`. Following the code from there will help determine the internal business logic for how data is laid out.
 
-# Under The Hood
+## The Portfolio View
 
-## Checking Login
+This view is a bit complicated because it has its own sub-tab structure, whose logic is somewhat duplicated relative to how screens are managed for the bottom-menu navigation.
+
+# Checking Login
 
 The basic page data is stored in the div `page_data`. When the model initializes, it checks this div for various pieces
 of config data, as it were. If the backend confirmed login, then `data-login-token` is set to `user', `admin` or `none`. If set to _none_ views requiring logins are not rendered. 
 
-## Fetching data
+# Fetching data
 
 Data is fetched in `models/app_body_model.js`, in the method `fetch_screen`.
 
@@ -108,7 +110,7 @@ actually be rendered.
 `HeaderView` also decides what to do when the user is not logged in - instead of rendering the actual view, it pretends
 that it needs to render the `logged-out` screen.
 
-## Navigation
+# Navigation
 
 * Navigation happens via an event called `navigation:change` that is listened to by `HeaderView`, which calls
   `change_screens`. The view uses `AppBodyModel` to handle data about overall navigation. In some places, the app also
@@ -120,11 +122,11 @@ The following methods navigate to a new screen:
 1. Get the `HeaderView` to call `change_screens` with an object as the first argument, whose `to` property is set to the name of the destination screen.
 1. Call `pass_navigation()` on an `AppBodyView` instance, with an "options" object (description TBD - it takes the following keys among other details: `to`: the key of the screen to switch to)
 
-## Styling
+# Styling
 
 The styles are largely dependent on the [Materialize framework](http://materializecss.com/). Make sure to read through `variables.scss` and `mixins.scss` to get a sense of the conventions used specific to the app.
 
-## Creating entry forms
+# Creating entry forms
 
 The *Add Service* and *Add Milestone* templates are good examples for the logic behind the structure of an input form. The action happens in `render_and_close()` in `AppBodyView`.
 
@@ -149,7 +151,7 @@ method then sends a JSON payload which contains the server code and the array of
 
 * User accounts have Profiles, which store all the relevant information about a user. E.g., the `profile_type` column in `profiles` decides if the user is a student or counselor.
 
-# Database
+## Database
 
 * You can seed the database with some dummy values after migration:
   * `rake db:seed`
@@ -158,16 +160,13 @@ method then sends a JSON payload which contains the server code and the array of
 * Alameda County seed data has been produced in Ruby/ActiveRecord format in `db/seeds/make_programs.rb`. Load it with `rake db:seed:make_programs_and_organizations` and `rake db:seed:make_categorizations`
 * If Programs haven't already been geo-coded, you can use `db/seeds/initialize_lat_lon.rb` to do so. It will set lat/lon values to -1 if the geocode fails. It rate-limits itself to 3 requests per second, so expect it'll take a while if you have a lot of entries.
 
-# External dependencies
+# External Dependencies
 
-JS based libraries
+## JS based libraries
 
 * Materialize: managed via gems
-
-Some assets are stored in `vendor/assets/`:
-
-* Leaflet
-* Dropzone
+* Leaflet: in `vendor/assets/`
+* Dropzone: in `vendor/assets/`
 
 To update, run a package manager to install/upgrade globally (say, [YarnJS](https://yarnpkg.com/)), and copy the updated files, if any, to the vendor folder. For example, if you use `[YarnJS](https://yarnpkg.com/)`,
 

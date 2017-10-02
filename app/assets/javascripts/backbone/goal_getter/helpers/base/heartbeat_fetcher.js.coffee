@@ -33,6 +33,6 @@ GoalGetter.Helpers.HeartbeatFetcher = Backbone.Collection.extend
     if @interval == ''
       @interval = setInterval(
         @run.bind(@),
-        4000
+        10000
       )
   
