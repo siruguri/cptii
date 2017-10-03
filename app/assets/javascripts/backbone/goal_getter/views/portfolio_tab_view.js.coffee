@@ -65,7 +65,7 @@ GoalGetter.Views.PortfolioTabView = GoalGetter.Views.ScreenBase.extend
         str = "Feed entry " + m.get('description')
 
       card_html = _.template($('#body_portfolio-tab-item_template').html())(
-        description_string: str, entry_name: m.get('entry_name'), public_link: m.get('public_link')
+        description_string: str, entry_name: m.get('user_name'), public_link: m.get('public_link')
       )
       
       e = $(card_html)

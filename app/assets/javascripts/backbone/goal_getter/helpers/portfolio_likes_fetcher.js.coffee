@@ -13,8 +13,8 @@ GoalGetter.Helpers.PortfolioLikesFetcher = GoalGetter.Helpers.HeartbeatFetcher.e
 
   modify_data: (coll, resp, opts) ->
     # entry_refresher is a backbone collection, remember?
-    if resp.data.user_info.likes.length > 0
-      coll.set resp.data.user_info.likes
+    if resp.data.likes.length > 0
+      coll.set resp.data.likes
     else
       coll.set []
       

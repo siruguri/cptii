@@ -19,7 +19,7 @@ class ProfilesControllerTest < ActionController::TestCase
     end
     it 'works for likes' do
       get :show, xhr: true, params: {format: 'json', screen_number: 'portfolio-likes'}
-      b = JSON.parse(response.body)['data']['user_info']['likes']
+      b = JSON.parse(response.body)['data']['likes']
       assert_equal 2, b.length
     end
     

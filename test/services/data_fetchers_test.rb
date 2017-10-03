@@ -18,7 +18,7 @@ class DataFetchersTest < ActiveSupport::TestCase
   test 'likes entries' do
     resp = @d.portfolio_data(users(:student_1), tab: 'likes')
     assert_equal 2,
-                 resp[:user_info][:likes].length
+                 resp[:likes].length
   end
 
   test '#contacts_data' do

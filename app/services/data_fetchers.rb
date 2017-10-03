@@ -49,7 +49,7 @@ module DataFetchers
         
         {id: p_e.id, description: p_e.entry_key == 'work' ? p_e.entry_details['workplace'] : p_e.entry_details['text'],
          entry_type: "profile_#{p_e.entry_key}", timestamp: p_e.created_at.to_i,
-         entry_name: prof.contact_details['first_name'], public_link: prof.user.public_link,
+         user_name: prof.full_name, public_link: prof.user.public_link,
          liked_status: p_e.entry_likes.where(liked_by_id: u.id).present?,
          img_url: prof.profile_pic&.url}
       end
@@ -65,18 +65,17 @@ module DataFetchers
 
       {friend_entries: ret}
     when 'likes'
-      
-      {user_info:
-         {likes:
-            ProfileEntry.joins(:entry_likes).includes(:entry_likes).
-           where('profile_id = ?', u.profile.id).
-           order('entry_likes.created_at desc').all.map do |rec|
-            text_key = rec.entry_key == 'work' ? 'title' : 'text'
-            rec.entry_likes.all.map do |e_l|
-              {user_name: e_l.liked_by.full_name, profile_entry_text: rec.entry_details[text_key],
-               img_url: e_l.liked_by.profile.profile_pic&.url}
-            end
-          end.flatten}}
+      {likes:
+         ProfileEntry.joins(:entry_likes).includes(:entry_likes).
+        where('profile_id = ?', u.profile.id).
+        order('entry_likes.created_at desc').all.map do |rec|
+         text_key = rec.entry_key == 'work' ? 'title' : 'text'
+         rec.entry_likes.all.map do |e_l|
+           {user_name: e_l.liked_by.full_name, public_link: public_profile_path(identifier: e_l.liked_by.public_link),
+            profile_entry_text: rec.entry_details[text_key],
+            img_url: e_l.liked_by.profile.profile_pic&.url}
+         end
+       end.flatten}
     end
   end
 
