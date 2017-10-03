@@ -10,7 +10,7 @@ module Users
       # https://github.com/plataformatec/devise/blob/master/app/controllers/devise/sessions_controller.rb
       sign_out resource_name
       set_flash_message! :notice, :signed_out if !signed_in?
-      head :ok
+      redirect_to root_path
     end
     
     def create
