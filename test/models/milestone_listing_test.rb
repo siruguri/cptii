@@ -23,10 +23,7 @@ class MilestoneListingTest < ActiveSupport::TestCase
       m = MilestoneListing.create_from_api_call({'title' => 'title 1', 'description' => 'desc 2', 'enddate' => 'Thu Jul 13 2017'})
     end
 
-    assert_enqueued_jobs(2) do
-      assert_enqueued_with(job: CreateAlertJob) do
-        m = MilestoneListing.create_from_api_call({'title' => 'title 1', 'description' => 'desc 2', 'enddate' => 'Thu Jul 13 2017', 'student_id' => users(:student_1).id})
-      end
-    end
+    m = MilestoneListing.create_from_api_call({'title' => 'title 1', 'description' => 'desc 2', 'enddate' => 'Thu Jul 13 2017', 'student_id' => users(:student_1).id})
+    assert_equal ['ActionMailer::DeliveryJob', 'CreateAlertJob'].sort, enqueued_jobs.map { |item| item[:job].to_s}.sort
   end
 end

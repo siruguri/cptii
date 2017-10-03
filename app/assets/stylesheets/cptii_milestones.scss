@@ -1,6 +1,17 @@
 #milestone-student-search {
   padding-top: 0.8rem;
+  input#query {
+    padding-top: 10px;
+  }
+
+  .result {
+    padding: 5px;
+    &:hover {
+      background: $basic-blue-rgba;
+    }
+  }
 }
+
 .milestone-listing {
   margin-top: 37px;
   
