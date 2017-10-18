@@ -44,6 +44,7 @@ gem 'geocoder'
 gem 'devise'
 gem 'haml-rails'
 gem 'sidekiq'
+gem 'mail'
 gem 'sendgrid-ruby'
 
 gem 'memorable_password'
