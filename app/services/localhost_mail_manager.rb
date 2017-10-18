@@ -1,15 +1,12 @@
 module LocalhostMailManager
-  def localhost_email(from:, to:, text_body:, subject: nil)
+  def localhost_email(from_mailbox: nil, to:, text_body:, subject: nil, name: nil)
     # Need to parametrize the domain
-    _from = "CPTii student<#{from}@#{Rails.application.config.action_mailer.default_url_options[:host]}>"
+    
+    _from = from_mailbox.present? ? "#{name || 'CPTii student'}<#{from_mailbox}@#{Rails.application.config.action_mailer.default_url_options[:host]}>" : "#{Rails.application.config.action_mailer.default_options[:from]}<#{Rails.application.config.action_mailer.default_options[:from]}@#{Rails.application.config.action_mailer.default_url_options[:host]}>"
+    
     _s = subject || 'CPTii App'
-
-    _to = to
-    mail = Mail.deliver do
-      from _from
-      subject _s
-      to _to
-      body text_body
-    end
+    GeneralMailer.wrapper(_from, to, _s, text_body).deliver_now
   end
 end
+
+
