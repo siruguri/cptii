@@ -1,3 +1,5 @@
-a = Admin.new email: 'admin@goalgetterapp.org'
+a = Admin.find_or_initialize_by email: 'admin@goalgetterapp.org'
 a.password = ENV['ADMIN_PASSWORD']
-a.save
+puts a.password
+a.save!
+
