@@ -59,11 +59,18 @@ class AjaxRequestsControllerTest < ActionController::TestCase
                                                                                       text: 'i achieved it!'}}}
       end
 
-      assert_difference('MilestoneListing.count', 1) do
+      assert_difference('MilestoneListing.count', 0) do
         put :handle_payload, xhr: true, params: {format: 'json',
                                                  payload: {code: 'add-milestone',
                                                            data: {title: 'type 1', description: 'is a description 1',
                                                                   enddate: 'Thu Jul 13 2017'}}}
+      end
+      # requires student_id
+      assert_difference('MilestoneListing.count', 1) do
+        put :handle_payload, xhr: true, params: {format: 'json',
+                                                 payload: {code: 'add-milestone',
+                                                           data: {title: 'type 1', description: 'is a description 1',
+                                                                  enddate: 'Thu Jul 13 2017', student_id: @student_1.id}}}
       end      
     end
     

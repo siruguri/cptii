@@ -7,10 +7,16 @@ class MilestonesControllerTest < ActionController::TestCase
     end
 
     it 'gets all milestones created by counselor' do
+      # make all milestones current
+      mls = MilestoneListing.where(owner_id: @u.id)
+      mls.find_each do |m|
+        m.update_attributes due_in: Date.today + 1.day
+      end
+      
       get :index
 
       b = JSON.parse response.body
-      assert_equal MilestoneListing.where(owner_id: @u.id).count - 1, b['data']['milestones'].size
+      assert_equal mls.count, b['data']['milestones'].size
     end
   end
 

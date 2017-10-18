@@ -65,8 +65,10 @@ module ProfileUpdaters
 
   def add_milestone(u, params)
     resp = 
-      if valid_data?(params, :title, :description, :enddate)
-        MilestoneListing.create_from_api_call params[:payload][:data].permit(:title, :description, :enddate, :student_id).to_h, user: u
+      if valid_data?(params, :title, :description, :enddate) &&
+         at_least?(params, [:assign_to_all, :student_id], 0)
+        MilestoneListing.create_from_api_call params[:payload][:data].
+                                               permit(:title, :description, :enddate, :assign_to_all, :student_id).to_h, user: u
       else
         {}
       end
@@ -76,5 +78,9 @@ module ProfileUpdaters
   def valid_data?(params, *required_keys)
     (d = params.dig(:payload, :data)) &&
       (required_keys - d.keys.map {|k| k.to_sym}).length == 0
+  end
+  def at_least?(params, required_key_list, strict_minimum)
+    (d = params.dig(:payload, :data)) &&
+      (d.keys.inject(0) {|memo, k| memo += (required_key_list.include?(k.to_sym) || required_key_list.include?(k) ? 1 : 0); memo}) > strict_minimum
   end
 end
