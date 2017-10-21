@@ -55,9 +55,6 @@ gem 'sinatra', git: 'https://github.com/sinatra/sinatra.git'
 group :production do
   gem 'pg'
   gem 'execjs'
-
-  # Uncomment this for Heroku
-  gem 'rails_12factor'
 end
 
 group :development do
