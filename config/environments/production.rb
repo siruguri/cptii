@@ -80,15 +80,12 @@ GoalGetter::Application.configure do
   config.default_url_options = { host: Rails.application.secrets.default_host, scheme: 'https' }
   
   config.action_mailer.default_options = { from: Rails.application.secrets.default_mailer_from }
-  config.action_mailer.default_url_options = { :host => Rails.application.secrets.default_mailer_host }
+  config.action_mailer.default_url_options = { host: Rails.application.secrets.default_mailer_host,
+                                               from: Rails.application.secrets.default_mailer_from}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address        => 'smtp.sendgrid.net',
-      :port           => '587',
-      :authentication => :plain,
-      :user_name      => ENV['SENDGRID_USERNAME'],
-      :password       => ENV['SENDGRID_PASSWORD'],
-      :domain         => 'gmail.com',
-      :enable_starttls_auto => true
+      :address        => 'localhost',
+      :port           => '25',
+      :domain         => Rails.application.secrets.default_mailer_host
   }
 end

@@ -8,7 +8,7 @@ class CounselorMailJob < ActiveJob::Base
 
     #from: 'from', to: 'to', text_body: 'text body', subject: 'subject')
     localhost_email to: record.receiver.email,
-                    from: "#{record.token}+sms", subject: "Email from #{record.sender.email} (CPTii)",
+                    from_mailbox: "#{record.token}+sms", subject: "Email from #{record.sender.email} (CPTii)",
                     text_body: @msg_header + @msg_text
   end
 end

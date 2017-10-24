@@ -15,7 +15,7 @@ class CounselorMailJobTest < ActiveSupport::TestCase
   
   test 'job sets up job if there is work to do' do
     # triggers net stubs
-    assert_raises(Errno::ECONNREFUSED) do
+    assert_difference('ActionMailer::Base.deliveries.size', 1) do
       CounselorMailJob.perform_now ChatRecord.find_by_message('message')
     end
   end
