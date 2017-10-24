@@ -1,4 +1,4 @@
-str = User.all.to_a.to_yaml
+str = User.includes(:profile).all.map { |u| [u, u.profile] }.to_yaml
 
 a = ArbitraryData.find_by_search_key 'aws_iam_creds'
 creds = a[:data_payload]
