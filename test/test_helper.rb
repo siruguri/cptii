@@ -11,7 +11,7 @@ require 'capybara/webkit'
 require 'capybara/poltergeist'
 
 Dir[Rails.root.join('test/support/**/*.rb')].each { |f| require f }
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.disable_net_connect! allow_localhost: true
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
