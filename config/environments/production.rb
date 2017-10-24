@@ -86,6 +86,7 @@ GoalGetter::Application.configure do
   config.action_mailer.smtp_settings = {
       :address        => 'localhost',
       :port           => '25',
-      :domain         => Rails.application.secrets.default_mailer_host
+      :domain         => Rails.application.secrets.default_mailer_host,
+      enable_starttls_auto: false
   }
 end
