@@ -22,6 +22,21 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  describe 'type checking' do
+    it 'works for student?' do
+      assert users(:student_1).student?
+    end
+
+    it 'works for counselors' do
+      assert users(:counselor_1).counselor?
+    end
+
+    it 'handles empty profiles' do
+      u = create :user
+      refute u.student?
+    end
+  end
+  
   describe '#students' do
     it 'works for counselor without students' do
       assert_equal 0, users(:counselor_empty_school).students.count

@@ -62,49 +62,12 @@ class ChatRecordsControllerTest < ActionController::TestCase
     end
   end
   
-  describe '#create from sendgrid' do
-    it 'works for responses to emails' do
+  describe '#create' do
+    it 'works when chatting in app' do
       assert_enqueued_with(job: CounselorMailJob) do
         post :create, xhr: true, params: {message_to_counselor: 'hey', counselor_id: users(:counselor_1).id}
       end
-
-      sign_out :user
-      cr = ChatRecord.last
-      to = "first last <#{cr.token}+sms@counselors.com>"
-
-      # Pretend the student wrote back
-      assert_difference('DebugLog.count', 1) do
-        assert_difference('ChatRecord.count', 1) do
-          post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: "response! \n", api_key: 'testkey'}
-        end
-      end
-      assert_equal 'chat_records_controller', DebugLog.last.log_source      
-      assert_equal 'response!', ChatRecord.last.message
     end
-
-    it 'ignores poorly formed tokens' do
-      to = "first last <123+sms@counselors.com>"
-      refute_difference('ChatRecord.count') do
-        post :create, params: {'envelope' => {'to' => [to].to_json}, to: to, text: 'response!', api_key: 'testkey'}
-      end
-    
-      assert_equal 422, response.status
-    end
-
-    it 'creates guides' do
-      to = 'guides@whereverreally.com'
-      subject = 'great guide'
-      content = 'great content'
-      assert_difference('ContentResource.count', 1) do
-        post :create, params: {'envelope' => {'to' => [to].to_json}, subject: subject,
-                               from: 'couns_1@valid.com', to: to, text: content, api_key: 'testkey'}
-      end
-      guide = ContentResource.last
-
-      assert_equal schools(:school_1).id, guide.school_id
-      assert_equal 200, response.status
-      assert_equal subject, guide.title
-    end      
   end
 
   private

@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 
   delegate :full_name, to: :profile
   delegate :profile_entries, to: :profile
+  delegate :school, to: :profile
 
   def name_with_school
     if (s = self.school)
@@ -40,7 +41,6 @@ class User < ActiveRecord::Base
     # Implement READ filter later TODO
     {unread_inbox: AccountInboxMessage.where(is_read: false).all.map(&:alerts_data)}
   end
-  delegate :school, to: :profile
 
   def students
     self.counselor? ? User.joins(:profile).where('(profiles.contact_details->>\'school_id\')::int in (?) and profiles.profile_type = ?',
@@ -111,6 +111,6 @@ class User < ActiveRecord::Base
   end
   
   def is_a_type?(sym)
-    self.profile.profile_type.to_sym == sym
+    self.profile.present? && sym.present? && self.profile.profile_type.try(:to_sym) == sym
   end
 end

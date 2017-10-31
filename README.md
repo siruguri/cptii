@@ -179,6 +179,16 @@ To update, run a package manager to install/upgrade globally (say, [YarnJS](http
 
 # Deploying to a bare Ubuntu (Linux) box
 
+* Set up Postgres and Passenger as per usual. Make sure to grant both database, schema and sequence access to the Postgres user configured for db access in `config/database.yml`
+* Use the `.env` file which is read by the gem [`Dotenv`](https://github.com/bkeepers/dotenv) to set the environment.
+* PG backups have been configured using [PG Barman](http://docs.pgbarman.org/)
+* Create an SSL certificate for the app - the production environment defaults to SSL.
+* The repository contains Systemd service files for starting Sidekiq and Redis. Use `apt-get` to install Redis. Sidekiq will work because it's already in the app's bundle.
+* Set up RVM and add the mail receiver user and the app server user as members of the `rvm` group.
+* Emails are sent via localhost - configure Sendmail to act as an MTA with localhost access. The sender domain must be set in the app's environment via the `.env` file.
+* Emails are received by the user `goalg` and processed via `procmail`. The `procmail` recipe calls the custom task `make_log` which is in `db/seeds/make_log.rb`
+* Point an MX record for the domain to the app server.
+
 ## Dependencies
 
 * `apt-get install libpq-dev`

@@ -74,6 +74,7 @@ end
 
 # Testing with minitest
 group :test do
+  gem 'factory_bot_rails'
   gem "chromedriver-helper"
   gem 'mocha'
   gem 'simplecov'
