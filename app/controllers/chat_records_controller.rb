@@ -1,6 +1,5 @@
 class ChatRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token, if: :skip_token_on_auth
-  include ChatRecordsHelper
   
   def index
     # The "counselor_id" could also be a non-counselor user - at this point.
@@ -38,80 +37,28 @@ class ChatRecordsController < ApplicationController
     # The "counselor_id" could also be a non-counselor user - at this point.
 
     counselor_id = params[:counselor_id]
-    resp,
-    status =
-    if params[:api_key] == Rails.application.secrets.sendgrid_checkin_key.to_s
-      if ENV['RECORD_LOGS']
-        DebugLog.create log_level: 'debug', log_source: 'chat_records_controller',
-                        log_message: params.inspect
-      end
-      
-      valid_sendgrid = false
-      error_log = 'no to attribute'
-      if params[:to].present?
-        mesg = (params[:text] || params[:html])&.strip
-        # If this was an email to create guides...
-        error_log = 'check for to/from/mesg length failed'
-        if /^guides\@/.match(params[:to]) and (mesg&.length).to_i > 0 and params[:from].present?
-          u = User.find_by_email parsed_from(params[:from])
-          error_log = 'sender is not counselor'
-          if u&.counselor?
-            u.schools.each do |school|
-              cr = ContentResource.new resource_type: 'guides', title: params[:subject], description: mesg,
-                                       school: school
-              cr.save
-            end
-            valid_sendgrid = true
-          end
-        elsif /\<[A-Za-z0-9]+\+sms/.match(params[:to])
-          # It's a response to a chat message
-          matches = /\<([A-Za-z0-9]+)\+sms/.match params[:to]
-          token = matches[1]
-          origin = ChatRecord.find_by_token token
-          if origin
-            cr = ChatRecord.new(
-              receiver: origin.sender,
-              sender: origin.receiver,
-              message: mesg,
-              written_time: Time.now
-            )
-            cr.save
-            cr.token = cr.token.downcase
-            cr.save
+    resp, status =
+          if !current_user
+            [{}, :unauthorized]
+          else 
+            counselor = current_user.counselors.where(id: counselor_id).first
+            friend = current_user.friends.where(id: counselor_id).first
+            receiver = counselor || friend
             
-            valid_sendgrid = true
+            if receiver.nil? || params[:message_to_counselor].blank?
+              [{}, :unprocessable_entity]
+            else
+              cr = ChatRecord.new(
+                sender: current_user,
+                receiver: receiver,
+                message: params[:message_to_counselor],
+                written_time: Time.now
+              )
+              cr.save
+              [{chat_id: cr.id}, :ok]
+            end
           end
-        end
-      end
-
-      # Response to sendgrid
-      valid_sendgrid ? [{}, :ok] : [{error: error_log}, :unprocessable_entity]
-    else
-      if !current_user
-          [{}, :unauthorized]
-      else 
-        counselor = current_user.counselors.where(id: counselor_id).first
-        friend = current_user.friends.where(id: counselor_id).first
-        receiver = counselor || friend
-        
-        if receiver.nil? || params[:message_to_counselor].blank?
-          [{}, :unprocessable_entity]
-        else
-          cr = ChatRecord.new(
-            sender: current_user,
-            receiver: receiver,
-            message: params[:message_to_counselor],
-            written_time: Time.now
-          )
-          cr.save
-          cr.token = cr.token.downcase
-          cr.save
-          
-          [{chat_id: cr.id}, :ok]
-        end
-      end
-    end
-
+    
     render json: ({data: resp}), status: status
   end
 
