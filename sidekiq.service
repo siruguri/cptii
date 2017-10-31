@@ -28,7 +28,7 @@ WorkingDirectory=/var/www/goalgetter
 # If you use rbenv:
 # ExecStart=/bin/bash -lc 'bundle exec sidekiq -e production'
 # If you use the system's ruby:
-ExecStart=/usr/local/rvm/bin/rvm-auto-ruby -S bundle exec sidekiq -e production -q mailers -q low -c 3 -L log/sidekiq.log
+ExecStart=/usr/local/rvm/bin/rvm-auto-ruby -S bundle exec sidekiq -e production -q default -q mailers -q low -c 3 -L log/sd_sidekiq.log
 User=www
 Group=www
 UMask=0002
