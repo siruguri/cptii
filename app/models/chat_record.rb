@@ -10,7 +10,7 @@ class ChatRecord < ActiveRecord::Base
 
   def self.email_response!(from, to, subject, message)
     mesg = message.strip
-    mail_valid = {}
+    return_fields = {}
     
     # If this was an email to create guides...
     error_log = 'check for to/from/mesg length failed'
@@ -22,11 +22,12 @@ class ChatRecord < ActiveRecord::Base
           resource = ContentResource.new resource_type: 'guides', title: subject.strip, description: mesg,
                                          school: school
           resource.save
+          return_fields[:data] = resource
         end
-        mail_valid[:guides] = true
       end
     elsif (matches = /\<([A-Za-z0-9]+)\+sms/.match(to))
-      # It's a response to a chat message
+      # It's a response to a chat message. We have the from field transmitted by the external code, but
+      # note that we are ignoring it.
       token = matches[1]
       origin = ChatRecord.find_by_token token
       if origin
@@ -37,9 +38,11 @@ class ChatRecord < ActiveRecord::Base
           written_time: Time.now
         )
         cr.save
-        mail_valid[:chat_response] = true
+        return_fields[:data] = cr
       end
     end
+
+    return_fields[:data]
   end
   
   private
