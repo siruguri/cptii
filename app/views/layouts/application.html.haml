@@ -16,6 +16,8 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     = render 'google_analytics'
+    :javascript
+      addToHomescreen();
 
   %body
     = render 'header'

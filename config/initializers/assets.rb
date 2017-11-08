@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( dropzone.js admin_application.css )
+Rails.application.config.assets.precompile += %w( dropzone.js admin_application.css addtohomescreen.min.js addtohomescreen.css)
