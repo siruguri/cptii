@@ -32,6 +32,8 @@ Note: requires Ruby knowledge, Heroku experience
   
   Make sure you turn on bucket hosting on the bucket for Paperclip to work.
 
+* To automatically filter services down to the ones relevant to the network, add an environment variable called `NETWORK_NAME`. Create a `TaxonomyNode` whose `node_name` value is the same as this variable.
+
 # Friends
 
 For demo purposes, you can run `rake db:seed:make_students` to create some students. There should already be a school in the database for this to work.
