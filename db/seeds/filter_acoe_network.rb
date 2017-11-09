@@ -1,5 +1,3 @@
-require 'JSON'
-
 node = TaxonomyNode.find_or_create_by node_name: 'acoe'
 
 if !File.exists? $argv[:arg1]
