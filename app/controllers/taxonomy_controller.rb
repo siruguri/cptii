@@ -3,7 +3,7 @@ class TaxonomyController < ApplicationController
   
   def list_names
     # A bunch of configuration data for the app
-    d1 = TaxonomyNode.pluck :node_name, :image_key
+    d1 = TaxonomyNode.order(id: :asc).pluck :node_name, :image_key
     d2 = PortfolioCategory.pluck :category_name
     user_info = {}
     if current_user

@@ -17,7 +17,6 @@
 //= require jquery_ujs
 //= require leaflet
 //= require dropzone
-//= require addtohomescreen.min
 //= require materialize
 //= require backbone
 //= require backbone_rails_sync
