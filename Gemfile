@@ -79,6 +79,7 @@ group :test do
   gem 'mocha'
   gem 'simplecov'
   gem 'webmock'
+  gem 'minitest', '5.10.1'
   gem 'minitest-spec-rails'
   gem 'minitest-rails-capybara'
   gem 'capybara-webkit'
