@@ -2,7 +2,7 @@ nd_1:
   node_name: node_top_left
   parent_id: -1
 nd_1_again:
-  node_name: node_top_left.1
+  node_name: node_bottom_eft
   parent_id: -1
 nd_2:
   node_name: node2
